@@ -1,0 +1,629 @@
+/* ====== Import files ============== */
+@import url('root.css');
+
+
+pre code.hljs {
+    padding: 0em;
+}
+/* ============ Page - 1 ============== */
+#page1 {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(24, 24, 24);
+}
+
+#page1 h1 {
+    font-size: 5vw;
+    font-family: Gilroy, sans-serif;
+    font-weight: 800;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+}
+
+#page1 h6 {
+    margin-top: 4%;
+    font-weight: 300;
+    color: #6d717a;
+    font-size: 2vw;
+    text-align: center;
+}
+
+#page1 a {
+    background-color: #333;
+    font-size: 1.562vw;
+    box-shadow: rgba(224, 233, 246, 0.762) 0px 2px 12px 0px;
+    padding: 0.8vw 2.5vw;
+    margin-bottom: 3%;
+    border-radius: 50px;
+    font-weight: 700;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#page1 a img {
+    height: 2vw;
+    margin: 0 1vw;
+}
+
+/* ============= Page - 2 ================= */
+
+#page2 {
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.pageLayout {
+    padding: 2vw 4.9vw;
+    background-color: rgb(24, 24, 24);
+}
+
+.width_wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 2vw;
+    width: 100%;
+    /* max-width: 1300px; */
+    margin: 0 auto;
+    position: relative;
+    /* background-color: red; */
+}
+
+/* ----------page left------------ */
+.pageLeftInfo {
+    min-height: 510px;
+    width: 100%;
+    /* background-color: aqua; */
+    /* grid-area: 1/2; */
+    /* background: 0 0 ; */
+    z-index: 1;
+}
+
+.pageLeftHead {
+    width: 65%;
+    /* background-color: antiquewhite; */
+    display: flex;
+    position: relative;
+}
+
+.pageLayout .imagePageLeft {
+    width: 70%;
+    /* background-color: red; */
+}
+
+.imagePageLeft img {
+    height: 4vw;
+    width: 4vw;
+}
+
+.pageLeftHead h1 {
+    font-size: 2.7vw;
+    color: #fff;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.pageLeftInfo .pageLeftMiddle {
+    padding: 3vw 2vw;
+}
+
+.pageLeftMiddle p {
+    font-size: 1.5vw;
+    color: hsl(230deg 12% 80.39%);
+    /* font-weight: 100; */
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+.pageLeftInfo button {
+    /* height: 2vw;
+    width: 4vw; */
+    background-color: hsl(139.41deg 58.62% 54.51%);
+    line-height: 1.2;
+    padding: 0.8vw 1.3vw;
+    font-size: 1.1vw;
+    color: black;
+    font-weight: normal !important;
+    text-transform: capitalize;
+    border-radius: 10px;
+    border: none;
+    transition: 0.4s all ease;
+}
+
+.pageLeftInfo button:hover {
+    padding: 0.8vw 1.7vw;
+    background-color: green;
+    color: rgb(219, 224, 229);
+}
+
+/* -------------PAGE RIGHT---------- */
+
+.pageRightInfo {
+    height: 410px;
+    width: 100%;
+    background: linear-gradient(109.61deg, #4c4f5a 4.26%, #202125 84.84%);
+    border-radius: 13px;
+    grid-area: 1/2;
+    /* background: 0 0 ; */
+    position: relative;
+}
+
+.pageRightInfo .pageRightBoxes {
+    height: 33%;
+    width: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.6s all ease;
+    /* background-color: red; */
+}
+
+.pageRightInfo:hover {
+    .rightBox {
+        top: 3%;
+        right: 2%;
+    }
+
+    .middleBox {
+        left: 0%;
+    }
+
+    .RightBottomBox {
+        bottom: 3%;
+    }
+
+    .RightMiddleBox {
+        right: 2%;
+    }
+
+    .setRightbox {
+        box-shadow: rgba(224, 233, 246, 0.2) 0px 2px 12px 0px;
+    }
+}
+
+.rightBox {
+    position: absolute;
+    top: -9%;
+    right: 0;
+}
+
+.middleBox {
+    position: absolute;
+    top: 26%;
+    left: -12%;
+}
+
+.RightBottomBox {
+    position: absolute;
+    bottom: -5%;
+    left: 8%;
+}
+
+.RightMiddleBox {
+    position: absolute;
+    right: -13%;
+    top: 37%;
+}
+
+.pageRightBoxes .setRightbox {
+    height: 100%;
+    width: 80%;
+    background-color: #1d1e22;
+    border-radius: 13px;
+    overflow: hidden;
+    /* background-color: pink; */
+    transition: 0.6s all ease;
+}
+
+.setRightbox .boxHeading {
+    height: 2.7vw;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    /* background-color: red; */
+    position: relative;
+}
+
+.boxHeading img {
+    height: 2vw;
+    width: 2vw;
+    margin-left: 0.8vw;
+}
+
+.boxHeadingTitle {
+    font-size: 0.65vw;
+    text-transform: capitalize;
+    /* background-color: #fff; */
+    width: auto;
+    padding: 0 1.2vw;
+    color: #fff;
+    /* font-weight: 400; */
+}
+
+.boxHeading h1 {
+    font-weight: 600;
+    letter-spacing: 2px;
+}
+
+.boxBody {
+    width: 100%;
+    /* height: 100%; */
+    /* background-color: red; */
+    /* font-size: 0.5vw; */
+}
+
+.boxBody .hljs {
+    background-color: #1d1e22 !important;
+    scrollbar-width: none;
+}
+
+.boxBody code {
+    font-size: 0.9vw;
+    line-height: 1.2;
+    /* background-color: red; */
+}
+
+/* =============== Page - 3 ============= */
+
+#page3 {
+    height: 140vh;
+    width: 100%;
+    background-color: rgb(24, 24, 24);
+    position: relative;
+    /* background-color: pink; */
+    padding: 0 4.9vw;
+}
+
+.pageBGimgright {
+    /* background-color: red; */
+    position: absolute;
+    top: 0;
+    right: 0;
+    /* transform: rotate(-90deg); */
+}
+
+.pageBGimgright img {
+    height: 10vw;
+    width: 39vw;
+}
+
+.pageBGimgleft {
+    position: absolute;
+    bottom: 10%;
+    left: 0;
+}
+
+.pageBGimgleft img {
+    height: 10vw;
+    width: 13vw;
+}
+
+/* ----------page3 Heading---------- */
+
+.paeg3Heading {
+    /* height: 15vh; */
+    width: 33vw;
+    /* background-color: red; */
+}
+
+.paeg3Heading h3 {
+    color: #fff;
+    font-size: 3vw;
+    font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+
+/* -----------page3 Main----------- */
+
+.page3Main {
+    height: 81%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: red; */
+}
+
+.page3MainBox {
+    height: 90%;
+    width: 100%;
+    position: relative;
+    /* background-color: blue; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.navigation {
+    position: absolute;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0 20px;
+}
+
+
+
+
+.postDetail {
+    height: 20%;
+    width: 70%;
+    /* background-color: red; */
+}
+
+.sliderHeightBox {
+    height: 100% !important;
+}
+
+.userPostBoxes {
+    position: relative;
+    height: 96%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(56, 48, 48); */
+}
+
+.postBGclip {
+    height: 100%;
+    width: 100%;
+    background-color: hsl(232.5deg 11.76% 13.33%);
+    border-radius: 13px;
+    clip-path: inset(12% 0 0% 14%);
+    transition: clip-path 0.3s ease 0.2s;
+    position: absolute;
+}
+
+.userPostBox {
+    height: 90%;
+    width: 80%;
+    border-radius: 13px;
+    overflow: hidden;
+    cursor: pointer;
+    /* background-color: rebeccapurple; */
+    /* top: 0; */
+    /* position: absolute; */
+    /* background-color: red; */
+}
+
+.postImgBox {
+    border-radius: 13px;
+    overflow: hidden;
+    height: 70%;
+    width: 100%;
+    /* background-color: red; */
+    position: relative;
+}
+
+
+.postImgBox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.userDetailsBox {
+    border-radius: 13px;
+    position: absolute;
+    bottom: 0;
+    height: 25%;
+    width: 100%;
+    background-color: #1b1b1d;
+    display: flex;
+    align-items: center;
+}
+
+.profileImgBox {
+    height: 90%;
+    width: 20%;
+    border-radius: 13px;
+    position: relative;
+    overflow: hidden;
+    /* background-color: aqua; */
+}
+
+.profileImgBox img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    object-fit: cover;
+}
+
+.postUserDetail {
+    width: 70%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    /* align-items: center; */
+    /* background-color: red; */
+    color: #fff;
+}
+
+.postUserDetail .postCaption {
+    min-width: 30vw;
+    /* background-color: red; */
+}
+
+.postUserDetail .userName {
+    padding: 0.3vw;
+    /* font-weight: 200; */
+}
+
+.userName h4 {
+    font-weight: 300;
+}
+
+.redirectPostsPage {
+    height: 3vw;
+    width: 7.5vw;
+    position: absolute;
+    bottom: 2%;
+    left: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: hsl(227, 12%, 30%);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.redirectPostsPage:hover {
+    background-color: #2c2f32;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.redirectPostsPage a {
+    font-size: 1.2vw;
+    text-decoration: none;
+    text-transform: capitalize;
+    font-weight: 300;
+    color: #fff;
+    transition: color 0.3s ease;
+}
+
+.redirectPostsPage a:hover {
+    color: #d1d1d1;
+}
+
+/* ================ Page - 4 ============== */
+
+#page4 {
+    min-height: 100vh;
+    width: 100%;
+    /* background-color: yellow; */
+    padding: 2vw 9.9vw;
+}
+
+#page4 section {
+    margin-bottom: 5%;
+    height: 50%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* background-color: red; */
+}
+
+section .images {
+    overflow: hidden;
+    /* height: 100%; */
+    width: 48%;
+    /* background-color: red; */
+    border-radius: 14px;
+}
+
+.images img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    transition: all ease 0.3s;
+}
+
+.images img:hover {
+    transform: scale(1.2);
+}
+
+section .information {
+    width: 48%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.information h2 {
+    font-size: 3vw;
+    text-transform: capitalize;
+    font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+        "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+    font-weight: 800;
+}
+
+.information p {
+    font-size: 1.3vw;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.information p span {
+    position: relative;
+    float: left;
+    height: 3vw;
+    width: 7vw;
+    /* background-color: red; */
+}
+
+/* ================ Page - 5 ================ */
+
+#page5 {
+    height: 50vh;
+    width: 100%;
+    background-image: url("../images/lastPageBack.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-color: rgba(149, 157, 173, 0.08);
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    padding: 2vw 7.9vw;
+}
+
+.leftSide h1 {
+    font-size: 4.5vw;
+    text-transform: capitalize;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.leftSide p {
+    margin-top: 2vw;
+    font-size: 1.6vw;
+    font-weight: 100;
+    color: rgb(113, 112, 112);
+}
+
+.rightSide {
+    height: 100%;
+    /* padding: 4vw 0; */
+    /* background-color: red; */
+}
+
+.rightSide button {
+    background-color: #222;
+    font-size: 1.5vw;
+    color: #fff;
+    border-radius: 13px;
+    text-transform: uppercase;
+    position: sticky;
+    top: 12%;
+    font-weight: 700;
+    padding: 1.5vw 3vw;
+    cursor: pointer;
+}

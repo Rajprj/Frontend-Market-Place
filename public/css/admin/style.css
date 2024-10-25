@@ -1,0 +1,416 @@
+/* General Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f0f2f5;
+}
+
+h2,
+h3 {
+    margin: 0;
+}
+
+p {
+    margin: 5px 0;
+    font-weight: bold;
+}
+
+/* ===== Navbar Styling ===== */
+.navbar {
+    background-color:rgb(36, 36, 36);
+    color: #fff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .admin-info {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ===== Admin Dashboard Section ===== */
+
+
+.admin-dashboard {
+    height: 81.3vh;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+/* ===== Sidebar Styling ===== */
+#sidebar {
+    height: 100%;
+    width: 15%;
+    padding: 2vw 2.3vw;
+    /* position: fixed; */
+    /* left: 0; */
+    /* top: 64px; */
+    margin-top: 3.6vw;
+    margin-right: 2%;
+    background-color: rgb(36, 36, 36);
+    border-right: 1px solid rgb(205, 201, 201);
+    /* background-color: red; */
+}
+
+
+
+.headParts {
+    height: 5%;
+    width: 67%;
+    /* background-color: yellow; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4%;
+}
+
+.sideLogo img {
+    height: 2.5vw;
+    width: 2.5vw;
+}
+
+.headParts h1 {
+    font-size: 1.3vw;
+    font-weight: 700;
+    color: #fff;
+    font-family: Gilroy, sans-serif;
+}
+
+.otherRegex {
+    height: 50%;
+    width: 100%;
+    /* background-color: rgb(168, 130, 130); */
+}
+
+.parts {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    /* padding: 0.5vw; */
+    cursor: pointer;
+    margin-bottom: 3%;
+    background-color: rgb(80, 80, 80);
+    /* justify-content: center; */
+    /* background-color: blue; */
+}
+#sidebar a{
+    text-decoration: none;
+    color: #fff;
+  }
+
+.parts:hover {
+    background-color: rgb(230, 230, 230);
+    color: black
+}
+
+.bg_clr {
+    background-color: rgb(230, 230, 230);
+}
+
+.sideLogoParts {
+    height: 100%;
+    width: 18%;
+    display: flex;
+    /* margin-right: 2%; */
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5vw;
+    /* background-color: red; */
+}
+
+.sideLogoParts img {
+    height: 1.6vw;
+    width: 1.6vw;
+}
+
+.parts h6 {
+    font-size: 1vw;
+    margin-left: 4%;
+    font-weight: 600;
+}
+
+
+/* ============main-Content========== */
+
+.main-content {
+    height: 100%;
+    width: 80%;
+}
+
+/* Dashboard Boxes */
+.dashboard-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.dashboard-container .dashboard-box {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.dashboard-container .dashboard-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.dashboard-container .dashboard-box h3 {
+    font-size: 22px;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.dashboard-container .dashboard-box p {
+    font-size: 28px;
+    color: #3b82f6;
+}
+
+/* ===== Details Section ===== */
+.details-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.details-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.details-container table,
+.details-container th,
+.details-container td {
+    border: 1px solid #e5e7eb;
+}
+
+.details-container th,
+.details-container td {
+    padding: 15px;
+    text-align: left;
+}
+
+.details-container th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+.details-container td {
+    font-size: 16px;
+}
+
+/* ===== Developer Section ===== */
+
+
+.developer-container {
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.developer-container .developer-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.developer-container .developer-box {
+    flex: 1;
+    max-width: 30%;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-right: 20px;
+}
+
+.developer-container .developer-box:last-child {
+    margin-right: 0;
+}
+
+.developer-container .profile-pic {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.developer-container .post-count-btn {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.developer-container .post-count-btn:hover {
+    background-color: #0056b3;
+}
+
+/* =============Developer Post Container============== */
+
+.developer-container .eachDeveloperPosts {
+    min-height: 80vh;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: white;
+}
+
+.eachDeveloperPosts .eachDeveloperPostsClose {
+    height: 34px;
+    width: 100%;
+    /* background-color: yellow; */
+    margin: 13px 0;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+.eachDeveloperPosts .eachDeveloperPostsClose .closeBtn {
+    font-size: 32px;
+    margin-right: 12px;
+}
+
+.developer-container .eachDeveloperPosts .developerPost-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.developer-container .eachDeveloperPosts .developerPost-row .developerPost-box {
+    flex: 1;
+    max-width: 30%;
+    border: 1px solid #ccc;
+    padding: 15px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-right: 20px;
+    position: relative;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.developer-container .eachDeveloperPosts .developerPost-row .developerPost-box:last-child {
+    margin-right: 0;
+}
+
+.developer-container .eachDeveloperPosts .developerPost-row .postThumbnail {
+    width: 100%;
+    height: 50%;
+    /* border-radius: 50%; */
+
+    /* object-fit: cover; */
+    margin-bottom: 10px;
+}
+
+.developer-container .eachDeveloperPosts .developerPost-row .postDeleteBtn {
+    background-color: #cd0703;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.developer-container .eachDeveloperPosts .developerPost-row .postDeleteBtn:hover {
+    background-color: #9c0202;
+}
+
+
+/* ============Vier Container============== */
+
+/* Viewer Container Styling */
+#viewerContainer {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+/* Table Styling */
+#viewerTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#viewerTable th,
+#viewerTable td {
+    border: 1px solid #e5e7eb;
+    padding: 15px;
+    text-align: left;
+}
+
+#viewerTable th {
+    background-color: #f3f4f6;
+    font-weight: 600;
+}
+
+#viewerTable tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+/* Button Styling */
+.edit-btn,
+.delete-btn {
+    background-color: #3b82f6;
+    /* Edit button color */
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: #2563eb;
+    /* Darker shade on hover for edit */
+}
+
+.delete-btn {
+    background-color: #ef4444;
+    /* Delete button color */
+}
+
+.delete-btn:hover {
+    background-color: #dc2626;
+    /* Darker shade on hover for delete */
+}
+
+.edit-btn:focus,
+.delete-btn:focus {
+    outline: none;
+    /* Remove default outline */
+    box-shadow: 0 0 0 2px rgba(59, 130, 247, 0.5);
+    /* Focus effect */
+}

@@ -1,0 +1,635 @@
+/* ============= Import Files ============= */
+@import url('../root.css');
+
+#profilePage{
+  display: flex;
+  flex-direction: row;
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* ---------profile SideBar------------ */
+
+.profileSideBar a{
+  text-decoration: none;
+  color: #fff;
+}
+.profileSideBar{
+  
+  width: 19vw !important;
+  background-color: rgb(36, 36, 36) !important;
+  color: #fff !important;
+}
+
+.profileBarHead{
+  /* width: % !important; */
+  margin-bottom: 10%;
+  /* background-color: aqua !important; */
+}
+
+.profileParts{
+  margin-bottom: 3%;
+  background-color: rgb(80, 80, 80);
+}
+
+.profileParts:hover{
+  color: #111;
+}
+
+.pinnedProfileBar{
+  top: 4%;
+}
+
+
+/* -------------profile box----------------- */
+
+#profileBox{
+  /* min-height: 100%; */
+  width: 90%;
+  background-color: rgb(15, 15, 15) ;
+}
+
+.profileHeader{
+  height: 42vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color:rgb(50, 50, 50);
+}
+.bghighlight{
+  height: 75%;
+  width: 50%;
+  position: absolute;
+  box-shadow: rgba(224, 233, 246, 0.862) 0px 2px 32px 0px;
+  /* background-color: red; */
+}
+.coverImg{
+  height: 75%;
+  width: 100%;
+  background-color: rgb(66, 60, 60);
+}
+
+.coverImg img{
+  height: 100%;
+  width: 100%;
+  /* object-fit: contain; */
+}
+
+.userDetail{
+  /* background-color: red; */
+  height: 9vh;
+  position: absolute;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.profileHeader .profilePic{
+  position: absolute;
+  height: 10vw;
+  width: 10vw;
+  left: 6%;
+  bottom: -14%;
+  border-radius: 13px;
+  overflow: hidden;
+  /* background-color: red; */
+}
+
+.profilePic img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* -------------profile post body-------------- */
+
+.profilePostBody{
+  height: 100vh;
+  width: 100%;
+  padding: 4vw 4vw;
+  /* background-color: red; */
+}
+
+.profilePostCap{
+  left: 4%;
+}
+
+.page3MainBox {
+  height: 90%;
+  width: 100%;
+  position: relative;
+  /* background-color: blue; */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.userPostBoxes {
+  position: relative;
+  height: 96%;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* background-color: rgb(56, 48, 48); */
+}
+
+.postBGclip {
+  height: 100%;
+  width: 100%;
+  background-color: hsl(232.5deg 11.76% 13.33%);
+  border-radius: 13px;
+  clip-path: inset(12% 0 0% 14%);
+  transition: clip-path 0.3s ease 0.2s;
+  position: absolute;
+}
+
+.userPostBoxes:hover {
+  .postBGclip {
+      clip-path: inset(0 0 0 0);
+  }
+}
+
+.userPostBox {
+  height: 90%;
+  width: 80%;
+  border-radius: 13px;
+  overflow: hidden;
+  cursor: pointer;
+  /* background-color: rebeccapurple; */
+  /* top: 0; */
+  /* position: absolute; */
+  /* background-color: red; */
+}
+
+.postImgBox {
+  border-radius: 13px;
+  overflow: hidden;
+  height: 70%;
+  width: 100%;
+  background-color: red;
+  position: relative;
+}
+
+.postImgBox img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.userDetailsBox {
+  border-radius: 13px;
+  position: absolute;
+  bottom: 0;
+  height: 25%;
+  width: 100%;
+  background-color: #1b1b1d;
+  display: flex;
+  align-items: center;
+}
+
+.profileImgBox {
+  height: 90%;
+  width: 20%;
+  border-radius: 13px;
+  position: relative;
+  overflow: hidden;
+  /* background-color: aqua; */
+}
+
+.profileImgBox img {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  object-fit: cover;
+}
+
+.postUserDetail {
+  width: 70%;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  /* align-items: center; */
+  /* background-color: red; */
+  color: #fff;
+}
+
+.postUserDetail .postCaption {
+  min-width: 30vw;
+  /* background-color: red; */
+}
+
+.postUserDetail .userName {
+  padding: 0.3vw;
+  /* font-weight: 200; */
+}
+
+.userName h4 {
+  font-weight: 300;
+}
+
+
+/* side navigation----------- */
+
+.profileSideNavi{
+  position: absolute;
+  top: 33%;
+  right: 0;
+  z-index: 12;
+  height: 100%;
+  width: 23%;
+  background-color:  rgb(15, 15, 15);
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all ease 0.6s;
+  border-radius: 5px;
+}
+
+.hideNaviBar{
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.setNavibox{
+  height: 80%;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  /* background-color: #111; */
+}
+
+.setNavibox a{
+  height: 20%;
+  width: 100%;
+  background-color: rgb(80, 80, 80);
+  border-radius: 12px;
+  text-align: center;
+  font-size: 1.7vw;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  cursor: pointer;
+}
+
+.setNavibox a:last-child{
+  background-color: rgb(192, 5, 5);
+}
+
+.setNavibox a:last-child:hover{
+  background-color: rgb(123, 5, 5);
+}
+
+.elemsBox {
+  color: #fff;
+  padding-left: 1.7vw;
+}
+
+
+.backNaviBox{
+  height: 2vw;
+  width: 2vw;
+  position: absolute;
+  /* background-color: red; */
+  bottom: 0;
+  left: 2vw;
+  cursor: pointer;
+}
+.backNaviBox img{
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+/* -------hamBargar for SideNavi------------- */
+
+#sideNaviBtn{
+  height: 2.8vw;
+  width: 3vw;
+  position: absolute;
+  z-index: 10;
+  right: 1vw;
+  top: 3.4vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(80, 80, 80);
+  cursor: pointer;
+  border-radius: 50%; /* Circle button */
+  transition: all 0.3s ease-in-out;
+}
+
+.setNaviBtn{
+  height: 76%;
+  width: 76%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+  transition: all 0.5s ease-in-out;
+}
+
+#sideNaviBtn .lines{
+  height: 10%;
+  border-radius: 12px;
+  width: 80%;
+  background-color: white;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Lines rotate vertically when active */
+#sideNaviBtn.active{
+  transform: rotate(90deg); 
+  /* background-color: white; */
+}
+
+/* Pulsating circle effect remains the same */
+#sideNaviBtn.active {
+  animation: pulse 0.7s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 5px rgb(80, 80, 80);
+  }
+  50% {
+    box-shadow: 0 0 15px rgb(100, 100, 100);
+  }
+  100% {
+    box-shadow: 0 0 5px rgb(80, 80, 80);
+  }
+}
+
+/* Reset the lines to their original state when not active */
+#sideNaviBtn .lines {
+  transition: all 0.5s ease-in-out;
+}
+
+/* -----------upload profilepic------------- */
+
+.modal {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(5px); 
+}
+
+.modal .modal-content {
+  background-color: #fff;
+  /* background-color: red; */
+  margin: 10% auto; 
+  padding: 20px;
+  border-radius: 10px; 
+  width: 40%; 
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); 
+  text-align: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.modal-content h2{
+  margin-bottom: 2vw;
+}
+
+.modal .modal-content form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1vw 0;
+  width: 50%;
+  /* background-color: red; */
+}
+
+#closeBtn {
+  color: #555;
+  float: right;
+  font-size: 44px;
+  font-weight: bold;
+  margin-top: -25px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  position: absolute;
+  top: 12%;
+  right: 3%;
+}
+
+#closeBtn:hover,
+#closeBtn:focus {
+  color: #000;
+}
+
+.modal .modal-content .uploadBtn {
+  margin-top: 1vw;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.uploadBtn:hover {
+  background-color: #0056b3;
+}
+
+.removeBtn {
+  background-color: #f10303;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.removeBtn:hover {
+  background-color: #b30000;
+}
+
+.removeBtn:disabled {
+  background-color: #ccc;
+  color: #666; 
+  cursor: not-allowed; 
+}
+
+
+/* ------------For Profile Update---------------- */
+
+.modalProfile {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(5px); 
+}
+
+.modalProfile .modal-content {
+  background-color: #fff;
+  /* background-color: red; */
+  margin: 10% auto; 
+  padding: 20px;
+  border-radius: 10px; 
+  width: 40%; 
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); 
+  text-align: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.modalProfile .modal-content form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1vw 0;
+  width: 50%;
+  /* background-color: red; */
+}
+
+#profileUpdateModal .modal-content form input{
+  width: 100%;
+  border: 1px solid silver;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 12px;
+}
+
+#profileUpdateModal .modal-content form select{
+  width: 100%;
+  padding: 10px;
+  border: 1px solid silver;
+  border-radius: 12px;
+}
+
+#profileUpdateModal .modal-content form .submitBtn{
+  width: 50%;
+  margin: 23px 0;
+  /* background-color: red; */
+}
+
+#profileUpdateModal .modal-content form .submitBtn a{
+  /* margin-top: 1vw; */
+  background-color: #007bff;
+  color: #fff;
+  width: 100%;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  cursor: not-allowed;
+  transition: background-color 0.3s ease;
+}
+
+#profileUpdateModal .modal-content form .submitBtn a:hover {
+  background-color: #0056b3;
+}
+
+
+/* ---------------For Post Upload------------- */
+
+.modalPost {
+  display: none; 
+  position: fixed; 
+  z-index: 1; 
+  left: 0;
+  top: 0;
+  width: 100%; 
+  height: 100%; 
+  overflow: auto;
+  /* background-color: red; */
+  background-color: rgba(0, 0, 0, 0.6); 
+  backdrop-filter: blur(5px); 
+  scrollbar-width: none; 
+}
+.modalPost .modal-content {
+  background-color: #fff;
+  /* background-color: red; */
+  margin: 10% auto; 
+  padding: 20px;
+  border-radius: 10px; 
+  width: 40%; 
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); 
+  text-align: center; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#postUploadModal .modal-content form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1vw 0;
+  width: 60%;
+  /* background-color: red; */
+}
+
+.modalPost .modal-content form .form-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+.modalPost .modal-content form input{
+  width: 100%;
+  border: 1px solid silver;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 8px;
+}
+
+.modalPost .modal-content form label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+}
+
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}

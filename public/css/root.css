@@ -1,0 +1,1056 @@
+
+*{
+    margin: 0%;
+    padding: 0%;
+    box-sizing: border-box;
+    font-family: neue-haas-grotesk-display, sans-serif;
+    border: none;
+    position: relative;
+    /* color: #fff; */
+}
+a{
+    text-decoration: none;
+}
+body{
+    overflow-x: hidden;
+}
+
+header{
+    height: 100vh;
+    width: 100vw;
+    /* background-color: #000000; */
+}
+
+nav{
+    box-shadow: rgba(115, 116, 116, 0.762) 0px 6px 14px;
+    height: 10vh;
+    width: 90%;
+    /* background-color: red; */
+    background-color:rgba(43, 43, 43, 0.3);
+    backdrop-filter: blur(.9rem);
+    position: fixed;
+    left: 50%;
+    transform: translate(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 0px 0px 30px 30px;
+    padding: 0 3vw;
+    z-index: 2;
+    /* border: 2px solid rgb(157, 156, 156); */
+    border-top: none;
+}
+.offBoxShadowNav{
+    box-shadow: none;
+}
+
+
+.logo{
+    display: flex;
+    align-items:center;
+    /* justify-content: center; */
+    opacity: 0; /* Start hidden */
+    transform: scale(0.8) rotate(-10deg); /* Start scaled down and rotated */
+    animation: zoomInRotate 0.6s ease forwards; /* Apply zoom-in and rotation */
+    animation-delay: 0.1s; /* Slight delay */
+}
+
+@keyframes zoomInRotate {
+    from {
+        opacity: 0;
+        transform: scale(0.8) rotate(-10deg); /* Start scaled down and rotated */
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) rotate(0); /* End at original size and rotation */
+    }
+}
+.logo .title{
+    padding: 0 0.5vw;
+    font-size: 1.4vw;
+    font-weight: 600;
+    color: #fff;
+}
+
+.image img{
+    height: 2.5vw;
+    width: 2.5vw;
+}
+
+.menu ul{
+    /* width: 10vw; */
+    /* background-color: yellow; */
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 8%;
+}
+
+.menu ul li {
+    font-size: 1.2vw;
+    border-radius: 7px;
+    padding: 0.5vw 1vw;
+    list-style: none;
+    font-weight: 500;
+    text-transform: capitalize;
+    background-color: #333;
+    opacity: 0; /* Start with hidden */
+    animation: fadeIn 0.5s ease forwards; /* Apply fade-in animation */
+    animation-delay: calc(0.1s * var(--order)); /* Staggered effect */
+}
+.menu ul li:hover{
+    background-color: #444;
+}
+.menu ul li a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    /* display: block; */
+     /* Ensure the anchor takes up the full li area */
+    /* padding: inherit; Inherit padding from li */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px); /* Slight upward movement for effect */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.loginRegister{
+    width: 11.5vw;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.loginRegister div{
+    font-size: 1.1vw;
+    border-radius: 8px;
+    padding: 0.5vw 1vw;
+    color: #fff;
+    border: none;
+    text-transform: capitalize;
+    background: #333;
+    /* transition: all ease 0.2s; */
+    cursor: pointer;
+}
+.loginRegister div:hover{
+    background-color: #e6e4e4;
+    color: #000;
+    border: 1px solid black;
+    /* font-weight: 700; */
+}
+
+.loginRegister, .profileRedirectBox {
+    opacity: 0; /* Start hidden */
+    transform: rotateY(90deg); /* Start flipped */
+    animation: flipIn 0.6s ease forwards; /* Apply flip-in animation */
+    animation-delay: 0.3s; /* Slight delay after logo */
+}
+
+@keyframes flipIn {
+    from {
+        opacity: 0;
+        transform: rotateY(90deg); /* Start flipped */
+    }
+    to {
+        opacity: 1;
+        transform: rotateY(0); /* End at original orientation */
+    }
+}
+
+
+.imgboxProfile{
+    height: 3vw;
+    width: 3vw;
+    overflow: hidden;
+    border-radius: 50%;
+    /* background-color: red; */
+}
+
+.imgboxProfile img{
+    width: 100%;
+    height: 100%;
+}
+
+/* =================== Sidebar for regez & profile =============== */
+#sidebar{
+    min-height: 100vh;
+    width: 25%;
+    padding: 2vw 2.3vw;
+    position: relative;
+    background-color: #fff;
+    border-right: 1px solid rgb(205, 201, 201);
+    /* background-color: red; */
+}
+
+.pined{
+    /* background-color: pink; */
+    position: sticky;
+    top: 12%;
+}
+
+.headParts{
+    height: 5%;
+    width: 67%;
+    /* background-color: yellow; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4%;
+}
+
+.sideLogo img{
+    height: 2.5vw;
+    width: 2.5vw;
+}
+
+.headParts h1{
+    font-size: 1.3vw;
+    font-weight: 700;
+    font-family: Gilroy, sans-serif;
+}
+
+.otherRegex{
+    height: 80%;
+    width: 100%;
+    /* background-color: rgb(168, 130, 130); */
+}
+
+.parts{
+    height: 8%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-radius: 10px;
+    padding: 0.5vw;
+    cursor: pointer;
+    /* justify-content: center; */
+    /* background-color: blue; */
+}
+.parts:hover{
+    background-color: rgb(230, 230, 230);
+}
+.bg_clr{
+    background-color: rgb(230, 230, 230);
+}
+.sideLogoParts{
+    height: 100%;
+    width: 18%;
+    display: flex;
+    /* margin-right: 2%; */
+    justify-content: center;
+    align-items: center;
+    margin-right: 0.5vw;
+    /* background-color: red; */
+}
+
+.sideLogoParts img{
+    height: 1.6vw;
+    width: 1.6vw;
+}
+
+.parts h6{
+    font-size: 1vw;
+    margin-left: 4%;
+    font-weight: 300;
+}
+
+
+/* ==================media box navibox================= */
+.sideNaviMedia {
+    box-shadow: rgba(115, 116, 116, 0.762) 0px 6px 14px;
+    height: 45vh;
+    width: 100%;
+    background-color: rgba(43, 43, 43, 0.3);
+    backdrop-filter: blur(0.9rem);
+    position: fixed;
+    top: 9.7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 3vw;
+    z-index: 89;
+    opacity: 0;
+    transform: translateX(-100%);
+    transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.sideNaviMediaHideShow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.sideMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    padding-top: 5vh;
+}
+
+.sideMenu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sideMenu ul li {
+    font-size: 3.4vw;
+    border-radius: 27px;
+    padding: 0.7vw 25.9vw;
+    margin: 1.8vw 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-align: center;
+    opacity: 0; /* Start hidden */
+    transform: translateY(20px); /* Start slightly below */
+    transition: opacity 0.5s ease, transform 0.5s ease; /* Smooth transition */
+}
+
+/* Hover Effect */
+.sideMenu ul li:hover {
+    background-color: rgba(149, 157, 173, 0.18);
+    cursor: pointer; /* Added for visual feedback */
+}
+
+/* Animation for List Items */
+.sideNaviMediaHideShow .sideMenu ul li {
+    opacity: 1; /* Ensure opacity is 1 when shown */
+    transform: translateY(0); /* Move to original position */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+
+.sideNavbrgar{
+    height: 56% !important;
+    width: 7%!important;
+    display: none;
+}
+.sideShowNavi{
+    height: 100% !important;
+    width: 100%!important;
+    top: 0 !important;
+    position: relative !important;
+}
+
+
+/* ================Post Detailed Box============= */
+#postDetailedBox {
+    height: 100vh;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    display: none;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    /* position: relative; */
+}
+
+#postDetailedBox .closeBtn{
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 1%;
+    left: -3.4%;
+    clip-path: polygon(25% 0%, 100% 0, 100% 100%, 25% 100%, 0% 50%);
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:22px ;
+    border: 1px solid black;
+    cursor: pointer;
+}
+#postDetailedBox .closeBtn:hover{
+    background-color: rgb(223, 223, 223);
+}
+#postDetailedBox .postDetailedBoxSet {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox {
+    height: 100%;
+    width: 77%;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    padding: 2vw 1vw;
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox .postInfoBox {
+    height: 100%;
+    width: 55%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .postThumbnail {
+    height: 45%;
+    width: 90%;
+    position: relative;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .postThumbnail img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .multiPicPostBox {
+    height: 12%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 8px;
+    background-color: #f3f4f6;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .multiPicPostBox .pics {
+    height: 90%;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid rgb(22, 22, 22);
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .multiPicPostBox .pics:last-child {
+    border: none;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .multiPicPostBox .pics img {
+    height: 100%;
+    width: 70%;
+    cursor: pointer;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox {
+    height: 30%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    position: relative;
+
+}
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .likeBox {
+    height: 40px;
+    width: 60px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .likeBox .likeContainer {
+    width: 40%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* position: relative; */
+    cursor: pointer; 
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .likeBox .likeContainer:hover .likeButton {
+    background-color: rgba(0, 0, 0, 0.7); 
+    transform: scale(1.05);
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .likeBox .likeContainer .likeButton {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 50px;
+    color: #fff;
+    font-weight: bold;
+    background-color: rgba(0, 0, 0, 0.4);
+    /* background-color: red; */
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .likeBox .likeContainer .likeButton .heartIcon {
+    width: 25px;
+    height: 25px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/like--v1.png') no-repeat center center;
+    background-size: contain;
+    margin-right: 8px;
+    /* background-color: pink; */
+    transition: background 0.3s ease;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .likeBox .likeContainer .liked .heartIcon {
+    background: url('https://img.icons8.com/ios-filled/30/fa314a/like--v1.png') no-repeat center center;
+    background-size: contain;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .userInfo {
+    height: 33%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .userInfo .profilePic {
+    height: 100%;
+    width: 12%;
+    margin-right: 12px;
+    position: relative;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .userInfo .profilePic img {
+    height: 100%;
+    width: 100%;
+
+    border-radius: 8px;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .postInfo {
+    height: 33%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+}
+
+
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtnAndDownloadBtn {
+    width: 90%;
+    display: flex;
+    /* background-color: red; */
+    flex-direction: row;
+    align-items: center;
+    justify-content: start;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #fff;
+    background: linear-gradient(45deg, #00aaff, #0077ff);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-size: var(--mediumFont);
+    font-weight: var(--largeFontWeight);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    text-transform: uppercase;
+    margin-right: 13px;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn a::before {
+    content: '+';
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtnAndDownloadBtn .downloadBtn a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(45deg, #8e44ad, #e74c3c); /* Deep purple to bright red/pink gradient */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    font-size: var(--mediumFont);
+    font-weight: var(--largeFontWeight);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtnAndDownloadBtn .downloadBtn a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
+
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtnAndDownloadBtn .downloadBtn a:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------------Comments section-------------- */
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox {
+    height: 100%;
+    width: 45%;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .addCommentBox {
+    height: 60px;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    background-color: #f1f1f1;
+    padding: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px -2px 6px;
+  }
+  
+  /* Textarea for adding comments */
+  .addCommentBox textarea {
+    width: 85%;
+    height: 100%;
+    border-radius: 5px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    resize: none;
+    margin-right: 10px;
+    background-color: #fff;
+    box-shadow: inset 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+ /* Submit button with icon */
+.submitCommentBtn {
+    width: 15%;
+    height: 100%;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submitCommentBtn i {
+    color: #fff; /* Icon color */
+    font-size: 20px; /* Icon size */
+  }
+  
+  .submitCommentBtn:hover {
+    background-color: #0056b3;
+  }
+  
+ 
+  
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentHeader{
+    height: 8%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    /* background-color: rgb(158, 119, 119); */
+    font-size: 1.5vw;
+    margin-left: 12px;
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentsContainer{
+    height: 86%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(72, 17, 17); */
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentsContainer .commentsContainerSet{
+    height: 95%;
+    width: 95%;
+    /* background-color: rgb(255, 46, 46); */
+    overflow-y: scroll;
+    scrollbar-width: none;
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentsContainer .commentsContainerSet .userCommentBox{
+    min-height:70px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 22px;
+    /* background-color: rgb(96, 75, 75); */
+}
+
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentsContainer .commentsContainerSet .userCommentBox .userProfilePic{
+    width: 10%;
+    position: relative;
+    /* background-color: white; */
+}
+#postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentsContainer .commentsContainerSet .userCommentBox img{
+    height: 40px;
+    width: 40px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50px;
+    border: 1px silver solid;
+}
+
+
+.commentBox .commentsContainer .commentsContainerSet .userCommentBox .userNameAndComment{
+    width: 86%;
+    /* background-color: pink; */
+}
+
+
+/* ----------------post SideEffect and like/see button--------------- */
+
+.userPostBoxes:hover {
+    .postBGclip {
+        clip-path: inset(0 0 0 0);
+    }
+
+    .postImgBox .sideBgEffect {
+        opacity: 1;
+    }
+}
+.postImgBox .sideBgEffect {
+    position: absolute;
+    right: 0;
+    opacity: 0;
+    height: 100%;
+    width: 60%;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    background: linear-gradient(to right, transparent, rgba(31, 30, 30, 0.8));
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.postImgBox .likeContainer {
+    width: 40%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: relative;
+    margin: 12px 0;
+}
+
+.postImgBox .likeContainer .likeButton {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: bold;
+    
+}
+
+.postImgBox .likeContainer .likeButton:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.postImgBox .likeContainer .likeButton .heartIcon {
+    width: 25px;
+    height: 25px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/like--v1.png') no-repeat center center;
+    background-size: contain;
+    margin-right: 8px;
+    transition: background 0.3s ease;
+}
+
+.postImgBox .likeContainer .liked .heartIcon {
+    background: url('https://img.icons8.com/ios-filled/30/fa314a/like--v1.png') no-repeat center center;
+    background-size: contain;
+}
+
+.postImgBox .likeContainer .liked {
+    /* color: #e74c3c; */
+    
+    transition: color 0.3s ease;
+}
+
+.postImgBox .sideBgEffect .seeContainer {
+    cursor: pointer;
+    width: 32%;
+    height: 20%;
+    display: inline-flex;
+    align-items: center;
+    /* padding: 10px; */
+    border-radius: 50px;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.5);
+    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: bold;
+    margin-right: 7px;
+}
+
+.postImgBox .sideBgEffect .seeContainer:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+.postImgBox .sideBgEffect .seeContainer .eyeSymbol {
+    width: 25px;
+    height: 25px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/visible--v1.png') no-repeat center center;
+    background-size: contain;
+    /* margin-right: 8px; */
+}
+
+/* -------------media query--------------- */
+@media (max-width : 1075px){
+    .logo .title{
+        font-size: 1.9vw;
+    }
+    .logo .image img{
+        height: 3vw;
+        width: 3vw;
+    }
+    .menu ul li{
+        font-size: 1.8vw;
+        /* padding: 0.9vw 1.9vw; */
+    }
+    .loginRegister{
+        width: 14.5vw;
+    }
+    .loginRegister div{
+        font-size: 1.4vw;
+        padding: 0.7vw 1.2vw;
+    }
+}
+
+@media (max-width : 800px){
+    .logo .title{
+        font-size: 2.1vw;
+    }
+    .logo .image img{
+        height: 3.6vw;
+        width: 3.6vw;
+    }
+    .menu ul li{
+        font-size: 2vw;
+        /* padding: 0.9vw 1.9vw; */
+    }
+    .loginRegister{
+        width: 16.5vw;
+    }
+    .loginRegister div{
+        font-size: 1.6vw;
+        padding: 0.9vw 1.4vw;
+    }
+}
+
+@media (max-width:560px){
+    nav{
+        width: 100%;
+        border-radius: 2px;
+    }
+    .menu{
+        display: none;
+    }
+    .loginRegister{
+        display: none;
+    }
+    .logo .image img{
+        height: 4.6vw;
+        width: 4.6vw;
+    }
+    .logo .title{
+        font-size: 3.5vw;
+    }
+    .sideNavbrgar{
+        height: 56% !important;
+        width: 8%!important;
+        display: block;
+    }
+
+}
+
+@media (max-width:500px){
+    
+    .logo .image img{
+        height: 5vw;
+        width: 5vw;
+    }
+    .logo .title{
+        font-size: 3.9vw;
+    }
+    .sideMenu ul li {
+        font-size: 3.8vw;
+        
+        padding: 0.9vw 25.9vw;
+        margin: 1.9vw 0;
+        
+    }
+}
+
+@media (max-width:460px){
+    .sideNavbrgar{
+        height: 56% !important;
+        width: 8%!important;
+    }
+}
+
+@media (max-width:447px){
+    
+    .logo .image img{
+        height: 5.6vw;
+        width: 5.6vw;
+    }
+    .logo .title{
+        font-size: 4.4vw;
+    }
+    .sideMenu ul li {
+        font-size: 4vw;
+        
+        padding: 1.2vw 25.9vw;
+        margin: 1.9vw 0;
+        
+    }
+}
+@media (max-width:430px){
+    nav{
+        height: 9vh;
+    }
+    header{
+        height: 80vh;
+    }
+    #page1{
+        height: 80vh;
+    }
+}
+@media (max-width: 400px) {
+    
+}
+@media (max-width:380px){
+    
+    .logo .image img{
+        height: 6.1vw;
+        width: 6.1vw;
+    }
+    .logo .title{
+        font-size: 4.8vw;
+    }
+    .sideMenu ul li {
+        font-size: 4.8vw;
+        padding: 0.9vw 25.9vw;
+        margin: 2.5vw 0;
+        
+    }
+}
+
+@media (max-width:380px){
+    .sideMenu ul li {
+        font-size: 5.8vw;
+        padding: 0.9vw 25.9vw;
+        margin: 2.5vw 0;
+        
+    }
+
+    .sideNavbrgar{
+        height: 56% !important;
+        width: 9%!important;
+    }
+}
+
+@media (max-width:325px){
+    .sideNavbrgar{
+        height: 56% !important;
+        width: 10%!important;
+    }
+
+    nav{
+        height: 8.7vh;
+    }
+}
+
+
+
+
+/* =========== Footer - Start ============= */
+
+footer{
+    height: 100vh;
+    width: 100%;
+    padding: 4vw 7vw;
+    display: flex;
+    flex-direction: row;
+}
+
+.leftContain{
+    height: 10%;
+    width: 33%;
+    display: flex;
+    align-items: center;
+    /* justify-content: center; */
+    flex-direction: row;
+    /* background-color: red; */
+}
+
+.leftContain img{
+    height: 3.5vw;
+    width: 3.5vw;
+    margin-right: 1.32vw;
+}
+.leftContain h3{
+    font-size: 2vw;
+}
+
+.rightContain{
+    height: 100%;
+    width: 70%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-auto-columns: 1fr;
+    grid-template-rows: auto;
+    grid-column-gap: 1vw;
+    grid-row-gap: 1vw;
+    /* background-color: yellow; */
+}
+
+.elems h1{
+    font-size: 1.5vw;
+    font-weight: 500;
+    text-transform: capitalize;
+    color: #333;
+    padding: 1.3vw 0;
+}
+
+.elems h6{
+    font-size: 1.1vw;
+    color: #9c9898;
+    font-weight: 100;
+    line-height: 2;
+    text-transform: capitalize;
+}

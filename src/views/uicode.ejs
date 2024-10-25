@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/uicode.css" />
+  <title>Document</title>
+</head>
+
+<body>
+  <header>
+    <!-- -------------navbar----------- -->
+    <nav>
+      <a href="/">
+        <div class="logo">
+          <div class="image"><img src="./images/logo.png" alt="logo" /></div>
+          <div class="title">CodeMe</div>
+        </div>
+      </a>
+
+      <div class="menu">
+        <ul>
+          <li class="list"><a href="/">home</a></li>
+          <li class="list"><a href="regex">regex</a></li>
+          <!-- <li class="list"><a href="#">UI</a></li> -->
+          <li class="list"><a href="#">UI+Code</a></li>
+        </ul>
+      </div>
+
+      <% if (isLoggedIn) { %>
+        <div class="profileRedirectBox">
+          <a href="/profile">
+            <div class="imgboxProfile">
+              <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
+                <img src="/images/profilePic.png" alt="Default Profile Picture" />
+                <% } else { %>
+                  <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+                  <% } %>
+            </div>
+          </a>
+        </div>
+        <% } else { %>
+          <div class="loginRegister">
+            <a href="/login">
+              <div id="homeLoginBtn">login</div>
+            </a>
+            <a href="/register">
+              <div id="homeRegisterBtn">register</div>
+            </a>
+          </div>
+          <% } %>
+            <div class="sideNavbrgar">
+              <div id="sideNaviBtn" class="sideShowNavi">
+                <div class="setNaviBtn">
+                  <div class="lines"></div>
+                  <div class="lines"></div>
+                  <div class="lines"></div>
+                </div>
+              </div>
+            </div>
+    </nav>
+
+    <!-- ----------------Page - 1------------ -->
+    <div id="page1">.-
+
+      <div class="userPostSliderBox">
+        <button class="postSwitchBtn leftBtn prev">&#10094;</button>
+        <button class="postSwitchBtn rightBtn next">&#10095;</button>
+        <div class="postDetailsSetBox active">
+          <div class="slider">
+            <div class="slides">
+              <div class="slide b1">
+                <div class="postImgBox">
+                  <img src="/images/sliderpic1.webp" alt="">
+                </div>
+                <div class="postInfoBox">
+                  <div class="profilePic">
+                    <img src="/images/userProfile/ronak.jpg" alt="">
+                  </div>
+                  <div class="userNamePostdescription">
+                    <h1>Gamming Webpage Design</h1>
+                    <h4>ronak prajapati</h4>
+                  </div>
+                  <div class="followBtn">
+                    <a href="" class="follow">follow</a>
+                  </div>
+                  <div class="likeAndSeeBtns">
+                    <div class="likeContainer">
+                      <span class="likeButton" id="likeButton">
+                        <i class="heartIcon" id="heartIcon"></i>
+                        <span class="likeCount" id="likeCount">0</span>
+                      </span>
+                    </div>
+                    <div class="seeContainer">
+                      <i class="eyeSymbol"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="slide b1">
+                <div class="postImgBox">
+                  <img src="/images/sliderpic4.webp" alt="">
+                </div>
+                <div class="postInfoBox">
+                  <div class="profilePic">
+                    <img src="/images/userProfile/sandeep.jpg" alt="">
+                  </div>
+                  <div class="userNamePostdescription">
+                    <h1>tourism Webpage Design</h1>
+                    <h4>sandeep singh</h4>
+                  </div>
+                  <div class="followBtn">
+                    <a href="" class="follow">follow</a>
+                  </div>
+                  <div class="likeAndSeeBtns">
+                    <div class="likeContainer">
+                      <span class="likeButton" id="likeButton">
+                        <i class="heartIcon" id="heartIcon"></i>
+                        <span class="likeCount" id="likeCount">0</span>
+                      </span>
+                    </div>
+                    <div class="seeContainer">
+                      <i class="eyeSymbol"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div class="slide b1">
+                <div class="postImgBox">
+                  <img src="/images/feedpost.webp" alt="">
+                </div>
+                <div class="postInfoBox">
+                  <div class="profilePic">
+                    <img src="/images/userProfile/ut.jpg" alt="">
+                  </div>
+                  <div class="userNamePostdescription">
+                    <h1>bloging Webpage Design</h1>
+                    <h4>utsav patel</h4>
+                  </div>
+                  <div class="followBtn">
+                    <a href="" class="follow">follow</a>
+                  </div>
+                  <div class="likeAndSeeBtns">
+                    <div class="likeContainer">
+                      <span class="likeButton" id="likeButton">
+                        <i class="heartIcon" id="heartIcon"></i>
+                        <span class="likeCount" id="likeCount">0</span>
+                      </span>
+                    </div>
+                    <div class="seeContainer">
+                      <i class="eyeSymbol"></i>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="dotsContainer"></div>
+
+      </div>
+    </div>
+  </header>
+
+<main>
+
+  <!-- -----------Post Detailed Box--------------- -->
+  <div id="postDetailedBox" class="post_DetailedBox">
+      
+    <div class="postDetailedBoxSet">
+      
+      <div class="postBox">
+        <div class="closeBtn">
+          <p>&#x2702;</p>
+        </div>
+        <div class="postInfoBox">
+          
+          <div class="postThumbnail">
+            <img src="/images/sliderpic4.webp" alt="">
+          </div>
+          <div class="multiPicPostBox">
+            <div class="pics">
+              <img src="/images/userProfile/detail.jpg" alt="">
+            </div>
+            <div class="pics">
+              <img src="/images/userProfile/detail2.jpg" alt="">
+            </div>
+            <div class="pics">
+              <img src="/images/userProfile/detail3.jpg" alt="">
+            </div>
+            <div class="pics">
+              <img src="/images/userProfile/detail4.jpg" alt="">
+            </div>
+          </div>
+          <div class="userAndPostInfoBox">
+            <div class="likeBox">
+              <div class="likeContainer">
+                <span class="likeButton" id="likeButton">
+                  <i class="heartIcon" id="heartIcon"></i>
+                  <span class="likeCount" id="likeCount">567</span>
+                </span>
+              </div>
+            </div>
+            <div class="userInfo">
+              <div class="profilePic">
+                <img src="/images/userProfile/bhavy.jpg" alt="">
+              </div>
+              <div class="userName"><h2>Bhavy12</h2></div>
+            </div>
+            <div class="postInfo">
+              <div class="postName">
+                <h2>Tourism Explore WebPage</h2>
+              </div>
+            </div>
+            <div class="followBtnAndDownloadBtn">
+              <div class="followBtn">
+                <a href="#">Follow</a>
+              </div>
+              <div class="downloadBtn">
+                <a href="#">Download</a>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+        <div class="commentBox">
+          <div class="commentHeader">
+            <h3>Comments</h3>
+          </div>
+          <div class="commentsContainer">
+            <div class="commentsContainerSet">
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/ut.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">"Amazing work! 😍 The attention to detail is incredible!"</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/ronak.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@ronak_prj</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">"This is exactly what I needed! 👍 Keep up the awesome work!"</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/sandeep.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@sandeep_09</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">"Great job! 🎉 Your design skills are on point!"</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/ut.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/ronak.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/sandeep.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/ut.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/ronak.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
+                </div>
+              </div>
+              <div class="userCommentBox">
+                <div class="userProfilePic">
+                  <img src="/images/userProfile/sandeep.jpg" alt="">
+                </div>
+                <div class="userNameAndComment">
+                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="addCommentBox">
+            <textarea placeholder="Add a comment..." rows="3"></textarea>
+            <button type="button" class="submitCommentBtn">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ------------Page - 2-------------- -->
+  <div id="page2">
+    <div class="page2Main">
+      <div class="page2MainBox">
+        
+        <div class="userPostBoxes">
+          <div class="postBGclip"></div>
+          <div class="userPostBox">
+            <div class="postImgBox showslider">
+              <div class="sideBgEffect">
+                <div class="likeContainer">
+                  <span class="likeButton" id="likeButton">
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount">0</span>
+                  </span>
+                </div>
+                <div class="seeContainer">
+                  <i class="eyeSymbol"></i>
+                </div>
+              </div>
+              <img src="images/userProfile/IMG-20240811-WA0004.jpg" alt="" />
+            </div>
+            <div class="userDetailsBox">
+              <div class="profileImgBox">
+                <img src="images/userProfile/bhavy.jpg" alt="" />
+              </div>
+              <div class="postUserDetail">
+                <div class="postCaption">
+                  <h2>Gaming-web</h2>
+                </div>
+                <div class="userName">
+                  <h4>bhavy12</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="userPostBoxes">
+          <div class="postBGclip"></div>
+          <div class="userPostBox">
+            <div class="postImgBox">
+              <div class="sideBgEffect">
+                <div class="likeContainer">
+                  <span class="likeButton" id="likeButton">
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount">0</span>
+                  </span>
+                </div>
+                <div class="seeContainer">
+                  <i class="eyeSymbol"></i>
+                </div>
+              </div>
+              <img src="images/userProfile/IMG-20240811-WA0008.jpg" alt="" />
+            </div>
+            <div class="userDetailsBox">
+              <div class="profileImgBox">
+                <img src="images/userProfile/ut.jpg" alt="" />
+              </div>
+              <div class="postUserDetail">
+                <div class="postCaption">
+                  <h2>TripSite</h2>
+                </div>
+                <div class="userName">
+                  <h4>Utsav004</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="userPostBoxes">
+          <div class="postBGclip"></div>
+          <div class="userPostBox">
+            <div class="postImgBox">
+              <div class="sideBgEffect">
+                <div class="likeContainer">
+                  <span class="likeButton" id="likeButton">
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount">0</span>
+                  </span>
+                </div>
+                <div class="seeContainer">
+                  <i class="eyeSymbol"></i>
+                </div>
+              </div>
+              <img src="images/forms.webp" alt="" />
+            </div>
+            <div class="userDetailsBox">
+              <div class="profileImgBox">
+                <img src="images/userProfile/WhatsApp Image 2024-05-28 at 12.56.15_7b533366.jpg" alt="" />
+              </div>
+              <div class="postUserDetail">
+                <div class="postCaption">
+                  <h2>Web-Forms</h2>
+                </div>
+                <div class="userName">
+                  <h4>raaj__90</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="userPostBoxes">
+          <div class="postBGclip"></div>
+          <div class="userPostBox">
+            <div class="postImgBox">
+              <div class="sideBgEffect">
+                <div class="likeContainer">
+                  <span class="likeButton" id="likeButton">
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount">0</span>
+                  </span>
+                </div>
+                <div class="seeContainer">
+                  <i class="eyeSymbol"></i>
+                </div>
+              </div>
+              <img src="images/userProfile/IMG-20240811-WA0010.jpg" alt="" />
+            </div>
+            <div class="userDetailsBox">
+              <div class="profileImgBox">
+                <img src="images/profilePic.png" alt="" />
+              </div>
+              <div class="postUserDetail">
+                <div class="postCaption">
+                  <h2>Car hub</h2>
+                </div>
+                <div class="userName">
+                  <h4>VivekPrj09</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="userPostBoxes">
+          <div class="postBGclip"></div>
+          <div class="userPostBox">
+            <div class="postImgBox">
+              <div class="sideBgEffect">
+                <div class="likeContainer">
+                  <span class="likeButton" id="likeButton">
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount">0</span>
+                  </span>
+                </div>
+                <div class="seeContainer">
+                  <i class="eyeSymbol"></i>
+                </div>
+              </div>
+              <img src="images/userProfile/IMG-20240811-WA0011.jpg" alt="" />
+            </div>
+            <div class="userDetailsBox">
+              <div class="profileImgBox">
+                <img src="images/userProfile/ronak.jpg" alt="" />
+              </div>
+              <div class="postUserDetail">
+                <div class="postCaption">
+                  <h2>Innovative - webpage</h2>
+                </div>
+                <div class="userName">
+                  <h4>ronak_prj</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="userPostBoxes">
+          <div class="postBGclip"></div>
+          <div class="userPostBox">
+            <div class="postImgBox">
+              <div class="sideBgEffect">
+                <div class="likeContainer">
+                  <span class="likeButton" id="likeButton">
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount">0</span>
+                  </span>
+                </div>
+                <div class="seeContainer">
+                  <i class="eyeSymbol"></i>
+                </div>
+              </div>
+              <img src="images/userProfile/IMG-20240811-WA0012.jpg" alt="" />
+            </div>
+            <div class="userDetailsBox">
+              <div class="profileImgBox">
+                <img src="images/userProfile/sandeep.jpg" alt="" />
+              </div>
+              <div class="postUserDetail">
+                <div class="postCaption">
+                  <h2>furniture site</h2>
+                </div>
+                <div class="userName">
+                  <h4>Sundeep54</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="page3">
+    <div class="leftBox box">
+      <div class="postImgBox">
+        <img src="images/userProfile/IMG-20240811-WA0004.jpg" alt="">
+      </div>
+      <div class="postDetailBox">
+        <div class="likeAndSeeBox">
+          <div class="likeContainer">
+            <span class="likeButton" id="likeButton">
+              <i class="heartIcon" id="heartIcon"></i>
+              <span class="likeCount" id="likeCount">0</span>
+            </span>
+          </div>
+          <div class="seeContainer">
+            <i class="eyeSymbol"></i>
+          </div>
+        </div>
+        <div class="profileInfo">
+          <div class="imgBox">
+            <img src="/images/userProfile/sandeep.jpg" alt="">
+          </div>
+          <div class="userNameFollowers">
+            <h2>sandeep singh</h2>
+            <h3>Followers : 4k</h3>
+          </div>
+        </div>
+        <div class="postDescription">
+          <h2>Game loft page Design for well page</h2>
+        </div>
+        <div class="followBox">
+          <a href="#">follow</a>
+        </div>
+      </div>
+    </div>
+    <div class="rightBox box">
+      <div class="postImgBox">
+        <img src="images/userProfile/IMG-20240811-WA0011.jpg" alt="">
+      </div>
+      <div class="postDetailBox">
+        
+        <div class="profileInfo">
+          <div class="imgBox">
+            <img src="/images/userProfile/bhavy.jpg" alt="">
+          </div>
+          <div class="userNameFollowers">
+            <h2>sandeep singh</h2>
+            <h3>Followers : 4k</h3>
+          </div>
+        </div>
+        <div class="postDescription">
+          <h2>Game loft page Design for well page</h2>
+        </div>
+        <div class="followBox">
+          <a href="#">follow</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<footer>
+  <div class="leftContain">
+    <img src="./images/logo.png" alt="" />
+    <h3>CodeMe</h3>
+  </div>
+  <div class="rightContain">
+    <div class="elems">
+      <h1>product</h1>
+      <h6>low code plateform</h6>
+      <h6>automation</h6>
+      <h6>git-version control</h6>
+      <h6>components</h6>
+      <h6>ui desing</h6>
+    </div>
+    <div class="elems">
+      <h1>resources</h1>
+      <h6>low code plateform</h6>
+      <h6>automation</h6>
+      <h6>git-version control</h6>
+      <h6>components</h6>
+      <h6>ui desing</h6>
+      <h6>git-version control</h6>
+      <h6>components</h6>
+      <h6>ui desing</h6>
+    </div>
+    <div class="elems">
+      <h1>solution</h1>
+      <h6>low code plateform</h6>
+      <h6>automation</h6>
+      <h6>git-version control</h6>
+      <h6>components</h6>
+      <h6>ui desing</h6>
+    </div>
+    <div class="elems">
+      <h1>integration</h1>
+      <h6>low code plateform</h6>
+
+      <h6>ui desing</h6>
+    </div>
+    <div class="elems">
+      <h1>why CodeMe</h1>
+      <h6>low code plateform</h6>
+      <h6>automation</h6>
+      <h6>git-version control</h6>
+      <h6>components</h6>
+      <h6>ui desing</h6>
+    </div>
+  </div>
+</footer>
+  <!-- ------------Scripts----------- -->
+  <script src="/js/uicode.js"></script>
+</body>
+
+</html>

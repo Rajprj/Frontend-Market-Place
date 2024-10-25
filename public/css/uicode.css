@@ -1,0 +1,679 @@
+@import url('root.css');
+
+
+
+/* ----------Page - 1---------- */
+
+#page1 {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 10vh;
+    justify-content: center;
+    background-color: rgb(24, 24, 24);
+}
+
+#page1 .userPostSliderBox {
+
+    height: 90%;
+    width: 100%;
+    /* background-color: red; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+
+.leftBtn {
+    position: absolute;
+    top: 48%;
+    left: 10%;
+}
+
+.rightBtn {
+    position: absolute;
+    top: 48%;
+    right: 10%;
+}
+
+.postDetailsSetBox {
+    height: 100%;
+    width: 77%;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.postDetailsSetBox .slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+
+}
+
+.postDetailsSetBox .slider .slides {
+    display: flex;
+    width: 300%;
+    height: 100%;
+    transition: transform 0.5s ease-in-out;
+}
+
+.postDetailsSetBox .slider .slides .slide {
+    width: 34%;
+    height: 100%;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #ffffff;
+}
+
+
+
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox {
+    height: 20%;
+    width: 66%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: space-around; */
+    /* background-color: red; */
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .profilePic {
+    height: 70%;
+    width: 10%;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 0 12px;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .profilePic img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .userNamePostdescription {
+    height: 70%;
+    width: auto;
+    margin: 0 12px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    text-transform: capitalize;
+    /* background-color: yellow; */
+}
+
+
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .followBtn {
+    height: 70%;
+    /* background-color: blue; */
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .followBtn a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #ffffff;
+    margin-top: 27px;
+    margin-left: 12px;
+    background: linear-gradient(45deg, #00aaff, #0077ff);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-size: var(--mediumFont);
+    font-weight: var(--largeFontWeight);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    text-transform: uppercase;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .followBtn a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .followBtn a::before {
+    content: '+';
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns {
+    height: 76%;
+    width: 8%;
+    margin-left: 12px;
+    /* background-color: blue; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer {
+    width: 40%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: relative;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer .likeButton {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: bold;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer .likeButton:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer .likeButton .heartIcon {
+    width: 25px;
+    height: 25px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/like--v1.png') no-repeat center center;
+    background-size: contain;
+    margin-right: 8px;
+    transition: background 0.3s ease;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer .liked .heartIcon {
+    background: url('https://img.icons8.com/ios-filled/30/fa314a/like--v1.png') no-repeat center center;
+    background-size: contain;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer .liked {
+    /* color: #e74c3c; */
+    
+    transition: color 0.3s ease;
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns  .seeContainer {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 11px;
+    border-radius: 22px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: bold;
+    /* margin: 12px; */
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .seeContainer:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .seeContainer .eyeSymbol {
+    width: 36px;
+    height: 22px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/visible--v1.png') no-repeat center center;
+    background-size: contain;
+    /* margin-right: 8px; */
+}
+
+.postDetailsSetBox .slider .slides .slide .postImgBox {
+    height: 450px;
+    width: 90%;
+    background-color: rgb(67, 50, 50);
+}
+
+.postDetailsSetBox .slider .slides .slide .postImgBox img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.postSwitchBtn {
+    font-size: 2.4vw;
+    background-color: transparent;
+    border: none;
+    color: #fff;
+}
+
+.dotsContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+    bottom: -3%;
+    position: absolute;
+}
+
+.dot {
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    display: inline-block;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.dot.active {
+    background-color: #424242;
+    /* Active dot color */
+}
+
+
+/* ----------------Page - 2------------------- */
+
+#page2{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding-top: 10vh;
+    justify-content: center;
+    background-color: rgb(24, 24, 24);
+}
+
+.page2Main {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2vw 4.9vw;
+    /* background-color: red; */
+}
+
+.page2MainBox {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    /* background-color: blue; */
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+
+.page2MainBox .userPostBoxes {
+    position: relative;
+    height: 96%;
+    width: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* background-color: rgb(56, 48, 48); */
+}
+
+.page2MainBox .userPostBoxes .postBGclip {
+    height: 100%;
+    width: 100%;
+    background-color: hsl(232.5deg 11.76% 13.33%);
+    border-radius: 13px;
+    clip-path: inset(12% 0 0% 14%);
+    transition: clip-path 0.3s ease 0.2s;
+    position: absolute;
+}
+
+.page2MainBox .userPostBoxes:hover {
+    .postBGclip {
+        clip-path: inset(0 0 0 0);
+    }
+}
+
+.page2MainBox .userPostBoxes .userPostBox {
+    height: 98%;
+    width: 80%;
+    border-radius: 13px;
+    overflow: hidden;
+    cursor: pointer;
+    /* background-color: rebeccapurple; */
+    /* top: 0; */
+    /* position: absolute; */
+    /* background-color: red; */
+}
+
+.page2MainBox .userPostBoxes .userPostBox .postImgBox {
+    border-radius: 13px;
+    overflow: hidden;
+    height: 70%;
+    width: 100%;
+    /* background-color: red; */
+    position: relative;
+}
+
+.page2MainBox .userPostBoxes .userPostBox .postImgBox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox {
+    border-radius: 13px;
+    position: absolute;
+    bottom: 0;
+    height: 25%;
+    width: 100%;
+    background-color: #1b1b1d;
+    display: flex;
+    align-items: center;
+}
+
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox .profileImgBox {
+    height: 90%;
+    width: 20%;
+    border-radius: 13px;
+    position: relative;
+    overflow: hidden;
+    /* background-color: aqua; */
+}
+
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox .profileImgBox img {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    object-fit: cover;
+}
+
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox .postUserDetail {
+    width: 70%;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    /* align-items: center; */
+    /* background-color: red; */
+    color: #fff;
+}
+
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox .postUserDetail .postCaption {
+    min-width: 30vw;
+    /* background-color: red; */
+}
+
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox .postUserDetail .userName {
+    padding: 0.3vw;
+    /* font-weight: 200; */
+}
+
+
+.page2MainBox .userPostBoxes .userPostBox .userDetailsBox .userName h4 {
+    font-weight: 300;
+}
+
+
+/* ---------------Page - 3-------------- */
+
+#page3{
+    height: 120vh;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* padding-top: 10vh; */
+    justify-content: space-around;
+    background-color: rgb(24, 24, 24);
+    padding: 2vw 4.9vw;
+}
+
+#page3 .leftBox, .rightBox{
+    height: 86%;
+    width: 40%;
+    border-radius: 12px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    background-color: #fff;
+}
+
+#page3 .leftBox .postImgBox,
+#page3 .rightBox .postImgBox{
+    height: 50%;
+    width: 100%;
+    /* background-color: red; */
+    transition: all 0.3s ease;
+}
+#page3 .leftBox .postImgBox img,
+#page3 .rightBox .postImgBox img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+#page3 .leftBox .postDetailBox,
+#page3 .rightBox .postDetailBox{
+    /* height:100%; */
+    width: 100%;
+    /* background-color: red; */
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: space-around;
+    transition: all 0.3s ease;
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox,
+#page3 .rightBox .postDetailBox .likeAndSeeBox{
+    height: 60px;
+    width: 130px;
+    /* background-color: rgb(77, 58, 58); */
+    z-index: 2;
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}
+
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .likeContainer ,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .likeContainer {
+    width: 40%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    position: relative;
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .likeContainer .likeButton,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .likeContainer .likeButton {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 50px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: bold;
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .likeContainer .likeButton:hover,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .likeContainer .likeButton:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .likeContainer .likeButton .heartIcon,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .likeContainer .likeButton .heartIcon {
+    width: 25px;
+    height: 25px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/like--v1.png') no-repeat center center;
+    background-size: contain;
+    margin-right: 8px;
+    transition: background 0.3s ease;
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .likeContainer .liked .heartIcon,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .likeContainer .liked .heartIcon {
+    background: url('https://img.icons8.com/ios-filled/30/fa314a/like--v1.png') no-repeat center center;
+    background-size: contain;
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .likeContainer .liked,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .likeContainer .liked {
+    /* color: #e74c3c; */
+    
+    transition: color 0.3s ease;
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox  .seeContainer,
+#page3 .rightBox .postDetailBox .likeAndSeeBox  .seeContainer {
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    padding: 11px;
+    border-radius: 22px;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: background-color 0.3s ease;
+    color: #fff;
+    font-weight: bold;
+    /* margin: 12px; */
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .seeContainer:hover,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .seeContainer:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#page3 .leftBox .postDetailBox .likeAndSeeBox .seeContainer .eyeSymbol,
+#page3 .rightBox .postDetailBox .likeAndSeeBox .seeContainer .eyeSymbol {
+    width: 36px;
+    height: 24px;
+    background: url('https://img.icons8.com/ios-glyphs/30/ffffff/visible--v1.png') no-repeat center center;
+    background-size: contain;
+    /* margin-right: 8px; */
+}
+
+#page3 .leftBox .postDetailBox .profileInfo,
+#page3 .rightBox .postDetailBox .profileInfo{
+    height: 14%;
+    width: 100%;
+    /* background-color: #0077ff; */
+    display: flex;
+    /* padding: 1vw 2vw; */
+    flex-direction: row;
+    align-items: center;
+    /* margin-top: 18px; */
+}
+
+#page3 .leftBox .postDetailBox .profileInfo .imgBox,
+#page3 .rightBox .postDetailBox .profileInfo .imgBox{
+    height: 70px;
+    width: 70px;
+    margin:1vw 2vw;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    /* background-color: red; */
+}
+#page3 .leftBox .postDetailBox .profileInfo .imgBox img,
+#page3 .rightBox .postDetailBox .profileInfo .imgBox img{
+   height: 100%;
+   width: 100%;
+   position: absolute;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   top: 0;
+   object-fit: cover;
+}
+
+#page3 .leftBox .postDetailBox .profileInfo .userNameFollowers,
+#page3 .rightBox .postDetailBox .profileInfo .userNameFollowers{
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-transform: capitalize;
+}
+
+#page3 .leftBox .postDetailBox .postDescription,
+#page3 .rightBox .postDetailBox .postDescription{
+    padding: 1vw 2vw;
+    width: 100%;
+    height: auto;
+    /* background-color: red; */
+}
+/* #page3 .leftBox .followBox{
+    background-color: red;
+} */
+#page3 .leftBox  .followBox a ,
+#page3 .rightBox  .followBox a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 8px;
+    color: #ffffff;
+    /* margin-top: 27px; */
+    margin-left: 12px;
+    background: linear-gradient(45deg, #00aaff, #0077ff);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-size: var(--mediumFont);
+    font-weight: var(--largeFontWeight);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    text-transform: uppercase;
+}
+
+#page3 .leftBox .followBox a a:hover,
+#page3 .rightBox .followBox a a:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+
+#page3 .leftBox .followBox a::before,
+#page3 .rightBox .followBox a::before {
+    content: '+';
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}

@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css">
+
+    <link rel="stylesheet" href="./css/regex.css">
+    <title>regex</title>
+</head>
+
+<body>
+
+    <header id="regexHeader">
+        <nav class="regexNavBg">
+            <a href="/">
+
+                <div class="logo">
+                    <div class="image"><img src="./images/logo.png" alt="logo" /></div>
+                    <div class="title regexTitle">CodeMe</div>
+                </div>
+            </a>
+
+            <div class="regexMenu menu">
+                <ul>
+                    <li class="list"><a class="regexMenuList" href="/">home</a></li>
+                    <li class="list"><a class="regexMenuList" href="#">regex</a></li>
+                    <li class="list"><a class="regexMenuList" href="uicode">UI+Code</a></li>
+                </ul>
+            </div>
+
+            <% if (isLoggedIn) { %>
+                <div class="profileRedirectBox">
+                    <a href="/profile">
+                        <div class="imgboxProfile">
+                            <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
+                                <img src="/images/profilePic.png" alt="Default Profile Picture" />
+                                <% } else { %>
+                                    <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+                                    <% } %>
+                        </div>
+                    </a>
+                </div>
+                <% } else { %>
+                    <div class="loginRegister">
+                        <a href="/login">
+                            <div id="homeLoginBtn">login</div>
+                        </a>
+                        <a href="/register">
+                            <div id="homeRegisterBtn">register</div>
+                        </a>
+                    </div>
+                    <% } %>
+        </nav>
+    </header>
+
+    <section id="regexBody">
+        <!-- =============== ZIP Sidebar ============ -->
+        <div id="sidebar">
+            <div class="pined">
+                <div class="headParts">
+                    <div class="sideLogo">
+                        <img src="./images/regex_img/js.svg" alt="">
+                    </div>
+                    <h1>JavaScript</h1>
+                </div>
+
+                <div class="otherRegex">
+                    <div class="parts" tartget_box="zipRegex">
+                        <div class="sideLogoParts">
+                            <img src="./images/regex_img/zip.svg" alt="">
+                        </div>
+                        <h6>Zip Code</h>
+                    </div>
+                    <div class="parts" tartget_box="dateRegex">
+                        <div class="sideLogoParts">
+                            <img src="./images/regex_img/date.svg" alt="">
+                        </div>
+                        <h6>Date</h>
+                    </div>
+                    <div class="parts" tartget_box="phoneRegex">
+                        <div class="sideLogoParts">
+                            <img src="./images/regex_img/phone.svg" alt="">
+                        </div>
+                        <h6>Phone Number</h>
+                    </div>
+                    <div class="parts" tartget_box="emailRegex">
+                        <div class="sideLogoParts">
+                            <img src="./images/regex_img/email.svg" alt="">
+                        </div>
+                        <h6>Email</h>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============== ZIP REGEX================= -->
+        <div id="zipRegex" class="regexParts">
+            <div id="firstPart">
+                <div class="leftPart">
+                    <div class="logoBox">
+                        <img src="./images/regex_img/zip.svg" alt="">
+                    </div>
+                </div>
+                <div class="rightPart">
+                    <h1>ZIP code</h1>
+                    <p>ZIP code (US postal code) regular expression can be used to verify if a given string contains a
+                        valid ZIP code or extract ZIP code from a string. Supports both 5-digit and 9-digit (ZIP+4)
+                        formats.</p>
+                </div>
+            </div>
+
+            <div id="secPart">
+                <div class="setbox">
+                    <h3>ZIP code regex</h3>
+                    <p>A regular expression to test a string against ZIP code format:</p>
+
+                    <div class="regexCode">
+                        <pre><code class="language-javascript">
+    const ZipCodePattern = /^\d{6}$/;
+                    </code></pre>
+                    </div>
+
+                    <div class="testRegex">
+                        <label for="zip">Test Zip Code:</label>
+                        <input type="text" id="zip" name="zip">
+                        <p class="result">Enter valid ZIP code..</p>
+
+                    </div>
+
+                    <div class="regexExample">
+                        <h4>Example code in JS:</h4>
+                        <pre><code class="language-javascript">
+                        // Your code here
+                        const indianZipCodePattern = /^\d{6}$/;
+                        
+                        function validateIndianZipCode(zipCode) {
+                            return indianZipCodePattern.test(zipCode);
+                        }
+                        
+                        // Usage example
+                        const zipCode = '110001';
+                        console.log(validateIndianZipCode(zipCode)); // true or false
+                    </code></pre>
+                    </div>
+                    <div class="notes">
+                        <h4>Notes on ZIP code validation and extraction</h4>
+                        <p>This ZIP code regex has several limitations:</p>
+
+                        <ul>
+                            <li>It only works for US ZIP codes. If you need to support other countries, you might need
+                                to have a separate regular expression for each one of them and execute it based on the
+                                country provided.</li>
+                            <li>It can not guarantee that ZIP code actually exists. For instance, 99999 is a correct
+                                format, but this ZIP code does not exist.</li>
+                            <li>The extraction method can generate false-positive extraction if a string contains
+                                multiple numbers.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =======DATE REGEX======== -->
+        <div id="dateRegex" class="regexParts">
+            <div id="firstPart">
+                <div class="leftPart">
+                    <div class="logoBox">
+                        <img src="./images/regex_img/date.svg" alt="">
+                    </div>
+                </div>
+                <div class="rightPart">
+                    <h1>Date</h1>
+                    <p>Date regular expressions can be used to validate if a string has a valid date format and to
+                        extract a valid date from a string.</p>
+                </div>
+            </div>
+
+            <div id="secPart">
+                <div class="setbox">
+                    <h3>Simple date regex (DD/MM/YYYY)</h3>
+                    <p>Below is a simple regex to validate the string against a date format (D/M/YYYY or M/D/YYYY). This
+                        however does not guarantee that the date would be valid (read about moment.js below). You can
+                        also replace \/ with a separator you need.</p>
+
+                    <div class="regexCode">
+                        <pre><code class="language-javascript">
+    const dateRegex = /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/
+                    </code></pre>
+                    </div>
+
+                    <div class="testRegex">
+                        <label for="zip">Test Date</label>
+                        <input type="text" id="date" name="date">
+                        <p class="result dateres">Enter valid Date formate..</p>
+
+                    </div>
+
+                    <div class="regexExample">
+                        <h4>Example code in JS:</h4>
+                        <pre><code class="language-javascript">
+                        var dateRegex = /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/;
+                        // Validate date
+                        var dateString = '12/12/2022';
+                        dateRegex.test(dateString); // Returns true
+
+                        // Extract date from a string
+                        var dateRegexG = /[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}/g;
+                        'I\'m on vacation from 1/18/2021 till 1/29/2021'.match(dateRegexG); // returns ['1/18/2021', '1/29/2021']
+                    </code></pre>
+                    </div>
+                    <div class="notes datenotes">
+                        <h4>Notes on date string regex validation</h4>
+                        <p>While there are some regular expressions that allow more complex date validations, it is
+                            usually better to validate dates using special date and time libraries. For example, in
+                            Javascript moment.js library can be used for these purposes. In this case, the validation
+                            will look like this:</p>
+
+                        <pre><code class="language-javascript">
+                        var date = moment(yourDateString);
+                        date.isValid(); // returns true if variable yourDateString contains a valid date and time string
+                    </code></pre>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========PHONE REGEX======= -->
+        <div id="phoneRegex" class="regexParts">
+            <div id="firstPart">
+                <div class="leftPart">
+                    <div class="logoBox">
+                        <img src="./images/regex_img/phone.svg" alt="">
+                    </div>
+                </div>
+                <div class="rightPart">
+                    <h1>Phone number</h1>
+                    <p>The regular expressions below can be used to validate if a string is a valid phone number format
+                        and to extract a phone number from a string. Please note that this validation can not tell if a
+                        phone number actually exists.</p>
+                </div>
+            </div>
+
+            <div id="secPart">
+                <div class="setbox">
+                    <h3>The basic Indian phone number validation</h3>
+                    <p>A simple regex to validate string against a valid international phone number format without
+                        delimiters and with an optional plus sign:</p>
+
+                    <div class="regexCode">
+                        <pre><code class="language-javascript">
+  const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
+                  </code></pre>
+                    </div>
+
+                    <div class="testRegex">
+                        <label for="phone">Test phone number</label>
+                        <input type="text" id="phone" name="phone">
+                        <p class="result phoneRes">Enter valid phone number..</p>
+
+                    </div>
+
+                    <div class="regexExample">
+                        <h4>Example code in JS:</h4>
+                        <pre><code class="language-javascript">
+                      // Your code here
+                      const phoneRegex = /^\+?[1-9][0-9]{7,14}$/;
+                      
+                      function validatePhone(phone) {
+                          return validatePhone.test(phone);
+                      }
+                      
+                      // Usage example
+                      const phone = '9896954445';
+                      console.log(validatePhone(phone)); // true or false
+                  </code></pre>
+                    </div>
+                    <div class="notes">
+                        <h4>Extra information about validating phone number</h4>
+                        <p>While validation of phone numbers using regex can give a possibility to check the format of
+                            the phone number, it does not guarantee that the number exists.</p>
+
+                        <ul>
+                            <li>More complex phone numbers with extensions</li>
+                            <li>The different phone numbers for calling them on a different time of day</li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- =======EMAIL REGEX======= -->
+        <div id="emailRegex" class="regexParts">
+            <div id="firstPart">
+                <div class="leftPart">
+                    <div class="logoBox">
+                        <img src="./images/regex_img/email.svg" alt="">
+                    </div>
+                </div>
+                <div class="rightPart">
+                    <h1>Email</h1>
+                    <p>
+                        The regular expressions below can be used to validate if a string is an email address and to
+                        extract email addresses from a string. This validation method however does not guarantee that
+                        the emails validated and extracted actually exist.</p>
+                </div>
+            </div>
+
+            <div id="secPart">
+                <div class="setbox">
+                    <h3>The basic email validation</h3>
+                    <p>A simple JavaScript regex to validate string against email format and catch the most obvious
+                        syntax errors:</p>
+
+                    <div class="regexCode">
+                        <pre><code class="language-javascript">
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                </code></pre>
+                    </div>
+
+                    <div class="testRegex">
+                        <label for="email">Test phone number</label>
+                        <input type="email" id="email" name="email">
+                        <p class="result emailRes">Enter valid email..</p>
+
+                    </div>
+
+                    <div class="regexExample">
+                        <h4>Example code in JS:</h4>
+                        <pre><code class="language-javascript">
+                    // Your code here
+                    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                    
+                    function validateEmail(email) {
+                        return emailRegex.test(email);
+                    }
+                    
+                    // Usage example
+                    const email = 'abc@gmail.com';
+                    console.log(validateEmail(email)); // true or false
+                </code></pre>
+                    </div>
+                    <div class="notes">
+                        <h4>Extra information about validating email</h4>
+                        <p>As was stated previously, regex email validation can not fully guarantee that email exists
+                            and the message can be delivered. The best way how to know for sure that email is valid is
+                            to actually send an email to that address because even paid email validation services do not
+                            provide a 100% guarantee for that</p>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+
+
+    <div id="page5">
+
+        <div class="leftSide">
+            <h1>Create an internal tool </h1>
+            <h1>with CodeMe</h1>
+            <p>Create your tools faster and with no additional effort & resources.</p>
+        </div>
+
+        <div class="rightSide">
+            <button>Start building</button>
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="leftContain">
+            <img src="./images/logo.png" alt="">
+            <h3>CodeMe</h3>
+        </div>
+        <div class="rightContain">
+            <div class="elems">
+                <h1>product</h1>
+                <h6>low code plateform</h6>
+                <h6>automation</h6>
+                <h6>git-version control</h6>
+                <h6>components</h6>
+                <h6>ui desing</h6>
+            </div>
+            <div class="elems">
+                <h1>resources</h1>
+                <h6>low code plateform</h6>
+                <h6>automation</h6>
+                <h6>git-version control</h6>
+                <h6>components</h6>
+                <h6>ui desing</h6>
+                <h6>git-version control</h6>
+                <h6>components</h6>
+                <h6>ui desing</h6>
+            </div>
+            <div class="elems">
+                <h1>solution</h1>
+                <h6>low code plateform</h6>
+                <h6>automation</h6>
+                <h6>git-version control</h6>
+                <h6>components</h6>
+                <h6>ui desing</h6>
+            </div>
+            <div class="elems">
+                <h1>integration</h1>
+                <h6>low code plateform</h6>
+
+                <h6>ui desing</h6>
+            </div>
+            <div class="elems">
+                <h1>why CodeMe</h1>
+                <h6>low code plateform</h6>
+                <h6>automation</h6>
+                <h6>git-version control</h6>
+                <h6>components</h6>
+                <h6>ui desing</h6>
+            </div>
+        </div>
+
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <!-- <script src="js/script.js"></script> -->
+    <script src="js/regex.js"></script>
+</body>
+
+</html>

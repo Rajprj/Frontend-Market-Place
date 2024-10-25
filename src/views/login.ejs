@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/login.css" />
+    <title>login</title>
+  </head>
+  <body style="background-color: black">
+    <div class="containersBox">
+      <% if (typeof errorMessage !== 'undefined') { %>
+      <div class="flashMsg">
+        <p><%= errorMessage %></p>
+      </div>
+      <% } %>
+      <div id="redirectHome">
+        <a href="/">
+          <div class="setBox">
+            <span>go library</span> <img src="/images/sideArrow.png" alt="" />
+          </div>
+        </a>
+      </div>
+      <div id="login" class="loginContainer">
+        <div class="main">
+          <div class="loginlogo">
+            <img src="/images/logo.png" alt="logo" />
+            <div class="name">CodeMe</div>
+          </div>
+          <form id="loginForm" action="/users/login" method="post">
+            <div class="form_container">
+                <h1 class="headTag">Login</h1>
+        
+                <div class="input_fields">
+                    <span><img src="/images/sidebarImages/user.png" alt=""></span>
+                    <input type="text" name="userName" placeholder="Username..." required>
+                </div>
+                <div class="input_fields lastInputMargin">
+                    <span><img src="/images/pass.png" alt=""></span>
+                    <input type="password" name="password" placeholder="Password..." required>
+                </div>
+        
+                <div class="forgot">
+                    <a href="#">Forget password?</a>
+                </div>
+        
+                <div class="submit_btn">
+                    <button type="submit">Log In</button>
+        
+                    <span>Have no account? <a href="/register" class="btn">Sign up here</a></span>
+                </div>
+            </div>
+        </form>
+        
+        </div>
+        <div class="footerLogin">
+          <p>
+            Let us save your time. Set up a call with our team to build your
+            internal tool faster.
+          </p>
+        </div>
+      </div>
+    </div>
+    
+
+    <!-- ----------scripts--------- -->
+
+    <script src="js/login.js"></script>
+  </body>
+</html>

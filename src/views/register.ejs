@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/register.css">
+    <title>registration</title>
+</head>
+<body>
+    <div class="containersBox">
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <div class="flashMsg">
+                <p><%= errorMessage %></p>
+            </div>
+        <% } %>
+        <div id="redirectHome">
+            <a href="/">
+                <div class="setBox"><span>go library</span> <img src="/images/sideArrow.png" alt=""></div>
+            </a>
+        </div>
+        
+
+        <div id="register" class="registerContainer">
+            <div class="formContainer">
+                <div class="setForm">
+                    <div class="loginlogo">
+                        <img src="/images/logo.png" alt="logo">
+                        <div class="name">CodeMe</div>
+                    </div>
+                    <form action="/users/register" method="post" id="registrationForm">
+                        <div class="form_container">
+                            <h1>Registration</h1>
+                            
+                            <div class="input_fields">
+                                <span><img src="/images/sidebarImages/user.png" alt=""></span>
+                                <input type="text" name="userName" placeholder="Username..." 
+                                       pattern="^[a-zA-Z]+\d+$" 
+                                       title="Username must start with a letter and end with a number, with letters in between." 
+                                       required>
+                            </div>
+                            <div class="input_fields">
+                                <span><img src="/images/email.jpg" alt=""></span>
+                                <input type="email" name="email" placeholder="Email..." required>
+                            </div>
+                            <div class="input_fields">
+                                <span><img src="/images/sidebarImages/user.png" alt=""></span>
+                                <input type="text" name="fullName" placeholder="Full Name..." required>
+                            </div>
+                            <div class="input_fields lastInputMargin">
+                                <span><img src="/images/pass.png" alt=""></span>
+                                <input type="password" name="password" placeholder="Create Password..." 
+                                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" 
+                                       title="Password must be at least 8 characters long, contain a small letter, a big letter, and a number." 
+                                       required>
+                            </div>
+                            <div class="input_fields lastInputMargin">
+                                <span><img src="/images/pass.png" alt=""></span>
+                                <select name="" id="">
+                                    <option value="developer">Developer</option>
+                                    <option value="viewer">Viewer</option>
+                                </select>
+                            </div>
+                            <div class="submit_btn">
+                                <button type="submit">Sign Up</button>
+                                <span>Have an account? <a href="/login" class="loginbtn">Log In here</a></span>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+            </div>
+            <div class="footerLogin">
+                <p>Let us save your time. Set up a call with our team to build your internal tool faster.</p>
+            </div>
+        </div>
+      </div>
+
+    <!-- -----------scripts---------- -->
+
+    <script src="js/register.js"></script>
+</body>
+</html>

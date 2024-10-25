@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="/css/admin/style.css" />
+    <title>Document</title>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <div class="navbar">
+        <h2>Admin Dashboard</h2>
+        <div class="admin-info">
+            <span>Welcome, Admin</span>
+        </div>
+    </div>
+
+    <div class="admin-dashboard">
+        <!-- Sidebar -->
+        <div id="sidebar" class="profileSideBar">
+            <div class="pined pinnedProfileBar">
+              <div class="headParts profileBarHead">
+                <div class="sideLogo">
+                  <img src="/images/logo.png" alt="">
+                </div>
+                <h1>CodeMe</h1>
+              </div>
+      
+              <div class="otherRegex">
+                <a href="home">
+      
+                  <div class="parts profileParts">
+                    <div class="sideLogoParts">
+                      <img src="/images/sidebarImages/home1-removebg-preview.png" alt="">
+                    </div>
+                    <h6>Home</h>
+                  </div>
+                </a>
+                <a href="regex">
+      
+                  <div class="parts profileParts">
+                    <div class="sideLogoParts">
+                      <img src="/images/sidebarImages/regex-removebg-preview.png" alt="">
+                    </div>
+                    <h6>Regex</h>
+                  </div>
+                </a>
+                
+                <a href="uicode">
+      
+                  <div class="parts profileParts">
+                    <div class="sideLogoParts">
+                      <img src="/images/sidebarImages/code-removebg-preview.png" alt="">
+                    </div>
+                    <h6>Code+UI</h>
+                  </div>
+                </a>
+
+                <a href="#" id="adminDashboard">
+      
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/dashboard.png" alt="">
+                      </div>
+                      <h6>Dashboard</h>
+                    </div>
+                  </a>
+                  <a href="#" id="developerManagement">
+      
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/user.png" alt="">
+                      </div>
+                      <h6>Developer Management</h>
+                    </div>
+                  </a>
+
+                  <a href="#" id="viewerManagement">
+      
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/user.png" alt="">
+                      </div>
+                      <h6>Viewer Management</h>
+                    </div>
+                  </a>
+            </div>
+            </div>
+          </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- First Container with Boxes -->
+            <div id="dashboardContainer">
+                <div class="dashboard-container" id="firstContainer">
+                    <div class="dashboard-box" id="developerBox">
+                        <h3>Developers</h3>
+                        <p id="developerCount">10</p>
+                    </div>
+                    <div class="dashboard-box" id="viewerBox">
+                        <h3>Viewers</h3>
+                        <p id="viewerCount">15</p>
+                    </div>
+                    <div class="dashboard-box" id="postBox">
+                        <h3>Posts</h3>
+                        <p id="postCount">20</p>
+                    </div>
+                </div>
+
+                <!-- Second Container with Detailed Information -->
+                <div class="details-container" id="secondContainer">
+                    <!-- Developer Table -->
+                    <div id="developerTable">
+                        <h3>Developer Details</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>John Doe</td>
+                                    <td>john@example.com</td>
+                                    <td>Developer</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jane Smith</td>
+                                    <td>jane@example.com</td>
+                                    <td>Developer</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Viewer Table -->
+                    <div id="viewerTable" style="display: none">
+                        <h3>Viewer Details</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Bob Brown</td>
+                                    <td>bob@example.com</td>
+                                    <td>Viewer</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Alice Green</td>
+                                    <td>alice@example.com</td>
+                                    <td>Viewer</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Post Table -->
+                    <div id="postTable" style="display: none">
+                        <h3>Post Details</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Post ID</th>
+                                    <th>Post Name</th>
+                                    <th>Username</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>How to build a frontend</td>
+                                    <td>John Doe</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>CSS Tricks</td>
+                                    <td>Jane Smith</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div id="developerContainer" class="developer-container" style="display: none;">
+                <div class="developer-row">
+                    <!-- Developer Box 1 -->
+                    <div class="developer-box">
+                        <img src="/images/userProfile/bhavy.jpg" alt="Profile Picture" class="profile-pic">
+                        <p>ID: 1</p>
+                        <p>Username: John Doe</p>
+                        <p>Email: john@example.com</p>
+                        <button class="post-count-btn">Posts: 5</button>
+                    </div>
+            
+                    <!-- Developer Box 2 -->
+                    <div class="developer-box">
+                        <img src="profilepic2.jpg" alt="Profile Picture" class="profile-pic">
+                        <p>ID: 2</p>
+                        <p>Username: Jane Smith</p>
+                        <p>Email: jane@example.com</p>
+                        <button class="post-count-btn">Posts: 3</button>
+                    </div>
+            
+                    <!-- Developer Box 3 -->
+                    <div class="developer-box">
+                        <img src="profilepic3.jpg" alt="Profile Picture" class="profile-pic">
+                        <p>ID: 3</p>
+                        <p>Username: Bob Brown</p>
+                        <p>Email: bob@example.com</p>
+                        <button class="post-count-btn">Posts: 7</button>
+                    </div>
+                </div>
+            
+                <div class="developer-row">
+                    <!-- Developer Box 4 -->
+                    <div class="developer-box">
+                        <img src="profilepic4.jpg" alt="Profile Picture" class="profile-pic">
+                        <p>ID: 4</p>
+                        <p>Username: Alice Green</p>
+                        <p>Email: alice@example.com</p>
+                        <button class="post-count-btn">Posts: 8</button>
+                    </div>
+            
+                    <!-- Developer Box 5 -->
+                    <div class="developer-box">
+                        <img src="profilepic5.jpg" alt="Profile Picture" class="profile-pic">
+                        <p>ID: 5</p>
+                        <p>Username: Charlie Black</p>
+                        <p>Email: charlie@example.com</p>
+                        <button class="post-count-btn">Posts: 2</button>
+                    </div>
+            
+                    <!-- Developer Box 6 -->
+                    <div class="developer-box">
+                        <img src="profilepic6.jpg" alt="Profile Picture" class="profile-pic">
+                        <p>ID: 6</p>
+                        <p>Username: Eve White</p>
+                        <p>Email: eve@example.com</p>
+                        <button class="post-count-btn">Posts: 10</button>
+                    </div>
+                </div>
+
+                <div class="eachDeveloperPosts" style="display: none;">
+                    <div class="eachDeveloperPostsClose">
+                        <div class="closeBtn">&#x2702;</div>
+                    </div>
+                    <div class="developerPost-row">
+                        <!-- Developer Box 1 -->
+                        <div class="developerPost-box">
+                            <img src="/images/sliderpic1.webp" alt="Profile Picture" class="postThumbnail">
+                            <p>ID: 1</p>
+                            <p>Username: John Doe</p>
+                            <p>Email: john@example.com</p>
+                            <button class="postDeleteBtn">Delete</button>
+                        </div>
+                
+                        <!-- Developer Box 2 -->
+                        <div class="developerPost-box">
+                            <img src="/images/sliderpic4.webp" alt="Profile Picture" class="postThumbnail">
+                            <p>ID: 2</p>
+                            <p>Username: Jane Smith</p>
+                            <p>Email: jane@example.com</p>
+                            <button class="postDeleteBtn">Delete</button>
+                        </div>
+                
+                        <!-- Developer Box 3 -->
+                        <div class="developerPost-box">
+                            <img src="/images/feedpost.webp" alt="Profile Picture" class="postThumbnail">
+                            <p>ID: 3</p>
+                            <p>Username: Bob Brown</p>
+                            <p>Email: bob@example.com</p>
+                            <button class="postDeleteBtn">Delete</button>
+                        </div>
+                    </div>
+                    <div class="developerPost-row">
+                        <!-- Developer Box 1 -->
+                        <div class="developerPost-box">
+                            <img src="/images/sliderpic1.webp" alt="Profile Picture" class="postThumbnail">
+                            <p>ID: 1</p>
+                            <p>Username: John Doe</p>
+                            <p>Email: john@example.com</p>
+                            <button class="postDeleteBtn">Delete</button>
+                        </div>
+                
+                        <!-- Developer Box 2 -->
+                        <div class="developerPost-box">
+                            <img src="/images/sliderpic4.webp" alt="Profile Picture" class="postThumbnail">
+                            <p>ID: 2</p>
+                            <p>Username: Jane Smith</p>
+                            <p>Email: jane@example.com</p>
+                            <button class="postDeleteBtn">Delete</button>
+                        </div>
+                
+                        <!-- Developer Box 3 -->
+                        <div class="developerPost-box">
+                            <img src="/images/feedpost.webp" alt="Profile Picture" class="postThumbnail">
+                            <p>ID: 3</p>
+                            <p>Username: Bob Brown</p>
+                            <p>Email: bob@example.com</p>
+                            <button class="postDeleteBtn">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="viewerContainer" class="viewer-container" style="display: none;">
+                <h2>Viewer Management</h2>
+                <table id="viewerTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Bob Brown</td>
+                            <td>bob@example.com</td>
+                            <td><button class="edit-btn" data-userid="1">Edit</button></td>
+                            <td><button class="delete-btn" data-userid="1">Delete</button></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Alice Green</td>
+                            <td>alice@example.com</td>
+                            <td><button class="edit-btn" data-userid="2">Edit</button></td>
+                            <td><button class="delete-btn" data-userid="2">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</body>
+
+<script src="/js/admin/index.js"></script>
+
+</html>
