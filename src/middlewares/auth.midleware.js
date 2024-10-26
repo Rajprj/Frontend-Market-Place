@@ -15,7 +15,7 @@ const verifyUser = asyncHandler(async (req, res, next) => {
     
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
         if(!user){
-            throw new apiError(400, "Invalid Accesstoken")
+            return res.redirect('/login');
         }
     
         req.user = user

@@ -1,5 +1,5 @@
 import { User } from "../models/user.model.js";
-import { Post} from "../models/post.model.js";
+import { Post } from "../models/post.model.js";
 import { asyncHandler } from "../utils/asyncHendler.js";
 import { apiError } from "../utils/apiError.js";
 import { uploadOnCloudinary } from "../utils/coludinary.js";
@@ -215,15 +215,18 @@ const addUserPost = asyncHandler(async (req, res) => {
     const codeFilePath = path.join(codeFilesDir, codeFile.originalname);
     fs.renameSync(codeFile.path, codeFilePath);
 
-    
-    const newPost = new Post({
+    const findUser = req.user._id;
+    const newPost = await Post.create({
         postName: postName.toLowerCase(),
         postCode: `/public/codeFiles/${codeFile.originalname}`, 
         thumbnail: thumbnailImg.url,
-        images: sliderImageUrls  
+        images: sliderImageUrls,
+        user: findUser._id, 
     });
 
-    await newPost.save();
+    const createdPostUser = await User.findById(findUser._id);
+    createdPostUser.posts.push(newPost._id);
+    await createdPostUser.save({validateBeforeSave:true});
 
     res.redirect("/profile");
 });

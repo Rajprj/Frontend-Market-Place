@@ -39,10 +39,12 @@ const userSchema = new Schema({
     dp:{
         type:String,
     },
-    posts:{
+    posts:[
+      {
         type:Schema.Types.ObjectId,
         ref:"Post",
-    },
+      }
+    ],
     refreshToken:{
         type:String,
     }
