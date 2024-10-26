@@ -71,19 +71,21 @@ showUserInfoBox();
 // ==================Show Upload Post==============
 
 function showPostUpload(){
-  const editProfileBtn = document.querySelector('.addPost');
-  const updateProfileBox = document.querySelector('.modalPost');
+  const addPostBtn = document.querySelectorAll('.addPost');
+  const uploadPostBox = document.querySelector('.modalPost');
   const closeBtn = document.querySelector(".closeBtnPost");
 
-  console.log(updateProfileBox);
+  // console.log(updateProfileBox);
   
-  editProfileBtn.addEventListener("click", (event)=>{
-    event.preventDefault();
-    updateProfileBox.style.display = "block";
+  addPostBtn.forEach((btn)=>{
+    btn.addEventListener("click",(event)=>{
+      event.preventDefault();
+      uploadPostBox.style.display = "block";
+    })
   })
 
   closeBtn.addEventListener("click", ()=>{
-    updateProfileBox.style.display = "none";
+    uploadPostBox.style.display = "none";
   })
 }
 

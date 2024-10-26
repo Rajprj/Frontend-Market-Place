@@ -127,11 +127,24 @@
   grid-template-columns: 1fr 1fr 1fr;
 }
 
-
+.page3MainBox .dontHavePost{
+  width: 500px;
+  /* background-color: pink; */
+  position: absolute;
+  font-size: 23px;
+  left: 50%;
+  right: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; */
+  transform: translate(-50%, -50%);
+}
 .userPostBoxes {
   position: relative;
-  height: 96%;
-  width: 90%;
+  height: 350px;
+  width: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -171,7 +184,7 @@
   overflow: hidden;
   height: 70%;
   width: 100%;
-  background-color: red;
+  /* background-color: red; */
   position: relative;
 }
 
@@ -195,26 +208,6 @@
   background-color: #1b1b1d;
   display: flex;
   align-items: center;
-}
-
-.profileImgBox {
-  height: 90%;
-  width: 20%;
-  border-radius: 13px;
-  position: relative;
-  overflow: hidden;
-  /* background-color: aqua; */
-}
-
-.profileImgBox img {
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  object-fit: cover;
 }
 
 .postUserDetail {

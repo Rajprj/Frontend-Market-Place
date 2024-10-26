@@ -36,12 +36,15 @@ a {
 
 /* Flash Message */
 .flashMsg {
-    background-color: #ffcccc;
+    background-color: #fbacac;
     color: #b30000;
     padding: 10px;
+    min-width: 500px;
     border-radius: 5px;
     text-align: center;
     margin-bottom: 15px;
+    position: absolute;
+    top: 10%;
 }
 
 #redirectHome {

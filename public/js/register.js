@@ -1,4 +1,4 @@
-document.getElementById('registrationForm').addEventListener('submit', function(event) {
+document.getElementById('registrationForm').addEventListener('submit', function (event) {
     // Get the values from the input fields
     const username = document.querySelector('input[name="userName"]').value;
     const email = document.querySelector('input[name="email"]').value;
@@ -29,11 +29,13 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         return;
     }
 
-    // Password validation: must be at least 8 characters long, contain at least one lowercase letter, one uppercase letter, and one number
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    // Password validation: must be at least 6 characters long, contain at least one lowercase letter and one number
+    const passwordPattern = /^(?=.*[a-z])(?=.*\d)[a-z\d]{6,}$/;
     if (!passwordPattern.test(password)) {
-        alert("Password must be at least 8 characters long and contain a lowercase letter, an uppercase letter, and a number.");
+        alert("Password must be at least 6 characters long and contain a lowercase letter and a number.");
         event.preventDefault(); // Prevent the form from submitting
         return;
     }
+    
+    
 });

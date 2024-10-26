@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt";
 
 
+
 const userSchema = new Schema({
     userName:{
         type:String,
@@ -11,7 +12,7 @@ const userSchema = new Schema({
         trim:true,
         unique:true,
         lowecase:true,
-        index:true
+        index:true,
     },
     email:{
         type:String,
@@ -19,27 +20,31 @@ const userSchema = new Schema({
         trim:true,
         lowecase:true,
         unique:true,
-        index:true
+        index:true,
     },
     fullName:{
         type:String,
         required:true,
         trim:true,
     },
+    role:{
+      type:String,
+      required:true,
+    },
     password:{
         type:String,
         required:true,
-        trim:true
+        trim:true,
     },
     dp:{
-        type:String
+        type:String,
     },
     posts:{
         type:Schema.Types.ObjectId,
-        ref:"Post"
+        ref:"Post",
     },
     refreshToken:{
-        type:String
+        type:String,
     }
 },
 {

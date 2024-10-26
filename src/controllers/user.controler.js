@@ -1,8 +1,13 @@
 import { User } from "../models/user.model.js";
+import { Post} from "../models/post.model.js";
 import { asyncHandler } from "../utils/asyncHendler.js";
 import { apiError } from "../utils/apiError.js";
 import { uploadOnCloudinary } from "../utils/coludinary.js";
+import path from 'path';
+import fs from 'fs';
 
+
+//generate referash and access token for authentication
 const generateRefreshAccessToken = async function (userId) {
     try {
       const user = await User.findById(userId);
@@ -19,10 +24,11 @@ const generateRefreshAccessToken = async function (userId) {
         "Somthing went wrong while generating rfresh or access Token"
       );
     }
-  };
+};
 
+//For registration
   const registerUser = asyncHandler(async (req, res) => {
-    const { userName, fullName, email, password } = req.body;
+    const { userName, fullName, email, password, role} = req.body;
 
     // check if fields are empty
     if ([userName, fullName, email, password].some((fields) => fields?.trim() === "")) {
@@ -43,7 +49,8 @@ const generateRefreshAccessToken = async function (userId) {
         userName: userName.toLowerCase(),
         fullName,
         email,
-        password
+        password,
+        role
     });
 
     if (!user) {
@@ -53,7 +60,7 @@ const generateRefreshAccessToken = async function (userId) {
     res.redirect("/login");
 });
 
-
+//For login
 const loginUser = asyncHandler(async (req, res) => {
   const { userName, password } = req.body;
 
@@ -103,6 +110,7 @@ const loginUser = asyncHandler(async (req, res) => {
   return res.redirect("/profile");
 });
 
+//For logout
 const logOutUser = asyncHandler(async (req,res)=>{
     await User.findByIdAndUpdate(
         req.user._id,
@@ -124,10 +132,11 @@ const logOutUser = asyncHandler(async (req,res)=>{
     return res.redirect("/login")
 })
 
+//For uploadDp
 const uploadDp = asyncHandler(async (req, res) => {
     try {
         let dpLocalPath = req.file?.path;
-        console.log("File path:", dpLocalPath);
+        // console.log("File path:", dpLocalPath);
 
         const DpImg = await uploadOnCloudinary(dpLocalPath);
         if (!DpImg) {
@@ -150,6 +159,7 @@ const uploadDp = asyncHandler(async (req, res) => {
     }
 });
 
+//For removeDp
 const removeDp = asyncHandler(async (req, res) => {
     try {
         await User.findByIdAndUpdate(
@@ -166,9 +176,57 @@ const removeDp = asyncHandler(async (req, res) => {
     }
 });
 
+//For Add post
+const addUserPost = asyncHandler(async (req, res) => {
+    const { postName } = req.body;
 
+    // Check all fields 
+    if (!postName || !req.files || !req.files.thumbnailUpload || !req.files.codeUpload || !req.files.sliderImages) {
+        return res.status(400).json({ message: 'All fields (thumbnail, post code, and slider images) are required.' });
+    }
 
+    // Limit 4 images for slider
+    if (req.files.sliderImages.length > 4) {
+        return res.status(400).json({ message: 'You can only upload a maximum of 4 images.' });
+    }
 
+    // Upload the thumbnail image to Cloudinary
+    const thumbnailLocalPath = req.files.thumbnailUpload[0].path;
+    const thumbnailImg = await uploadOnCloudinary(thumbnailLocalPath);
+    if (!thumbnailImg) {
+        throw new apiError(402, "Error uploading thumbnail image");
+    }
+
+    // Upload slider images to Cloudinary
+    const sliderImageUrls = [];
+    for (const file of req.files.sliderImages) {
+        const imageUrl = await uploadOnCloudinary(file.path);
+        if (imageUrl) {
+            sliderImageUrls.push({ url: imageUrl.url });  
+        } else {
+            throw new apiError(402, "Error uploading the slider images");
+        }
+    }
+
+    // Move the user zip file in codeFile folder
+    const codeFile = req.files.codeUpload[0];
+    const codeFilesDir = path.join(process.cwd(), 'public', 'codeFiles');
+    if (!fs.existsSync(codeFilesDir)) fs.mkdirSync(codeFilesDir, { recursive: true });
+    const codeFilePath = path.join(codeFilesDir, codeFile.originalname);
+    fs.renameSync(codeFile.path, codeFilePath);
+
+    
+    const newPost = new Post({
+        postName: postName.toLowerCase(),
+        postCode: `/public/codeFiles/${codeFile.originalname}`, 
+        thumbnail: thumbnailImg.url,
+        images: sliderImageUrls  
+    });
+
+    await newPost.save();
+
+    res.redirect("/profile");
+});
 
 
 export {
@@ -176,5 +234,6 @@ export {
     loginUser,
     logOutUser,
     uploadDp,
-    removeDp
+    removeDp,
+    addUserPost
 }
