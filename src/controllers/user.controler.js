@@ -231,6 +231,22 @@ const addUserPost = asyncHandler(async (req, res) => {
     res.redirect("/profile");
 });
 
+//For Delete post
+const deletePost = asyncHandler(async (req, res)=>{
+    const findUser = req.user._id;
+    const findPost = await Post.findById(req.params.id);
+    if(!findPost){
+        throw new apiError(402, "post not found");
+    }
+
+    const postUser = await User.findById(findUser._id);
+    postUser.posts.splice(postUser.posts.indexOf(findPost._id),1);
+
+    await Post.deleteOne(findPost._id);
+    await postUser.save({validateBeforeSave:true});
+
+    res.redirect("/profile");
+})
 
 export {
     registerUser,
@@ -238,5 +254,6 @@ export {
     logOutUser,
     uploadDp,
     removeDp,
-    addUserPost
+    addUserPost,
+    deletePost
 }

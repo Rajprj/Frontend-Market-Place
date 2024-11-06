@@ -5,7 +5,6 @@ const userPostSchema = new Schema({
         type: String,
         required: true,
         trim: true,
-        unique: true,
         lowercase: true,
         index: true,
     },
@@ -30,4 +29,4 @@ function arrayLimit(val) {
     return val.length <= 4;
 }
 
-export const Post = mongoose.model("UserPost", userPostSchema);
+export const Post = mongoose.model("Post", userPostSchema);

@@ -44,7 +44,7 @@
 /* -------------profile box----------------- */
 
 #profileBox{
-  /* min-height: 100%; */
+  height: 100vh;
   width: 90%;
   background-color: rgb(15, 15, 15) ;
 }
@@ -108,9 +108,9 @@
 /* -------------profile post body-------------- */
 
 .profilePostBody{
-  height: 100vh;
+  /* height: 50vh; */
   width: 100%;
-  padding: 4vw 4vw;
+  padding: 4vw 4vw 0 4vw;
   /* background-color: red; */
 }
 
@@ -119,37 +119,27 @@
 }
 
 .page3MainBox {
-  height: 90%;
+  height: 48vh; 
   width: 100%;
   position: relative;
-  /* background-color: blue; */
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
+  gap: 1rem; 
+  /* background-color: red; */
+  overflow-y: auto; 
+  scrollbar-width: none;
 }
 
-.page3MainBox .dontHavePost{
-  width: 500px;
-  /* background-color: pink; */
-  position: absolute;
-  font-size: 23px;
-  left: 50%;
-  right: 50%;
-  color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* width: 100%; */
-  transform: translate(-50%, -50%);
-}
 .userPostBoxes {
   position: relative;
-  height: 350px;
-  width: 400px;
+  height: 350px; 
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: rgb(56, 48, 48); */
 }
+
+
 
 .postBGclip {
   height: 100%;
@@ -208,30 +198,43 @@
   background-color: #1b1b1d;
   display: flex;
   align-items: center;
+  justify-content: space-around;
 }
 
 .postUserDetail {
   width: 70%;
   height: 100%;
-  position: absolute;
-  right: 0;
+  /* position: absolute; */
+  /* right: 0; */
   display: flex;
   flex-direction: column;
   justify-content: center;
   overflow: hidden;
   /* align-items: center; */
-  /* background-color: red; */
+  /* background-color: rgb(180, 72, 72); */
   color: #fff;
 }
 
 .postUserDetail .postCaption {
   min-width: 30vw;
+  margin-left: 2%;
   /* background-color: red; */
 }
 
-.postUserDetail .userName {
-  padding: 0.3vw;
-  /* font-weight: 200; */
+.userDetailsBox .deletePost{
+  height: 80%;
+  width: 4vw;
+  position: relative;
+  /* background-color: red; */
+}
+
+
+.userDetailsBox .deletePost img{
+  height: 100%;
+  width: 100%;
+  
+
+  /* background-color: red; */
 }
 
 .userName h4 {
@@ -239,6 +242,22 @@
 }
 
 
+/* ---------If dont have post----------- */
+.page3MainBox .dontHavePost{
+  width: 500px;
+  /* background-color: pink; */
+  position: absolute;
+  font-size: 23px;
+  left: 50%;
+  top:  50%;
+
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* width: 100%; */
+  transform: translate(-50%, -50%);
+}
 /* side navigation----------- */
 
 .profileSideNavi{
@@ -351,13 +370,13 @@
   transition: all 0.5s ease-in-out;
 }
 
-/* Lines rotate vertically when active */
+
 #sideNaviBtn.active{
   transform: rotate(90deg); 
   /* background-color: white; */
 }
 
-/* Pulsating circle effect remains the same */
+
 #sideNaviBtn.active {
   animation: pulse 0.7s infinite;
 }
@@ -374,7 +393,6 @@
   }
 }
 
-/* Reset the lines to their original state when not active */
 #sideNaviBtn .lines {
   transition: all 0.5s ease-in-out;
 }
@@ -384,7 +402,7 @@
 .modal {
   display: none; 
   position: fixed; 
-  z-index: 1; 
+  z-index: 3; 
   left: 0;
   top: 0;
   width: 100%; 
@@ -407,6 +425,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  /* z-index: 4; */
 }
 
 .modal-content h2{
@@ -482,7 +501,7 @@
 .modalProfile {
   display: none; 
   position: fixed; 
-  z-index: 1; 
+  z-index: 3; 
   left: 0;
   top: 0;
   width: 100%; 
@@ -560,7 +579,7 @@
 .modalPost {
   display: none; 
   position: fixed; 
-  z-index: 1; 
+  z-index: 3; 
   left: 0;
   top: 0;
   width: 100%; 

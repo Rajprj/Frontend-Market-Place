@@ -60,7 +60,9 @@ dbConnection()
         res.render("uicode", { isLoggedIn, profileUser });
     })
     app.get("/profile",verifyUser,async (req,res)=>{
-        const profileUser = await User.findById(req.user._id)
+        const profileUser = await User.findById(req.user._id).populate('posts')
+        // console.log(profileUser);
+        
         res.render("profile", {profileUser})
     })
     app.get("/login",(req,res)=>{
