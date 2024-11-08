@@ -7,6 +7,7 @@ import path from 'path';
 import fs from 'fs';
 
 
+
 //generate referash and access token for authentication
 const generateRefreshAccessToken = async function (userId) {
     try {
@@ -31,7 +32,7 @@ const generateRefreshAccessToken = async function (userId) {
     const { userName, fullName, email, password, role} = req.body;
 
     // check if fields are empty
-    if ([userName, fullName, email, password].some((fields) => fields?.trim() === "")) {
+    if ([userName, fullName, email, password, role].some((fields) => fields?.trim() === "")) {
         return res.render("register", { errorMessage: "All fields are required!"});
     }
 
@@ -42,6 +43,11 @@ const generateRefreshAccessToken = async function (userId) {
 
     if (existedUser) {
         return res.render("register", { errorMessage: "User already exists!" });
+    }
+
+    // check user role
+    if(role !== "developer" && role !== "viewer" ){
+        return res.render("register", { errorMessage: "Sorry you'r giving another role!" });
     }
 
     // create user
@@ -106,8 +112,13 @@ const loginUser = asyncHandler(async (req, res) => {
 
   res.cookie("accessToken", accessToken, options).cookie("refreshToken", refreshToken, options);
 
+  //check user is admin or not
+  if(findUser.role === "admin"){
+    return res.redirect("/admin");
+  }
   // Redirect to profile page on success
   return res.redirect("/profile");
+
 });
 
 //For logout
@@ -248,6 +259,120 @@ const deletePost = asyncHandler(async (req, res)=>{
     res.redirect("/profile");
 })
 
+//For see detail post 
+const detailedPost = asyncHandler(async (req, res) => {
+    try {
+      const postId = req.params.id;
+      const post = await Post.findById(postId).populate('user');
+      
+      
+  
+     
+    //   console.log(post.user?.dp);
+    //   console.log(post.like);
+      
+      res.json({
+        postName: post.postName,
+        thumbnail: post.thumbnail,
+        userProfilePic: post.user.dp,
+        userName: post.user.userName,
+        image: post.images,
+        likes: post.like
+      });
+    } catch (err) {
+      throw new apiError(500, "server error fetching post")
+    }
+});
+  
+//For like post
+const likePost = asyncHandler(async (req, res)=>{
+    const findUser = req.user._id;
+    const post = await Post.findById(req.params.id);
+
+    let liked = false;
+    // if post already liked
+    if(post.like.indexOf(findUser._id) === -1){
+        post.like.push(findUser._id)
+        liked = true;
+    }
+    else{
+        post.like.splice(post.like.indexOf(findUser._id), 1);
+    }
+    await post.save({validateBeforeSave:true})
+
+    let countlike = 0;
+    post.like.forEach(like=>{
+        countlike++
+    })
+
+    res.json({countlike, liked})
+    
+})
+
+//For update the profile
+const updateProfile = asyncHandler(async (req, res)=>{
+    try {
+        const {userName, fullName, email, role} = req.body;
+        // check if fields are empty
+        if ([userName, fullName, email, role].some((fields) => fields?.trim() === "")) {
+            return res.render("profile", { errorMessage: "All fields are required!"});
+        }
+
+        const existedUser = await User.findOne({
+            $or:[{userName},{email}],
+            _id: { $ne: req.user._id } 
+        })
+        if(existedUser){
+            return res.render("profile", { errorMessage: "this userName or email already exist"});
+        }
+
+        await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $set:{
+                    userName: userName.toLowerCase(),
+                    fullName, email, role
+                }
+            }
+            ,
+            {
+                new:true
+            }
+        );
+        return res.redirect("/profile");
+    } catch (error) {
+        throw new apiError(500, "feiled while updating the profile")
+    }
+})
+
+//For change role
+const changeRole = asyncHandler(async (req, res)=>{
+    try {
+        const { role} = req.body;
+        // check if fields are empty
+        if (!role) {
+            return res.render("profile", { errorMessage: "Role fields are required!"});
+        }
+        await User.findByIdAndUpdate(
+            req.user._id,
+            {
+                $set:{
+                    role
+                }
+            }
+            ,
+            {
+                new:true
+            }
+        );
+        return res.redirect("/profile");
+    } catch (error) {
+        throw new apiError(500, "feiled while updating the role")
+    }
+})
+
+
+
 export {
     registerUser,
     loginUser,
@@ -255,5 +380,9 @@ export {
     uploadDp,
     removeDp,
     addUserPost,
-    deletePost
+    deletePost,
+    detailedPost,
+    likePost,
+    updateProfile,
+    changeRole
 }

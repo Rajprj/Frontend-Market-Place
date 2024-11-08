@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, logOutUser, registerUser, removeDp, uploadDp, addUserPost, deletePost } from "../controllers/user.controler.js";
+import { loginUser, logOutUser, registerUser, removeDp, uploadDp, addUserPost, deletePost, detailedPost, likePost, updateProfile, changeRole } from "../controllers/user.controler.js";
 import { verifyUser } from "../middlewares/auth.midleware.js";
 import { upload } from "../middlewares/multer.midleware.js";
 
@@ -19,4 +19,8 @@ router.post("/uploadPost", verifyUser,
     ]),addUserPost
 )
 router.get("/delete/post/:id", verifyUser, deletePost)
-export default router
+router.get("/seeDetailPost/:id", detailedPost)
+router.get("/likePost/:id", verifyUser, likePost)
+router.post("/updateProfile", verifyUser, updateProfile)
+router.post("/changeRole", verifyUser, changeRole)
+export const userRouter = router;

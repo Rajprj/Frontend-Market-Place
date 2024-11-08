@@ -30,7 +30,11 @@
 
       <% if (isLoggedIn) { %>
         <div class="profileRedirectBox">
-          <a href="/profile">
+          <% if(profileUser.role === "admin"){ %>
+            <a href="/admin">
+          <% } else { %>
+            <a href="/profile">
+          <% } %>
             <div class="imgboxProfile">
               <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
                 <img src="/images/profilePic.png" alt="Default Profile Picture" />

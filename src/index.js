@@ -4,6 +4,8 @@ import { apiError } from "./utils/apiError.js"
 import {verifyUser} from "./middlewares/auth.midleware.js"
 import { User } from "./models/user.model.js"
 import  jwt  from "jsonwebtoken"
+import { getDashboard } from "./middlewares/getUsersInfo.midleware.js"
+
 
 const port = 6500
 
@@ -62,7 +64,9 @@ dbConnection()
     app.get("/profile",verifyUser,async (req,res)=>{
         const profileUser = await User.findById(req.user._id).populate('posts')
         // console.log(profileUser);
-        
+        if(profileUser.role !== "developer" && profileUser.role !== "viewer"){
+            res.redirect("login");
+        }
         res.render("profile", {profileUser})
     })
     app.get("/login",(req,res)=>{
@@ -71,8 +75,16 @@ dbConnection()
     app.get("/register",(req,res)=>{
         res.render("register")
     })
-    app.get("/admin",(req,res)=>{
-        res.render("admin")
+    app.get("/admin",verifyUser,getDashboard, async (req,res)=>{
+        const admin = await User.findById(req.user._id);
+        // console.log(admin);
+        
+        if(admin.role === "admin"){
+        res.render("admin", {admin, developerCount:req.developerCount, viewerCount: req.viewerCount, postCount : req.postCount,developers: req.developers, viewers: req.viewers, userPosts : req.userPosts, } )
+        }
+        else{
+            res.render("login")
+        }
     })
     app.listen(port,()=>{
         console.log(`server listening on port:${port}`);

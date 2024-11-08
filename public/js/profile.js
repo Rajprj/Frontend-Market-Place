@@ -1,161 +1,251 @@
-
 // =================Show naviBar for Update Use Profile==============
-
 function showSideNavi() {
   const hamBargar = document.querySelector("#sideNaviBtn");
   const profileSideNavi = document.querySelector(".profileSideNavi");
 
   hamBargar.addEventListener("click", () => {
     profileSideNavi.classList.toggle("hideNaviBar");
-    hamBargar.classList.toggle("active"); // Add or remove the 'active' class for animation
+    hamBargar.classList.toggle("active");
+  });
+  document.addEventListener("click", (e) => {
+    if (!profileSideNavi.contains(e.target) && !hamBargar.contains(e.target)) {
+      profileSideNavi.classList.add("hideNaviBar");
+      hamBargar.classList.remove("active");
+    }
   });
 }
-
 showSideNavi();
 
-
-
 // ==============Show Upload/Update dp================
-
 function showDPuploadBox() {
-  document.addEventListener("DOMContentLoaded", function() {
+  document.addEventListener("DOMContentLoaded", function () {
     const modal = document.getElementById("imageUploadModal");
-    const editDpBtn = document.querySelector('.editdp'); // Corrected selector
+    const editDpBtn = document.querySelector(".editdp");
     const closeBtn = document.querySelector(".closeBtnDp");
-  
-    // Open the modal on "Edit DP" click
-    editDpBtn.addEventListener("click", function(event) {
-      event.preventDefault(); // Prevent link navigation
+
+    editDpBtn.addEventListener("click", function (event) {
+      event.preventDefault();
       modal.style.display = "block";
     });
-  
-    // Close the modal on close button click
-    closeBtn.addEventListener("click", function() {
+
+    closeBtn.addEventListener("click", function () {
       modal.style.display = "none";
     });
-  
-    // Close the modal if user clicks outside the modal content
-    window.addEventListener("click", function(event) {
+
+    window.addEventListener("click", function (event) {
       if (event.target === modal) {
         modal.style.display = "none";
       }
     });
   });
-  
-}    
+}
 showDPuploadBox();
 
-
 // ==================Show Update User info Profile==============
-
-function showUserInfoBox(){
-  const editProfileBtn = document.querySelector('.editProfile');
-  const updateProfileBox = document.querySelector('.modalProfile');
+function showUserInfoBox() {
+  const editProfileBtn = document.querySelector(".editProfile");
+  const updateProfileBox = document.querySelector(".modalProfile");
   const closeBtn = document.querySelector(".closeBtnProfile");
 
-  console.log(updateProfileBox);
-  
-  editProfileBtn.addEventListener("click", (event)=>{
+  // console.log(updateProfileBox);
+
+  editProfileBtn.addEventListener("click", (event) => {
     event.preventDefault();
     updateProfileBox.style.display = "block";
-  })
+  });
 
-  closeBtn.addEventListener("click", ()=>{
+  closeBtn.addEventListener("click", () => {
     updateProfileBox.style.display = "none";
-  })
-}
+  });
 
+  window.addEventListener("click", (event) => {
+    if (event.target === updateProfileBox) {
+      updateProfileBox.style.display = "none";
+    }
+  });
+}
 showUserInfoBox();
 
-
 // ==================Show Upload Post==============
-
-function showPostUpload(){
-  const addPostBtn = document.querySelectorAll('.addPost');
-  const uploadPostBox = document.querySelector('.modalPost');
+function showPostUpload() {
+  const addPostBtn = document.querySelectorAll(".addPost");
+  const uploadPostBox = document.querySelector(".modalPost");
   const closeBtn = document.querySelector(".closeBtnPost");
 
   // console.log(updateProfileBox);
-  
-  addPostBtn.forEach((btn)=>{
-    btn.addEventListener("click",(event)=>{
+
+  addPostBtn.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
       event.preventDefault();
       uploadPostBox.style.display = "block";
-    })
-  })
+    });
+  });
 
-  closeBtn.addEventListener("click", ()=>{
+  closeBtn.addEventListener("click", () => {
     uploadPostBox.style.display = "none";
-  })
-}
+  });
 
+  window.addEventListener("click", (event) => {
+    if (event.target === uploadPostBox) {
+      uploadPostBox.style.display = "none";
+    }
+  });
+}
 showPostUpload();
 
-// ---------------------like Button---------------
-function likeButton() {
+// ---------------post see button--------------
+function postSeeBtn() {
+  const seeBtns = document.querySelectorAll(".seeContainer");
+  const postDetailedBox = document.querySelector("#postDetailedBox");
 
-  document.addEventListener('DOMContentLoaded', function () {
-    
-    const likeButtons = document.querySelectorAll(".likeButton");
-  
-    // Iterate through each like button
-    likeButtons.forEach((likeButton) => {
-      const likeCount = likeButton.querySelector(".likeCount");
-  
-      let liked = false;
-      let count = parseInt(likeCount.textContent); 
-  
-      
-      likeButton.addEventListener("click", function () {
-        liked = !liked;
-        if (liked) {
-          count++;
-          likeButton.classList.add("liked");
-        } else {
-          count--;
-          likeButton.classList.remove("liked");
+  seeBtns.forEach((seeBtn) => {
+    seeBtn.addEventListener("click", async () => {
+      const postId = seeBtn.getAttribute("postId");
+      const userId = seeBtn.getAttribute("userId");
+      console.log(userId);
+
+      const response = await fetch(`/users/seeDetailPost/${postId}`);
+      // console.log("Post ID: ", postId);
+      const postData = await response.json();
+
+      postDetailedBox.style.display = "block";
+      // console.log(postData.image);
+      let countLike = 0;
+      postData.likes.forEach(like => {
+        countLike++
+      })
+      postDetailedBox.innerHTML = `
+  <div class="postDetailedBoxSet">
+    <div class="postBox">
+      <div class="closeBtn">
+        <p>&#x2702;</p>
+      </div>
+      <div class="postInfoBox">
+        <div class="postThumbnail">
+          <img src="${postData.thumbnail}" alt="">
+        </div>
+        <div class="multiPicPostBox">
+          ${postData.image && postData.image.length > 0
+          ? postData.image
+            .map(
+              (img) => `
+            <div class="pics">
+              <img src="${img.url}" alt="">
+            </div>
+          `
+            )
+            .join("")
+          : "No images available"
         }
-        
-        likeCount.textContent = count;
+        </div>
+        <div class="userAndPostInfoBox">
+          <div class="likeBox">
+            <div class="likeContainer">
+              <span class="likeButton" id="likeButton">
+                <i class="heartIcon" id="heartIcon"></i>
+                <span class="likeCount" id="likeCount">${countLike}</span>
+              </span>
+            </div>
+          </div>
+          <div class="postInfo">
+            <div class="postName">
+              <h2>${postData.postName}</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="commentBox">
+        <div class="commentHeader">
+          <h3>Comments</h3>
+        </div>
+        <div class="commentsContainer"></div>
+      </div>
+    </div>
+  </div>
+`;
+      const likeButtonElement = document.getElementById("likeButton");
+      
+      postData.likes.forEach(like => {
+        if (postData.likes.indexOf(userId) === -1) {
+          likeButtonElement.classList.remove("liked");
+        }
+        else{
+          likeButtonElement.classList.add("liked");
+        }
+      })
+     
+      // -------------------like post----------------
+      likeButtonElement.addEventListener("click", async function () {
+        const res = await fetch(`/users/likePost/${postId}`);
+        const data = await res.json();
+        countLike = data.countlike;
+        document.getElementById("likeCount").textContent = countLike;
+        if(data.liked === true){
+          likeButtonElement.classList.add("liked");
+        }
+        else{
+          likeButtonElement.classList.remove("liked");
+        }
+      });
+
+      // -----------------Detailed post Thubmnail img change-------------
+      function thumbnailImgChange() {
+        const thumbnail = document.querySelector(".postThumbnail img");
+        const multiImgs = document.querySelectorAll(".pics img");
+
+        multiImgs.forEach((img) => {
+          img.addEventListener("click", () => {
+            const selectedImg = img.src;
+            const oldThumbnailImg = thumbnail.src;
+
+            thumbnail.src = selectedImg;
+            img.src = oldThumbnailImg;
+          });
+        });
+      }
+      thumbnailImgChange();
+
+      const postDetailedSetBox = document.querySelector(".postDetailedBoxSet");
+      const postDetailedBoxCloseBtn = document.querySelector(
+        ".postDetailedBoxSet .postBox .closeBtn"
+      );
+      // Close the post details
+      postDetailedBoxCloseBtn.addEventListener("click", () => {
+        postDetailedBox.style.display = "none";
+      });
+
+      window.addEventListener("click", (event) => {
+        if (event.target === postDetailedSetBox) {
+          postDetailedBox.style.display = "none";
+        }
       });
     });
   });
-  
-  
-}
-likeButton();
-// -----------------Detailed post Thubmnail img change--------------
-function thumbnailImgChange() {
-  const thumbnail = document.querySelector(".postThumbnail img")
-  const multiImgs = document.querySelectorAll(".pics img");
-
-  multiImgs.forEach((imgs) => {
-    imgs.addEventListener("click", () => {
-      const selectedImg = imgs.src;
-      const oldThumbnailImg = thumbnail.src;
-      thumbnail.src = selectedImg;
-      imgs.src = oldThumbnailImg;
-    })
-  })
-}
-thumbnailImgChange();
-
-// ---------------post see button--------------
-function postSeeBtn(){
-
-  const seeBtns = document.querySelectorAll(".seeContainer")
-  const postDetailedBox = document.querySelector("#postDetailedBox");
-  const postDetailedBoxCloseBtn = document.querySelector(".postDetailedBoxSet .postBox .closeBtn")
-
-  seeBtns.forEach((seeBtn)=>{
-    seeBtn.addEventListener("click",()=>{
-      postDetailedBox.style.display = "block";
-    })
-  })
-
-  postDetailedBoxCloseBtn.addEventListener("click",()=>{
-    postDetailedBox.style.display = "none";
-  })
-
 }
 postSeeBtn();
+
+// ==============Show Change Role================
+function showChangeRole() {
+  document.addEventListener("DOMContentLoaded", function () {
+    const modal = document.getElementById("changeRoleModel");
+    const changeRoleBtn = document.querySelector(".changeRole");
+    const closeBtn = document.querySelector(".closeBtnRole");
+    console.log(changeRoleBtn);
+
+    changeRoleBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      modal.style.display = "block";
+    });
+
+    closeBtn.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  });
+}
+showChangeRole();

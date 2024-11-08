@@ -21,7 +21,11 @@ const userPostSchema = new Schema({
         type:Schema.Types.ObjectId,
         ref:"User"
     },
-    images: [{ url: String }]
+    images: [{ url: String }],
+    like:[{
+        type:Schema.Types.ObjectId,
+        ref:"User"
+    }] 
 });
 
 // Validation function to 4-image limit

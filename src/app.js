@@ -22,7 +22,9 @@ app.use('/images', express.static('/public'));
 
 
 // Routes
-import userRouter from "./routes/user.route.js";
+import {userRouter} from "./routes/user.route.js";
+import { adminRouter } from "./routes/admin.route.js";
 app.use("/users", userRouter);
+app.use("/admin", adminRouter);
 
 export { app };

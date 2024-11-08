@@ -4,21 +4,124 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f0f2f5;
+    overflow:hidden;
 }
 
-h2,
-h3 {
+body h2, body h3 {
     margin: 0;
 }
 
-p {
+body p {
     margin: 5px 0;
     font-weight: bold;
 }
 
+
+/* ======Closebtn for modals============ */
+#closeBtn {
+    color: #555;
+    float: right;
+    font-size: 44px;
+    font-weight: bold;
+    margin-top: -25px;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    position: absolute;
+    top: 12%;
+    right: 3%;
+  }
+  
+  #closeBtn:hover,
+  #closeBtn:focus {
+    color: #000;
+  }
+/* ------------For Profile Update---------------- */
+
+.modalProfile, .modalAddAdmin {
+    display: none; 
+    position: fixed; 
+    z-index: 3; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.6); 
+    backdrop-filter: blur(5px); 
+  }
+  
+  .modalProfile .modal-content,
+  .modalAddAdmin .modal-content {
+    background-color: #fff;
+    /* background-color: red; */
+    margin: 10% auto; 
+    padding: 20px;
+    border-radius: 10px; 
+    width: 40%; 
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3); 
+    text-align: center; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+  }
+  .modalProfile .modal-content form,
+  .modalAddAdmin .modal-content form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1vw 0;
+    width: 50%;
+    /* background-color: red; */
+  }
+  
+  #profileUpdateModal .modal-content form input,
+  .modalAddAdmin .modal-content form input{
+    width: 100%;
+    border: 1px solid silver;
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 12px;
+  }
+  
+  #profileUpdateModal .modal-content form select{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid silver;
+    border-radius: 12px;
+  }
+  
+  #profileUpdateModal .modal-content form .submitBtn
+  .modalAddAdmin .modal-content form .submitBtn{
+    width: 50%;
+    margin: 23px 0;
+    /* background-color: red; */
+  }
+  
+  #profileUpdateModal .modal-content form .submitBtn button,
+  .modalAddAdmin .modal-content form .submitBtn button{
+    /* margin-top: 1vw; */
+    background-color: #007bff;
+    color: #fff;
+    width: 100%;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    /* cursor: not-allowed; */
+    transition: background-color 0.3s ease;
+  }
+  
+  #profileUpdateModal .modal-content form .submitBtn button:hover,
+  .modalAddAdmin .modal-content form .submitBtn button:hover {
+    background-color: #0056b3;
+  }
+
 /* ===== Navbar Styling ===== */
 .navbar {
-    background-color:rgb(36, 36, 36);
+    background-color: rgb(36, 36, 36);
     color: #fff;
     padding: 15px 30px;
     display: flex;
@@ -32,165 +135,288 @@ p {
     font-weight: 600;
 }
 
+/* -------hamBargar for SideNavi------------- */
+
+#sideNaviBtn{
+    height: 2.8vw;
+    width: 3vw;
+    /* position: absolute; */
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(80, 80, 80);
+    cursor: pointer;
+    border-radius: 50%; /* Circle button */
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .setNaviBtn{
+    height: 76%;
+    width: 76%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+    /* z-index: 1; */
+    transition: all 0.5s ease-in-out;
+  }
+  
+  #sideNaviBtn .lines{
+    height: 10%;
+    border-radius: 12px;
+    width: 80%;
+    background-color: white;
+    transition: all 0.5s ease-in-out;
+  }
+  
+  
+  #sideNaviBtn.active{
+    transform: rotate(90deg); 
+    /* background-color: white; */
+  }
+  
+  
+  #sideNaviBtn.active {
+    animation: pulse 0.7s infinite;
+  }
+  
+  @keyframes pulse {
+    0% {
+      box-shadow: 0 0 5px rgb(80, 80, 80);
+    }
+    50% {
+      box-shadow: 0 0 15px rgb(100, 100, 100);
+    }
+    100% {
+      box-shadow: 0 0 5px rgb(80, 80, 80);
+    }
+  }
+  
+ 
+/* side navigation----------- */
+
+.profileSideNavi{
+    position: absolute;
+    top: 12%;
+    right: 0;
+    z-index: 2;
+    /* height: 100%; */
+    width: 23%;
+    background-color:  rgb(15, 15, 15);
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all ease 0.6s;
+    border-radius: 5px;
+  }
+  
+  .hideNaviBar{
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  
+  .setNavibox{
+    /* height: 80%; */
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* justify-content: space-around; */
+    /* background-color: #111; */
+  }
+  
+  .setNavibox a{
+    height: 20%;
+    width: 100%;
+    text-decoration: none;
+    background-color: rgb(80, 80, 80);
+    border-radius: 12px;
+    text-align: center;
+    font-size: 1.7vw;
+    font-weight: 600;
+    display: flex;
+    padding: 0.7vw 0;
+    margin: 0.7vw 0;
+    align-items: center;
+    justify-content: flex-start;
+    cursor: pointer;
+    color: #fff;
+  }
+  .setNavibox a span{
+    margin-left: 5%;
+  }
+  
+  .setNavibox a:last-child{
+    background-color: rgb(192, 5, 5);
+  }
+  
+  .setNavibox a:last-child:hover{
+    background-color: rgb(123, 5, 5);
+  }
+  
 /* ===== Admin Dashboard Section ===== */
-
-
 .admin-dashboard {
     height: 81.3vh;
     width: 100%;
-    padding: 20px;
+    padding-top: 20px;
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-
 /* ===== Sidebar Styling ===== */
 #sidebar {
-    height: 100%;
+    height: 92%;
     width: 15%;
     padding: 2vw 2.3vw;
-    /* position: fixed; */
-    /* left: 0; */
-    /* top: 64px; */
-    margin-top: 3.6vw;
+    /* margin-top: 3.6vw; */
     margin-right: 2%;
     background-color: rgb(36, 36, 36);
     border-right: 1px solid rgb(205, 201, 201);
-    /* background-color: red; */
 }
 
-
-
-.headParts {
+#sidebar .headParts {
     height: 5%;
     width: 67%;
-    /* background-color: yellow; */
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 4%;
 }
 
-.sideLogo img {
+#sidebar .sideLogo img {
     height: 2.5vw;
     width: 2.5vw;
 }
 
-.headParts h1 {
+#sidebar .headParts h1 {
     font-size: 1.3vw;
     font-weight: 700;
     color: #fff;
     font-family: Gilroy, sans-serif;
 }
 
-.otherRegex {
+#sidebar .otherRegex {
     height: 50%;
     width: 100%;
-    /* background-color: rgb(168, 130, 130); */
 }
 
-.parts {
+#sidebar .parts {
     height: 50px;
     display: flex;
     align-items: center;
     border-radius: 10px;
-    /* padding: 0.5vw; */
     cursor: pointer;
     margin-bottom: 3%;
     background-color: rgb(80, 80, 80);
-    /* justify-content: center; */
-    /* background-color: blue; */
 }
-#sidebar a{
+
+#sidebar a {
     text-decoration: none;
     color: #fff;
-  }
-
-.parts:hover {
-    background-color: rgb(230, 230, 230);
-    color: black
 }
 
-.bg_clr {
+#sidebar .parts:hover {
     background-color: rgb(230, 230, 230);
+    color: black;
 }
 
-.sideLogoParts {
+#sidebar .sideLogoParts {
     height: 100%;
     width: 18%;
     display: flex;
-    /* margin-right: 2%; */
     justify-content: center;
     align-items: center;
     margin-right: 0.5vw;
-    /* background-color: red; */
 }
 
-.sideLogoParts img {
+#sidebar .sideLogoParts img {
     height: 1.6vw;
     width: 1.6vw;
 }
 
-.parts h6 {
+#sidebar .parts h6 {
     font-size: 1vw;
     margin-left: 4%;
     font-weight: 600;
 }
 
-
-/* ============main-Content========== */
-
+/* ===== Main Content Styling ===== */
 .main-content {
     height: 100%;
-    width: 80%;
+    width: 76%;
 }
 
-/* Dashboard Boxes */
-.dashboard-container {
+.main-content .dashboard-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 40px;
 }
 
-.dashboard-container .dashboard-box {
+.main-content .dashboard-container .dashboard-box {
     background-color: #fff;
     padding: 30px;
     border-radius: 10px;
-    width: 30%;
+    width: 27%;
     text-align: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.dashboard-container .dashboard-box:hover {
+.main-content .dashboard-container .dashboard-box:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
-.dashboard-container .dashboard-box h3 {
+.main-content .dashboard-container .dashboard-box h3 {
     font-size: 22px;
     color: #1f2937;
     margin-bottom: 10px;
 }
 
-.dashboard-container .dashboard-box p {
+.main-content .dashboard-container .dashboard-box p {
     font-size: 28px;
     color: #3b82f6;
 }
 
 /* ===== Details Section ===== */
 .details-container {
-    background-color: #fff;
+    background-color: #ffffff;
+    height: 50vh;
     padding: 30px;
+    overflow-y: scroll;
     border-radius: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.details-container table {
+
+.details-container::-webkit-scrollbar {
+    width: 8px; 
+}
+
+.details-container::-webkit-scrollbar-track {
+    background: #ffffff; 
+    border-radius: 10px;
+}
+
+.details-container::-webkit-scrollbar-thumb {
+    background-color: #242121; 
+    border-radius: 10px;
+    border: 2px solid #e0e0e0; 
+}
+.details-container::-webkit-scrollbar-thumb:hover {
+    background-color: #242121; 
+}
+
+
+.details-container table{
     width: 100%;
+    /* overflow: scroll; */
     border-collapse: collapse;
     margin-top: 20px;
+    
 }
 
 .details-container table,
@@ -215,32 +441,52 @@ p {
 }
 
 /* ===== Developer Section ===== */
-
-
 .developer-container {
     display: flex;
     position: relative;
     flex-wrap: wrap;
     justify-content: space-around;
     margin-top: 20px;
+    height: 100%;
 }
 
 .developer-container .developer-row {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
     width: 100%;
+    height: 77.4vh;
     margin-bottom: 20px;
+    overflow-y: scroll;
+}
+
+.developer-container .developer-row::-webkit-scrollbar {
+    width: 7px;
+}
+
+.developer-container .developer-row::-webkit-scrollbar-track {
+    background: #ffffff; 
+    border-radius: 10px;
+}
+
+.developer-container .developer-row::-webkit-scrollbar-thumb {
+    background-color: #242121; 
+    border-radius: 10px;
+    border: 1px solid #e0e0e0; 
+}
+
+.developer-container .developer-row::-webkit-scrollbar-thumb:hover {
+    background-color: #3a3a3a; 
 }
 
 .developer-container .developer-box {
-    flex: 1;
-    max-width: 30%;
     border: 1px solid #ccc;
     padding: 15px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-right: 20px;
+
 }
+
 
 .developer-container .developer-box:last-child {
     margin-right: 0;
@@ -253,58 +499,90 @@ p {
     margin-bottom: 10px;
 }
 
-.developer-container .post-count-btn {
-    background-color: #007BFF;
+.developer-container .postCountBtn,.userEditBtn,.userDeleteBtn {
+    
     color: white;
     border: none;
+    width: 30%;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
     margin-top: 10px;
 }
 
-.developer-container .post-count-btn:hover {
-    background-color: #0056b3;
+.developer-container .postCountBtn {
+    background-color: #ff9f43;
+}
+.developer-container .postCountBtn:hover {
+    background-color: #e68a2e; 
 }
 
-/* =============Developer Post Container============== */
+.developer-container .userEditBtn {
+    background-color: #2d98da;
+}
+.developer-container .userEditBtn:hover {
+    background-color: #1c7bbd; 
+}
 
+.developer-container .userDeleteBtn {
+    background-color: #eb4d4b;
+}
+.developer-container .userDeleteBtn:hover {
+    background-color: #c0392b; 
+}
+
+
+/* ===== Developer Post Container ===== */
 .developer-container .eachDeveloperPosts {
-    min-height: 80vh;
+    height: 78vh;
     width: 100%;
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: white;
+    background-color: rgb(255, 255, 255);
+    overflow-y: scroll;
+}
+.developer-container .eachDeveloperPosts::-webkit-scrollbar {
+    width: 7px;
 }
 
-.eachDeveloperPosts .eachDeveloperPostsClose {
+.developer-container .eachDeveloperPosts::-webkit-scrollbar-track {
+    background: #ffffff; 
+    border-radius: 10px;
+}
+
+.developer-container .eachDeveloperPosts::-webkit-scrollbar-thumb {
+    background-color: #242121; 
+    border-radius: 10px;
+    border: 1px solid #e0e0e0; 
+}
+.developer-container .eachDeveloperPosts .eachDeveloperPostsClose {
     height: 34px;
     width: 100%;
-    /* background-color: yellow; */
     margin: 13px 0;
     display: flex;
     align-items: center;
     justify-content: end;
 }
 
-.eachDeveloperPosts .eachDeveloperPostsClose .closeBtn {
+.developer-container .eachDeveloperPosts .eachDeveloperPostsClose .closeBtn {
     font-size: 32px;
     margin-right: 12px;
+    cursor: pointer;
 }
 
 .developer-container .eachDeveloperPosts .developerPost-row {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
     width: 100%;
     margin-bottom: 20px;
+    
 }
 
 .developer-container .eachDeveloperPosts .developerPost-row .developerPost-box {
-    flex: 1;
-    max-width: 30%;
     border: 1px solid #ccc;
     padding: 15px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -324,15 +602,17 @@ p {
 .developer-container .eachDeveloperPosts .developerPost-row .postThumbnail {
     width: 100%;
     height: 50%;
-    /* border-radius: 50%; */
-
-    /* object-fit: cover; */
     margin-bottom: 10px;
 }
 
-.developer-container .eachDeveloperPosts .developerPost-row .postDeleteBtn {
-    background-color: #cd0703;
+.developer-container .eachDeveloperPosts .developerPost-row .postBtns{
+    width: 100%;
+}
+.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postDeleteBtn,
+.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postMsgBtn {
+  
     color: white;
+    width: 45%;
     border: none;
     padding: 8px 12px;
     border-radius: 5px;
@@ -340,77 +620,91 @@ p {
     margin-top: 10px;
 }
 
+.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postDeleteBtn{
+    background-color: #cd0703;
+}
 .developer-container .eachDeveloperPosts .developerPost-row .postDeleteBtn:hover {
     background-color: #9c0202;
 }
+.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postMsgBtn {
+    background-color: #2d98da;
+}
 
-
-/* ============Vier Container============== */
-
-/* Viewer Container Styling */
+.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postMsgBtn:hover{
+    background-color: #1c7bbd; 
+}
+/* ===== Viewer Container ===== */
 #viewerContainer {
     padding: 20px;
     background-color: #fff;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    font-family: Arial, sans-serif;
 }
 
-/* Table Styling */
-#viewerTable {
+#viewerContainer h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#viewerContainer table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
+    font-size: 14px;
+    color: #555;
 }
 
-#viewerTable th,
-#viewerTable td {
-    border: 1px solid #e5e7eb;
-    padding: 15px;
+#viewerContainer th,
+#viewerContainer td {
+    padding: 8px;
+    border: 1px solid #ddd;
     text-align: left;
 }
 
-#viewerTable th {
-    background-color: #f3f4f6;
-    font-weight: 600;
+#viewerContainer th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: #333;
 }
 
-#viewerTable tr:nth-child(even) {
-    background-color: #f9fafb;
+#viewerContainer td {
+    color: #666;
 }
 
-/* Button Styling */
-.edit-btn,
-.delete-btn {
-    background-color: #3b82f6;
-    /* Edit button color */
-    color: white;
+#viewerContainer a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+#viewerContainer a:hover {
+    text-decoration: underline;
+}
+
+#viewerContainer .editBtn,
+#viewerContainer .deleteBtn {
+    padding: 6px 12px;
     border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    font-size: 12px;
+    margin: 0 2px;
+    font-weight: bold;
+    color: #fff;
 }
 
-.edit-btn:hover {
-    background-color: #2563eb;
-    /* Darker shade on hover for edit */
+#viewerContainer .editBtn {
+    background-color: #2d98da;
 }
 
-.delete-btn {
-    background-color: #ef4444;
-    /* Delete button color */
+#viewerContainer .deleteBtn {
+    background-color: #eb4d4b;
 }
 
-.delete-btn:hover {
-    background-color: #dc2626;
-    /* Darker shade on hover for delete */
+
+#viewerContainer .editBtn:hover {
+    background-color: #1c7bbd;
 }
 
-.edit-btn:focus,
-.delete-btn:focus {
-    outline: none;
-    /* Remove default outline */
-    box-shadow: 0 0 0 2px rgba(59, 130, 247, 0.5);
-    /* Focus effect */
+#viewerContainer .deleteBtn:hover {
+    background-color:#c0392b;
 }
