@@ -1,3 +1,5 @@
+
+
 // =================Show naviBar for Update Use Profile==============
 function showSideNavi() {
   const hamBargar = document.querySelector("#sideNaviBtn");
@@ -151,37 +153,36 @@ sidebarListContainerShow();
 // ======================Developer Post Container================
 function eachDeveloperPostShow() {
   const postContainer = document.querySelector(".eachDeveloperPosts");
+  const postContainerRow = document.querySelector(".eachDeveloperPosts .developerPost-row");
   const developerPostBtn = document.querySelectorAll(".postCountBtn");
 
 
   developerPostBtn.forEach((btns) => {
     btns.addEventListener("click", () => {
       postContainer.style.display = "block";
-      const user = btns.getAttribute("user")
-      console.log(user);
-      user.posts.forEach((post)=>{
-        console.log(post);
-        
-      })
+      const user = JSON.parse(btns.getAttribute("user"));
       
-      
-      
-      postContainer.innerHTML = `
-                    <div class="eachDeveloperPostsClose">
-                        <div class="closeBtn">&#x2702;</div>
+      postContainerRow.innerHTML = `
+    
+    ${user.posts.map(post => {
+        return `
+            
+                <div class="developerPost-box">
+                    <img src="${post.thumbnail}" alt="Profile Picture" class="postThumbnail">
+                    <p>ID: ${post._id}</p>
+                    <p>Username: ${user.userName}</p>
+                    <p>Postname: ${post.postName}</p>
+                    <div class="postBtns">
+                        
+                        <button class="postDeleteBtn">Delete</button>
                     </div>
-                    <div class="developerPost-row">
-                        <div class="developerPost-box">
-                            <img src="" alt="Profile Picture" class="postThumbnail">
-                            <p>ID: 3</p>
-                            <p>Username: Bob Brown</p>
-                            <p>Email: bob@example.com</p>
-                            <div class="postBtns">
-                                <button class="postMsgBtn">Message</button>
-                                <button class="postDeleteBtn">Delete</button>
-                            </div>
-                        </div>
-                    </div>`
+                </div>
+                
+            
+        `;
+    }).join('')}
+`;
+
       const postContainerCloseBtn = document.querySelector(
         ".eachDeveloperPostsClose .closeBtn"
       );
@@ -194,3 +195,129 @@ function eachDeveloperPostShow() {
 
 }
 eachDeveloperPostShow();
+
+//===========userDelete==============
+function userDelete(){
+  const userDeleteBtn = document.querySelectorAll(".removeUser");
+
+userDeleteBtn.forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    const userId = btn.getAttribute("userId");
+
+    // Show a confirmation prompt
+    const confirmDelete = confirm("Are you sure you want to delete this user?");
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`/admin/deleteUser/${userId}`);
+
+      if (res.ok) {
+        const userItem = btn.closest(".removeUserBox");
+        if (userItem) {
+          userItem.remove();
+        } else {
+          console.warn("user box not found");
+        }
+      } else {
+        console.error("not delete");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  });
+});
+}
+userDelete();
+
+// ============Edit user detail==========
+function editUserDetail(){
+  const userEditForm = document.querySelector(".modalUserProfile")
+  const editBtn = document.querySelectorAll(".userEditBtn")
+
+  editBtn.forEach((btn)=>{
+    btn.addEventListener("click",()=>{
+      const userId = JSON.parse(btn.getAttribute("user"))
+      // console.log(userId);
+      
+      userEditForm.innerHTML = `<div class="modal-content">
+          <span id="closeBtn" class="closeBtnUserProfile">&times;</span>
+          <h2>Update User A/c</h2>
+          <form  onsubmit="return submitForm(event)" >
+            <input type="text" name="userName" placeholder="userName" value="${userId.userName}">
+            <input type="text" name="fullName" placeholder="fullName" value="${userId.fullName}">
+            <input type="email" name="email" placeholder="Email" value="${userId.email}">
+            <select name="role" value="${userId.role}">
+              <option value="developer">developer</option>
+              <option value="viewer">viewer</option>
+            </select>
+            <div class="submitBtn">
+              <button type="submit" >Submit</button>
+            </div>
+          </form>
+
+        </div>`
+        userEditForm.style.display = "block"
+        function submitForm(event){
+          event.preventDefault();
+          return false;
+        }
+
+        const closeBtn = document.querySelector(".closeBtnUserProfile");
+        closeBtn.addEventListener("click",()=>{
+          userEditForm.style.display = "none"
+        })
+
+        window.addEventListener("click",(e)=>{
+          if(e.target === userEditForm){
+            userEditForm.style.display = "none"
+          }
+        })
+    })
+  })
+}
+editUserDetail()
+// ==============Flash Messages============
+function flashMsgsTiming() {
+  const errorMsgBox = document.querySelector("#errorMsgFromBackend");
+  const successMsgFromBackend = document.querySelector("#successMsgFromBackend");
+  const msgTimeCircle = document.querySelector(".circle");
+  let count = 0;
+
+  if (errorMsgBox) { 
+    errorMsgBox.style.display = 'flex'; 
+    const timeInt = setInterval(() => {
+      count++;
+      msgTimeCircle.innerHTML = count;
+      if (count === 5) {
+        clearInterval(timeInt);
+
+        errorMsgBox.style.transition = "opacity 0.5s, transform 0.5s";
+        errorMsgBox.style.opacity = "0";
+        errorMsgBox.style.transform = "translateY(-20%)";
+
+        setTimeout(() => {
+          errorMsgBox.style.display = 'none';
+        }, 500); 
+      }
+    }, 1000);
+  }
+  if(successMsgFromBackend){
+    successMsgFromBackend.style.display = 'flex'; 
+    const timeInt = setInterval(() => {
+      count++;
+      msgTimeCircle.innerHTML = count;
+      if (count === 3) {
+        clearInterval(timeInt);
+
+        successMsgFromBackend.style.transition = "opacity 0.5s, transform 0.5s";
+        successMsgFromBackend.style.opacity = "0";
+        successMsgFromBackend.style.transform = "translateY(-20%)";
+
+        setTimeout(() => {
+          successMsgFromBackend.style.display = 'none';
+        }, 500); 
+      }
+    }, 1000);
+  }
+}
+flashMsgsTiming();

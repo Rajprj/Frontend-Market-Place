@@ -8,20 +8,22 @@ const verifyUser = asyncHandler(async (req, res, next) => {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ","")
     
         if(!token){
-            return res.redirect('/login');
+            console.log("token is required");
+            return res.render('login', {errorMessage: "Sorry you'r not loggedIn!"});
         }
     
         const decodedToken = jwt.verify(token,"sadfASFAFsfsf")
     
         const user = await User.findById(decodedToken?._id).select("-password -refreshToken")
         if(!user){
-            return res.redirect('/login');
+            console.log("user not found in auth");
+            return res.render('login',{errorMessage:"Something went wrong"});
         }
     
         req.user = user
         next()
     } catch (error) {
-        throw new apiError(401, error.message || "Invalid tokens try again")
+        return res.render("login",{errorMessage:"Invalid token"})
     }
 });
 

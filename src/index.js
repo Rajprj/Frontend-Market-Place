@@ -1,96 +1,126 @@
 import { app } from "./app.js"
-import {dbConnection} from "./db/dbConnection.js"
+import { dbConnection } from "./db/dbConnection.js"
 import { apiError } from "./utils/apiError.js"
-import {verifyUser} from "./middlewares/auth.midleware.js"
+import { verifyUser } from "./middlewares/auth.midleware.js"
 import { User } from "./models/user.model.js"
-import  jwt  from "jsonwebtoken"
+import jwt from "jsonwebtoken"
 import { getDashboard } from "./middlewares/getUsersInfo.midleware.js"
 
 
 const port = 6500
 
 dbConnection()
-.then(()=>{
-    app.get("/",async (req, res) => {
-        const isLoggedIn = req.cookies?.accessToken ? true : false;
-        let profileUser = null;
+    .then(() => {
+        app.get("/", async (req, res) => {
+            const isLoggedIn = req.cookies?.accessToken ? true : false;
+            let profileUser = null;
 
-        if(isLoggedIn){
-            try {
-                const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
-                profileUser = await User.findById(decodedToken._id)
-            } catch (error) {
-                console.log(error);
-                
+            if (isLoggedIn) {
+                try {
+                    const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
+                    profileUser = await User.findById(decodedToken._id)
+                } catch (error) {
+                    console.log(error);
+
+                }
             }
-        }
 
-        res.render("index", { isLoggedIn, profileUser });
-    });
+            res.render("index", { isLoggedIn, profileUser });
+        });
 
-    app.get("/regex",async (req,res)=>{
-        const isLoggedIn = req.cookies?.accessToken ? true : false;
-        let profileUser = null;
+        app.get("/regex", async (req, res) => {
+            const isLoggedIn = req.cookies?.accessToken ? true : false;
+            let profileUser = null;
 
-        if(isLoggedIn){
-            try {
-                const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
-                profileUser = await User.findById(decodedToken._id)
-            } catch (error) {
-                console.log(error);
-                
+            if (isLoggedIn) {
+                try {
+                    const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
+                    profileUser = await User.findById(decodedToken._id)
+                } catch (error) {
+                    console.log(error);
+
+                }
             }
-        }
 
-        res.render("regex", { isLoggedIn, profileUser });
-    })
+            res.render("regex", { isLoggedIn, profileUser });
+        })
 
-    app.get("/uicode",async (req,res)=>{
-        const isLoggedIn = req.cookies?.accessToken ? true : false;
-        let profileUser = null;
+        app.get("/uicode", async (req, res) => {
+            const isLoggedIn = req.cookies?.accessToken ? true : false;
+            let profileUser = null;
 
-        if(isLoggedIn){
-            try {
-                const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
-                profileUser = await User.findById(decodedToken._id)
-            } catch (error) {
-                console.log(error);
-                
+            if (isLoggedIn) {
+                try {
+                    const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
+                    profileUser = await User.findById(decodedToken._id)
+                } catch (error) {
+                    console.log(error);
+
+                }
             }
-        }
 
-        res.render("uicode", { isLoggedIn, profileUser });
-    })
-    app.get("/profile",verifyUser,async (req,res)=>{
-        const profileUser = await User.findById(req.user._id).populate('posts')
-        // console.log(profileUser);
-        if(profileUser.role !== "developer" && profileUser.role !== "viewer"){
-            res.redirect("login");
-        }
-        res.render("profile", {profileUser})
-    })
-    app.get("/login",(req,res)=>{
-        res.render("login")
-    })
-    app.get("/register",(req,res)=>{
-        res.render("register")
-    })
-    app.get("/admin",verifyUser,getDashboard, async (req,res)=>{
-        const admin = await User.findById(req.user._id);
-        // console.log(admin);
-        
-        if(admin.role === "admin"){
-        res.render("admin", {admin, developerCount:req.developerCount, viewerCount: req.viewerCount, postCount : req.postCount,developers: req.developers, viewers: req.viewers, userPosts : req.userPosts, } )
-        }
-        else{
+            res.render("uicode", { isLoggedIn, profileUser });
+        })
+        app.get("/profile", verifyUser, async (req, res) => {
+            const profileUser = await User.findById(req.user._id).populate('posts')
+            // console.log(profileUser);
+            const errorMessage = req.session.errorMessage;
+            req.session.errorMessage = null;
+            const successMsg = req.session.successMsg;
+            req.session.successMsg = null;
+
+
+            if (profileUser.role !== "developer" && profileUser.role !== "viewer") {
+                res.redirect("login");
+            }
+            res.render("profile", { profileUser, errorMessage, successMsg })
+        })
+        app.get("/login", (req, res) => {
             res.render("login")
-        }
+        })
+        app.get("/register", (req, res) => {
+            res.render("register")
+        })
+        app.get("/admin", verifyUser, getDashboard, async (req, res) => {
+            try {
+                const admin = await User.findById(req.user._id);
+
+                if (!admin) {
+                    console.error("Admin user not found");
+                    return res.status(404).send("Admin user not found");
+                }
+
+                if (admin.role === "admin") {
+                    const errorMessage = req.session.errorMessage;
+                    req.session.errorMessage = null;
+                    const successMsg = req.session.successMsg;
+                    req.session.successMsg = null;
+
+                    res.render("admin", {
+                        admin,
+                        developerCount: req.developerCount,
+                        viewerCount: req.viewerCount,
+                        postCount: req.postCount,
+                        developers: req.developers,
+                        viewers: req.viewers,
+                        userPosts: req.userPosts,
+                        errorMessage,
+                        successMsg
+                    });
+                } else {
+                    res.render("login"); // Redirect if not an admin
+                }
+            } catch (error) {
+                console.error("Error in /admin route:", error); // Log the specific error
+                res.status(500).send("Internal Server Error");
+            }
+        });
+
+        app.listen(port, () => {
+            console.log(`server listening on port:${port}`);
+
+        })
     })
-    app.listen(port,()=>{
-        console.log(`server listening on port:${port}`);
-        
+    .catch((err) => {
+        throw new apiError(401, "DB connection failed!")
     })
-})
-.catch((err)=>{
-    throw new apiError(401, "DB connection failed!")
-})

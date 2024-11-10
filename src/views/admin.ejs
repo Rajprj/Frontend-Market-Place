@@ -10,15 +10,27 @@
 </head>
 
 <body>
+    <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
+        <div id="errorMsgFromBackend">
+            <p><%= errorMessage %> <span class="circle"></span></p>
+        </div>
+    <% } %>
+    <% if (typeof successMsg !=='undefined' && successMsg) { %>
+        <div id="successMsgFromBackend">
+          <p>
+            <%= successMsg %> <span class="circle"></span>
+          </p>
+        </div>
+    <% } %>
     <!-- ---------------For Profile Info Updates-------------- -->
     <div id="profileUpdateModal" class="modalProfile">
         <div class="modal-content">
             <span id="closeBtn" class="closeBtnProfile">&times;</span>
             <h2>Update your A/c</h2>
             <form action="/admin/editProfile" method="POST">
-                <input type="text" name="userName" placeholder="userName" value="<%= admin.userName %>">
-                <input type="text" name="fullName" placeholder="fullName" value="<%= admin.fullName %>">
-                <input type="email" name="email" placeholder="Email" value="<%= admin.email %>">
+                <input type="text" name="userName" placeholder="userName" value="<%= admin.userName %>" required>
+                <input type="text" name="fullName" placeholder="fullName" value="<%= admin.fullName %>" required>
+                <input type="email" name="email" placeholder="Email" value="<%= admin.email %>" required>
 
                 <div class="submitBtn">
                     <button type="submit">Submit</button>
@@ -28,16 +40,21 @@
         </div>
     </div>
 
+    <!-- ---------------For Profile Info Updates-------------- -->
+    <div id="userProfileUpdateModal" class="modalUserProfile">
+        
+    </div>
+
     <!-- ---------------For add admin-------------- -->
     <div id="addAdminModal" class="modalAddAdmin">
         <div class="modal-content">
             <span id="closeBtn" class="closeBtnAddAdmin">&times;</span>
             <h2>Add Admin</h2>
             <form action="/admin/addAdmin" method="POST">
-                <input type="text" name="userName" placeholder="userName">
-                <input type="text" name="fullName" placeholder="fullName">
-                <input type="email" name="email" placeholder="Email">
-                <input type="password" name="password" placeholder="password">
+                <input type="text" name="userName" placeholder="userName" required>
+                <input type="text" name="fullName" placeholder="fullName" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="password" required>
                 <div class="submitBtn">
                     <button type="submit">Submit</button>
                 </div>
@@ -267,71 +284,73 @@
             <div id="developerContainer" class="developer-container" style="display: none;">
                 <div class="developer-row">
                     <% developers.forEach(developer=>{ %>
-                        <div class="developer-box">
-                            <% if (!developer.dp || developer.dp==="" ) { %>
+                        <div class="developer-box removeUserBox">
+                            <% if (!developer.dp || developer.dp === "" ) { %>
                                 <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
-                                <% } else { %>
-                                    <img src="<%= developer.dp %>" alt="Profile Picture" class="profile-pic">
-                                    <% } %>
-                                        <p>Id : <%= developer._id %>
-                                        </p>
-                                        <p>Username : <%= developer.userName %>
-                                        </p>
-                                        <p>Email : <%= developer.email %>
-                                        </p>
-                                        <button class="postCountBtn" user="<%= developer %>">
-                                            Post = <%= developer.developerPostCount %>
-                                        </button>
-
-                                        <button class="userEditBtn">
-                                            Edit
-                                        </button>
-
-                                        <button class="userDeleteBtn">
-                                            Delete
-                                        </button>
-
-                        </div>
+                            <% } else { %>
+                                <img src="<%= developer.dp %>" alt="Profile Picture" class="profile-pic" onerror="this.src='/images/profilePic.png'">
+                            <% } %>
+                          
+                            <p>Id: <%= developer._id %></p>
+                            <p>Username: <%= developer.userName %></p>
+                            <p>Email: <%= developer.email %></p>
+                            
+                            <button class="postCountBtn" user='<%= JSON.stringify(developer).replace(/'/g, "&#39;") %>'>
+                                Post = <%= developer.developerPostCount %>
+                            </button>
+                          
+                            <button class="userEditBtn" user='<%= JSON.stringify(developer).replace(/'/g, "&#39;") %>'>Edit</button>
+                          
+                            <button class="userMessage " userId="<%= developer._id %>">Message</button>
+                            <button class="userDeleteBtn removeUser" userId="<%= developer._id %>">Delete</button>
+                          </div>
+                          
                         <% }) %>
                 </div>
 
+                <!-- ================Each Developer Posts============ -->
                 <div class="eachDeveloperPosts" style="display: none;">
-                    
-                </div>
+                    <div class="eachDeveloperPostsClose">
+                        <div class="closeBtn">&#x2702;</div>
+                    </div>
+                    <div class="developerPost-row">
 
-                <div id="viewerContainer" class="viewer-container" style="display: none;">
-                    <h2>Viewer Management</h2>
-                    <table id="viewerTable">
-                        <thead>
-                            <tr>
-                                <th>User ID</th>
-                                <th>Username</th>
-                                <th>Email</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==============Viewer Container=========== -->
+            <div id="viewerContainer" class="viewer-container" style="display: none;">
+                <h2>Viewer Management</h2>
+                <table id="viewerTable">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% viewers.forEach(viewer=>{ %>
+                            <tr class="removeUserBox">
+                                <td>
+                                    <%= viewer._id %>
+                                </td>
+                                <td>
+                                    <%= viewer.userName %>
+                                </td>
+                                <td>
+                                    <%= viewer.email %>
+                                </td>
+                                <td><button class="editBtn" >Edit</button></td>
+                                <td><button class="deleteBtn removeUser" userId="<%= viewer._id%>" >Delete</button></td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <% viewers.forEach(viewer=>{ %>
-                                <tr>
-                                    <td>
-                                        <%= viewer._id %>
-                                    </td>
-                                    <td>
-                                        <%= viewer.userName %>
-                                    </td>
-                                    <td>
-                                        <%= viewer.email %>
-                                    </td>
-                                    <td><button class="editBtn" data-userid="1">Edit</button></td>
-                                    <td><button class="deleteBtn" data-userid="1">Delete</button></td>
-                                </tr>
-                                <% }) %>
+                            <% }) %>
 
-                        </tbody>
-                    </table>
-                </div>
-
+                    </tbody>
+                </table>
             </div>
         </div>
 </body>

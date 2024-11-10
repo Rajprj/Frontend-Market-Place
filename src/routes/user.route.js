@@ -15,7 +15,7 @@ router.post("/uploadPost", verifyUser,
     upload.fields([
         { name: "thumbnailUpload", maxCount: 1 },
         { name: "codeUpload", maxCount: 1 },
-        { name: "sliderImages", maxCount: 4 }
+        { name: "sliderImages" }
     ]),addUserPost
 )
 router.get("/delete/post/:id", verifyUser, deletePost)

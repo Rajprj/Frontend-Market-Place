@@ -33,15 +33,19 @@
 
             <% if (isLoggedIn) { %>
                 <div class="profileRedirectBox">
+                  <% if(profileUser.role === "admin"){ %>
+                    <a href="/admin">
+                  <% } else { %>
                     <a href="/profile">
-                        <div class="imgboxProfile">
-                            <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
-                                <img src="/images/profilePic.png" alt="Default Profile Picture" />
-                                <% } else { %>
-                                    <img src="<%= profileUser.dp %>" alt="Profile Picture" />
-                                    <% } %>
-                        </div>
-                    </a>
+                  <% } %>
+                    <div class="imgboxProfile" style="box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);">
+                      <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
+                        <img src="/images/profilePic.png" alt="Default Profile Picture" />
+                        <% } else { %>
+                          <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+                          <% } %>
+                    </div>
+                  </a>
                 </div>
                 <% } else { %>
                     <div class="loginRegister">

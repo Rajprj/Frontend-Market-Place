@@ -31,8 +31,12 @@
 
       <% if (isLoggedIn) { %>
         <div class="profileRedirectBox">
-          <a href="/profile">
-            <div class="imgboxProfile">
+          <% if(profileUser.role === "admin"){ %>
+            <a href="/admin">
+          <% } else { %>
+            <a href="/profile">
+          <% } %>
+            <div class="imgboxProfile" >
               <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
                 <img src="/images/profilePic.png" alt="Default Profile Picture" />
                 <% } else { %>
@@ -63,7 +67,7 @@
     </nav>
 
     <!-- ----------------Page - 1------------ -->
-    <div id="page1">.-
+    <div id="page1">
 
       <div class="userPostSliderBox">
         <button class="postSwitchBtn leftBtn prev">&#10094;</button>

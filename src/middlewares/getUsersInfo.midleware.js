@@ -13,7 +13,7 @@ const getDashboard = asyncHandler(async (req, res, next) => {
         // console.log(postCount);
         
         //for developer
-        const developers = await User.find({ role: "developer" }).select("userName email fullName dp").populate('posts');
+        const developers = await User.find({ role: "developer" }).select("userName email fullName role dp").populate('posts');
         await Promise.all(
             developers.map(async (developer) => {
                 const posts = await Post.find({ user: developer._id });

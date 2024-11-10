@@ -15,6 +15,124 @@ body p {
     margin: 5px 0;
     font-weight: bold;
 }
+#errorMsgFromBackend {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 1; 
+    animation: slideDown 0.5s ease-in-out; 
+}
+
+#errorMsgFromBackend p {
+    background-color: #ffdddd;
+    color: #b30000;
+    padding: 15px 20px;
+    min-width: 320px;
+    max-width: 90vw; 
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1rem;
+    margin: 10px 0;
+    position: relative;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 1s ease-in-out;
+    word-wrap: break-word; 
+    white-space: normal; 
+}
+
+#errorMsgFromBackend p .circle {
+    height: 2vw;
+    width: 2vw;
+    min-height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    color: #fff;
+    background-color: #b30000;
+    /* position: absolute;
+    right: 15px; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    animation: pulse 1s infinite;
+}
+
+#successMsgFromBackend {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    opacity: 1; 
+    animation: slideDown 0.5s ease-in-out;
+}
+
+#successMsgFromBackend p {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px 20px;
+    min-width: 320px;
+    max-width: 80vw;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-size: 1rem;
+    margin: 10px 0;
+    position: relative;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: fadeIn 1s ease-in-out;
+}
+
+#successMsgFromBackend p .circle {
+    height: 2vw;
+    width: 2vw;
+    min-height: 25px;
+    min-width: 25px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    color: #fff;
+    background-color: #28a745;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
+    animation: pulse 1s infinite;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideDown {
+    from { transform: translate(-50%, -50%); }
+    to { transform: translate(-50%, 0); }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
 
 
 /* ======Closebtn for modals============ */
@@ -37,7 +155,7 @@ body p {
   }
 /* ------------For Profile Update---------------- */
 
-.modalProfile, .modalAddAdmin {
+.modalProfile, .modalAddAdmin, .modalUserProfile{
     display: none; 
     position: fixed; 
     z-index: 3; 
@@ -49,9 +167,10 @@ body p {
     background-color: rgba(0, 0, 0, 0.6); 
     backdrop-filter: blur(5px); 
   }
-  
+
   .modalProfile .modal-content,
-  .modalAddAdmin .modal-content {
+  .modalAddAdmin .modal-content,
+  .modalUserProfile .modal-content {
     background-color: #fff;
     /* background-color: red; */
     margin: 10% auto; 
@@ -67,7 +186,8 @@ body p {
     position: relative;
   }
   .modalProfile .modal-content form,
-  .modalAddAdmin .modal-content form{
+  .modalAddAdmin .modal-content form,
+  .modalUserProfile .modal-content form{
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,30 +198,36 @@ body p {
   }
   
   #profileUpdateModal .modal-content form input,
-  .modalAddAdmin .modal-content form input{
+  .modalAddAdmin .modal-content form input,
+  .modalUserProfile .modal-content form input{
     width: 100%;
     border: 1px solid silver;
     padding: 12px;
     margin-bottom: 12px;
+    box-sizing: border-box;
     border-radius: 12px;
   }
   
-  #profileUpdateModal .modal-content form select{
+  #profileUpdateModal .modal-content form select,
+  .modalUserProfile .modal-content form select{
     width: 100%;
-    padding: 10px;
+    padding: 12px;
+    /* box-sizing: border-box; */
     border: 1px solid silver;
     border-radius: 12px;
   }
   
   #profileUpdateModal .modal-content form .submitBtn
-  .modalAddAdmin .modal-content form .submitBtn{
+  .modalAddAdmin .modal-content form .submitBtn,
+  .modalUserProfile .modal-content form .submitBtn{
     width: 50%;
     margin: 23px 0;
     /* background-color: red; */
   }
   
   #profileUpdateModal .modal-content form .submitBtn button,
-  .modalAddAdmin .modal-content form .submitBtn button{
+  .modalAddAdmin .modal-content form .submitBtn button,
+  .modalUserProfile .modal-content form .submitBtn button{
     /* margin-top: 1vw; */
     background-color: #007bff;
     color: #fff;
@@ -115,7 +241,8 @@ body p {
   }
   
   #profileUpdateModal .modal-content form .submitBtn button:hover,
-  .modalAddAdmin .modal-content form .submitBtn button:hover {
+  .modalAddAdmin .modal-content form .submitBtn button:hover,
+  .modalUserProfile .modal-content form .submitBtn button:hover {
     background-color: #0056b3;
   }
 
@@ -484,7 +611,7 @@ body p {
     padding: 15px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-
+    max-height: 290px;
 }
 
 
@@ -499,11 +626,11 @@ body p {
     margin-bottom: 10px;
 }
 
-.developer-container .postCountBtn,.userEditBtn,.userDeleteBtn {
+.developer-container .postCountBtn,.userEditBtn,.userDeleteBtn,.userMessage {
     
     color: white;
     border: none;
-    width: 30%;
+    width: 40%;
     padding: 8px 12px;
     border-radius: 5px;
     cursor: pointer;
@@ -511,25 +638,33 @@ body p {
 }
 
 .developer-container .postCountBtn {
-    background-color: #ff9f43;
+    background-color: #f4a261;
 }
 .developer-container .postCountBtn:hover {
-    background-color: #e68a2e; 
+    background-color: #e76f51;
 }
 
 .developer-container .userEditBtn {
-    background-color: #2d98da;
+    background-color: #4a90e2; 
 }
 .developer-container .userEditBtn:hover {
-    background-color: #1c7bbd; 
+    background-color: #357ABD; 
 }
 
 .developer-container .userDeleteBtn {
-    background-color: #eb4d4b;
+    background-color: #e63946; 
 }
 .developer-container .userDeleteBtn:hover {
-    background-color: #c0392b; 
+    background-color: #d62828;
 }
+
+.developer-container .userMessage {
+    background-color: #2a9d8f; 
+}
+.developer-container .userMessage:hover {
+    background-color: #21867a; 
+}
+
 
 
 /* ===== Developer Post Container ===== */
@@ -583,16 +718,14 @@ body p {
 }
 
 .developer-container .eachDeveloperPosts .developerPost-row .developerPost-box {
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     padding: 15px;
+    /* max-height: 400px; */
+    display: flex;
+    flex-direction: column; 
+    justify-content: space-between; 
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-right: 20px;
-    position: relative;
-    display: flex;
-    align-content: center;
-    flex-direction: column;
-    justify-content: space-around;
 }
 
 .developer-container .eachDeveloperPosts .developerPost-row .developerPost-box:last-child {
@@ -612,7 +745,7 @@ body p {
 .developer-container .eachDeveloperPosts .developerPost-row .postBtns .postMsgBtn {
   
     color: white;
-    width: 45%;
+    width: 95%;
     border: none;
     padding: 8px 12px;
     border-radius: 5px;
@@ -626,13 +759,7 @@ body p {
 .developer-container .eachDeveloperPosts .developerPost-row .postDeleteBtn:hover {
     background-color: #9c0202;
 }
-.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postMsgBtn {
-    background-color: #2d98da;
-}
 
-.developer-container .eachDeveloperPosts .developerPost-row .postBtns .postMsgBtn:hover{
-    background-color: #1c7bbd; 
-}
 /* ===== Viewer Container ===== */
 #viewerContainer {
     padding: 20px;

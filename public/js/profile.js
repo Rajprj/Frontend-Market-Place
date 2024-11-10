@@ -249,3 +249,49 @@ function showChangeRole() {
   });
 }
 showChangeRole();
+
+// ==============Flash Messages============
+function flashMsgsTiming() {
+  const errorMsgBox = document.querySelector("#errorMsgFromBackend");
+  const successMsgFromBackend = document.querySelector("#successMsgFromBackend");
+  const msgTimeCircle = document.querySelector(".circle");
+  let count = 0;
+
+  if (errorMsgBox) { 
+    errorMsgBox.style.display = 'flex'; 
+    const timeInt = setInterval(() => {
+      count++;
+      msgTimeCircle.innerHTML = count;
+      if (count === 5) {
+        clearInterval(timeInt);
+
+        errorMsgBox.style.transition = "opacity 0.5s, transform 0.5s";
+        errorMsgBox.style.opacity = "0";
+        errorMsgBox.style.transform = "translateY(-20%)";
+
+        setTimeout(() => {
+          errorMsgBox.style.display = 'none';
+        }, 500); 
+      }
+    }, 1000);
+  }
+  if(successMsgFromBackend){
+    successMsgFromBackend.style.display = 'flex'; 
+    const timeInt = setInterval(() => {
+      count++;
+      msgTimeCircle.innerHTML = count;
+      if (count === 3) {
+        clearInterval(timeInt);
+
+        successMsgFromBackend.style.transition = "opacity 0.5s, transform 0.5s";
+        successMsgFromBackend.style.opacity = "0";
+        successMsgFromBackend.style.transform = "translateY(-20%)";
+
+        setTimeout(() => {
+          successMsgFromBackend.style.display = 'none';
+        }, 500); 
+      }
+    }, 1000);
+  }
+}
+flashMsgsTiming();

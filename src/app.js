@@ -1,5 +1,6 @@
 import express from "express";
 import cookieParser from "cookie-parser";
+import session from "express-session"; // Import express-session
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -20,9 +21,16 @@ app.use(express.static(path.join(__dirname, '../public'))); // Public folder one
 app.use(cookieParser());
 app.use('/images', express.static('/public'));
 
+// Session middleware
+app.use(session({
+    secret: "your_secret_key", // Replace with a strong secret
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false } // Set to true if using HTTPS
+}));
 
 // Routes
-import {userRouter} from "./routes/user.route.js";
+import { userRouter } from "./routes/user.route.js";
 import { adminRouter } from "./routes/admin.route.js";
 app.use("/users", userRouter);
 app.use("/admin", adminRouter);

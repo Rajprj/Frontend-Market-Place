@@ -91,7 +91,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
   if (!isPassCorrect) {
       return res.status(400).render("login", {
-          errorMessage: "Password incorrect",
+          errorMessage: "Username & Password are incorrect",
       });
   }
 
@@ -151,7 +151,8 @@ const uploadDp = asyncHandler(async (req, res) => {
 
         const DpImg = await uploadOnCloudinary(dpLocalPath);
         if (!DpImg) {
-           throw new apiError(402,"Something went wrong while uploading a dp")
+            req.session.errorMessage = "Something went wrong while uploading Dp";
+            return res.redirect("/profile");
         }
 
         await User.findByIdAndUpdate(
@@ -166,7 +167,9 @@ const uploadDp = asyncHandler(async (req, res) => {
 
         return res.redirect("/profile");
     } catch (error) {
-        throw new apiError(400,"something went wrong!")
+        console.log(error);
+        req.session.errorMessage = "Something went wrong while uploading Dp";
+        return res.redirect("/profile");
     }
 });
 
@@ -178,11 +181,11 @@ const removeDp = asyncHandler(async (req, res) => {
             { $set: { dp: "" } },
             { new: true }
         );
-        // Optionally set a flash message or just redirect
-        // alert("successfully removed dp")
+        req.session.successMsg = "Dp remove successfully";
         return res.redirect("/profile");
+        
     } catch (error) {
-        console.error("Error removing DP:", error); // Log the error for debugging
+        console.error("Error removing DP:", error); 
         return res.status(500).send("Something went wrong while removing the display picture.");
     }
 });
@@ -193,19 +196,22 @@ const addUserPost = asyncHandler(async (req, res) => {
 
     // Check all fields 
     if (!postName || !req.files || !req.files.thumbnailUpload || !req.files.codeUpload || !req.files.sliderImages) {
-        return res.status(400).json({ message: 'All fields (thumbnail, post code, and slider images) are required.' });
+        req.session.errorMessage = "All fields are required!";
+        return res.redirect("/profile");
     }
 
     // Limit 4 images for slider
     if (req.files.sliderImages.length > 4) {
-        return res.status(400).json({ message: 'You can only upload a maximum of 4 images.' });
+        req.session.errorMessage = "You can only upload maximum 4 sub images!";
+        return res.redirect("/profile");
     }
 
     // Upload the thumbnail image to Cloudinary
     const thumbnailLocalPath = req.files.thumbnailUpload[0].path;
     const thumbnailImg = await uploadOnCloudinary(thumbnailLocalPath);
     if (!thumbnailImg) {
-        throw new apiError(402, "Error uploading thumbnail image");
+        req.session.errorMessage = "Something went wrong while uploading thumbnail image!";
+        return res.redirect("/profile");
     }
 
     // Upload slider images to Cloudinary
@@ -215,7 +221,8 @@ const addUserPost = asyncHandler(async (req, res) => {
         if (imageUrl) {
             sliderImageUrls.push({ url: imageUrl.url });  
         } else {
-            throw new apiError(402, "Error uploading the slider images");
+            req.session.errorMessage = "Something went wrong while uploading sub images!";
+        return res.redirect("/profile");
         }
     }
 
@@ -249,14 +256,16 @@ const deletePost = asyncHandler(async (req, res)=>{
     if(!findPost){
         throw new apiError(402, "post not found");
     }
-
-    const postUser = await User.findById(findUser._id);
-    postUser.posts.splice(postUser.posts.indexOf(findPost._id),1);
-
-    await Post.deleteOne(findPost._id);
-    await postUser.save({validateBeforeSave:true});
-
-    res.redirect("/profile");
+    else{
+        const postUser = await User.findById(findUser._id);
+        postUser.posts.splice(postUser.posts.indexOf(findPost._id),1);
+    
+        await Post.deleteOne(findPost._id);
+        await postUser.save({validateBeforeSave:true});
+    
+        req.session.successMsg = "Post successfully delete"
+        res.redirect("/profile");
+    }
 })
 
 //For see detail post 
@@ -280,7 +289,8 @@ const detailedPost = asyncHandler(async (req, res) => {
         likes: post.like
       });
     } catch (err) {
-      throw new apiError(500, "server error fetching post")
+        req.session.errorMessage = "Something went wrong while fetching details of post!";
+        return res.redirect("/profile");
     }
 });
   
@@ -315,7 +325,8 @@ const updateProfile = asyncHandler(async (req, res)=>{
         const {userName, fullName, email, role} = req.body;
         // check if fields are empty
         if ([userName, fullName, email, role].some((fields) => fields?.trim() === "")) {
-            return res.render("profile", { errorMessage: "All fields are required!"});
+            req.session.errorMessage = "All fields are required!";
+            return res.redirect("/profile");
         }
 
         const existedUser = await User.findOne({
@@ -323,7 +334,8 @@ const updateProfile = asyncHandler(async (req, res)=>{
             _id: { $ne: req.user._id } 
         })
         if(existedUser){
-            return res.render("profile", { errorMessage: "this userName or email already exist"});
+            req.session.errorMessage = "User is already exist!";
+            return res.redirect("/profile");
         }
 
         await User.findByIdAndUpdate(
@@ -341,7 +353,8 @@ const updateProfile = asyncHandler(async (req, res)=>{
         );
         return res.redirect("/profile");
     } catch (error) {
-        throw new apiError(500, "feiled while updating the profile")
+        req.session.errorMessage = "Something went wrong while updating the profile";
+        return res.redirect("/profile");
     }
 })
 
@@ -351,7 +364,8 @@ const changeRole = asyncHandler(async (req, res)=>{
         const { role} = req.body;
         // check if fields are empty
         if (!role) {
-            return res.render("profile", { errorMessage: "Role fields are required!"});
+            req.session.errorMessage = "Role filed is required!";
+            return res.redirect("/profile");
         }
         await User.findByIdAndUpdate(
             req.user._id,
@@ -367,11 +381,10 @@ const changeRole = asyncHandler(async (req, res)=>{
         );
         return res.redirect("/profile");
     } catch (error) {
-        throw new apiError(500, "feiled while updating the role")
+        req.session.errorMessage = "Something went wrong while changing the role!";
+        return res.redirect("/profile");
     }
 })
-
-
 
 export {
     registerUser,
