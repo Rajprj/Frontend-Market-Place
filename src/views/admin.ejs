@@ -22,10 +22,11 @@
           </p>
         </div>
     <% } %>
+
     <!-- ---------------For Profile Info Updates-------------- -->
     <div id="profileUpdateModal" class="modalProfile">
         <div class="modal-content">
-            <span id="closeBtn" class="closeBtnProfile">&times;</span>
+            <span id="closeBtn" class="closeBtnProfile">&#x2702;</span>
             <h2>Update your A/c</h2>
             <form action="/admin/editProfile" method="POST">
                 <input type="text" name="userName" placeholder="userName" value="<%= admin.userName %>" required>
@@ -48,7 +49,7 @@
     <!-- ---------------For add admin-------------- -->
     <div id="addAdminModal" class="modalAddAdmin">
         <div class="modal-content">
-            <span id="closeBtn" class="closeBtnAddAdmin">&times;</span>
+            <span id="closeBtn" class="closeBtnAddAdmin">&#x2702;</span>
             <h2>Add Admin</h2>
             <form action="/admin/addAdmin" method="POST">
                 <input type="text" name="userName" placeholder="userName" required>
@@ -57,6 +58,23 @@
                 <input type="password" name="password" placeholder="password" required>
                 <div class="submitBtn">
                     <button type="submit">Submit</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- ------------For send message to user------------ -->
+    <div id="sendMessage" class="modalSendMsg">
+        <div class="modal-content">
+            <span id="closeBtn" class="closeBtnSendMsg">&#x2702;</span>
+            <h2>Add Admin</h2>
+            <form action="/admin/sendMailUser" method="POST">
+                
+                <input type="email" name="email" placeholder="Email" required>
+                <textarea name="msg" id="" placeholder="send message" required></textarea>
+                <div class="submitBtn">
+                    <button type="submit">Sent</button>
                 </div>
             </form>
 
@@ -301,7 +319,7 @@
                           
                             <button class="userEditBtn" user='<%= JSON.stringify(developer).replace(/'/g, "&#39;") %>'>Edit</button>
                           
-                            <button class="userMessage " userId="<%= developer._id %>">Message</button>
+                            <button class="userMessage" userId='<%= JSON.stringify(developer).replace(/'/g, "&#39;") %>'>Message</button>
                             <button class="userDeleteBtn removeUser" userId="<%= developer._id %>">Delete</button>
                           </div>
                           
@@ -344,7 +362,7 @@
                                 <td>
                                     <%= viewer.email %>
                                 </td>
-                                <td><button class="editBtn" >Edit</button></td>
+                                <td><button class="editBtn userEditBtn" user='<%= JSON.stringify(viewer).replace(/'/g, "&#39;") %>'>Edit</button></td>
                                 <td><button class="deleteBtn removeUser" userId="<%= viewer._id%>" >Delete</button></td>
                             </tr>
                             <% }) %>

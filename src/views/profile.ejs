@@ -107,10 +107,11 @@
               <span id="closeBtn" class="closeBtnProfile">&times;</span>
               <h2>Update your A/c</h2>
               <form action="/users/updateProfile" method="POST">
-                <input type="text" name="userName" placeholder="userName" value="<%= profileUser.userName %>">
-                <input type="text" name="fullName" placeholder="fullName" value="<%= profileUser.fullName %>">
-                <input type="email" name="email" placeholder="Email" value="<%= profileUser.email %>">
+                <input type="text" name="userName" placeholder="Change userName ?" >
+                <input type="text" name="fullName" placeholder="Change fullName ?">
+                <input type="email" name="email" placeholder="Change Email ?" >
                 <select name="role" id="">
+                  <option value="" disabled selected>change role?</option>
                   <option value="developer">developer</option>
                   <option value="viewer">viewer</option>
                 </select>

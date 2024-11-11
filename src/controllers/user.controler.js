@@ -273,10 +273,7 @@ const detailedPost = asyncHandler(async (req, res) => {
     try {
       const postId = req.params.id;
       const post = await Post.findById(postId).populate('user');
-      
-      
-  
-     
+
     //   console.log(post.user?.dp);
     //   console.log(post.like);
       
@@ -321,41 +318,57 @@ const likePost = asyncHandler(async (req, res)=>{
 
 //For update the profile
 const updateProfile = asyncHandler(async (req, res)=>{
-    try {
+   
         const {userName, fullName, email, role} = req.body;
+        const findUser = await User.findById(req.user._id)
         // check if fields are empty
-        if ([userName, fullName, email, role].some((fields) => fields?.trim() === "")) {
-            req.session.errorMessage = "All fields are required!";
-            return res.redirect("/profile");
+        const updateFields = {};
+        if(userName) {
+            const existedUser = await User.findOne({
+                userName,
+                _id: { $ne: req.user._id } 
+            })
+            if(existedUser){
+                req.session.errorMessage = "Username is already exist!";
+                return res.redirect("/profile");
+            }
+            else{
+                updateFields.userName = userName
+            }
         }
-
-        const existedUser = await User.findOne({
-            $or:[{userName},{email}],
-            _id: { $ne: req.user._id } 
-        })
-        if(existedUser){
-            req.session.errorMessage = "User is already exist!";
-            return res.redirect("/profile");
-        }
-
-        await User.findByIdAndUpdate(
-            req.user._id,
-            {
-                $set:{
-                    userName: userName.toLowerCase(),
-                    fullName, email, role
+        if(fullName) updateFields.fullName = fullName
+        if(email){
+            const existedUser = await User.findOne({
+                email,
+                _id: { $ne: req.user._id } 
+            })
+            if(existedUser){
+                req.session.errorMessage = "Email is already exist!";
+                return res.redirect("/profile");
+            } else{
+                updateFields.email = email
+            }
+            }
+        if(role) {
+            if(role == "viewer"){
+                if(findUser.posts.length >0){
+                    req.session.errorMessage = "First delete your post";
+                    return res.redirect("/profile");
                 }
             }
-            ,
-            {
-                new:true
-            }
-        );
-        return res.redirect("/profile");
-    } catch (error) {
-        req.session.errorMessage = "Something went wrong while updating the profile";
-        return res.redirect("/profile");
-    }
+            updateFields.role = role
+        }
+        // console.log(updateFields);
+        
+    await User.updateOne({ _id: findUser._id}, { $set: updateFields })
+    .then(result => {
+        res.redirect("/profile")
+    })
+    .catch(error => {
+        req.session.errorMessage = "Something went wrong while updating the user"
+        res.redirect("/profile")
+    });
+    
 })
 
 //For change role

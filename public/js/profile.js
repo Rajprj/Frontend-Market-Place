@@ -255,14 +255,14 @@ function flashMsgsTiming() {
   const errorMsgBox = document.querySelector("#errorMsgFromBackend");
   const successMsgFromBackend = document.querySelector("#successMsgFromBackend");
   const msgTimeCircle = document.querySelector(".circle");
-  let count = 0;
+  let count = 4;
 
   if (errorMsgBox) { 
     errorMsgBox.style.display = 'flex'; 
     const timeInt = setInterval(() => {
-      count++;
+      count--;
       msgTimeCircle.innerHTML = count;
-      if (count === 5) {
+      if (count === 0) {
         clearInterval(timeInt);
 
         errorMsgBox.style.transition = "opacity 0.5s, transform 0.5s";
@@ -278,9 +278,9 @@ function flashMsgsTiming() {
   if(successMsgFromBackend){
     successMsgFromBackend.style.display = 'flex'; 
     const timeInt = setInterval(() => {
-      count++;
+      count--;
       msgTimeCircle.innerHTML = count;
-      if (count === 3) {
+      if (count === 0) {
         clearInterval(timeInt);
 
         successMsgFromBackend.style.transition = "opacity 0.5s, transform 0.5s";

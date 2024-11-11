@@ -67,6 +67,51 @@ function showAddAdminBox() {
   });
 }
 showAddAdminBox();
+function showSendMsgBox() {
+  const msgBtn = document.querySelectorAll(".userMessage");
+  const msgBox = document.querySelector(".modalSendMsg");
+
+
+  // console.log(updateProfileBox);
+msgBtn.forEach((btn)=>{
+  btn.addEventListener("click", (event) => {
+    event.preventDefault();
+    
+    const user = JSON.parse(btn.getAttribute("userId"))
+    console.log(user);
+    
+    msgBox.innerHTML = `<div class="modal-content">
+            <span id="closeBtn" class="closeBtnSendMsg">&#x2702;</span>
+            <h2>Add Admin</h2>
+            <form action="/admin/sendMailUser" method="POST">
+                
+                <input type="email" name="email" placeholder="Email" value="${user.email}" readonly>
+                <textarea name="msg" id="" placeholder="send message" required></textarea>
+                <div class="submitBtn">
+                    <button type="submit">Sent</button>
+                </div>
+            </form>
+
+        </div>`
+
+        msgBox.style.display = "block";
+const closeBtn = document.querySelector(".closeBtnSendMsg");
+console.log(closeBtn);
+
+  closeBtn.addEventListener("click", () => {
+    msgBox.style.display = "none";
+  });
+
+  window.addEventListener("click", (event) => {
+    if (event.target === msgBox) {
+      msgBox.style.display = "none";
+    }
+  });
+  });
+})
+
+}
+showSendMsgBox();
 
 // ===========Dashboard show boxes============
 function dashboardTableShow() {
@@ -174,7 +219,7 @@ function eachDeveloperPostShow() {
                     <p>Postname: ${post.postName}</p>
                     <div class="postBtns">
                         
-                        <button class="postDeleteBtn">Delete</button>
+                        <button class="postDeleteBtn" postId="${post._id}">Delete</button>
                     </div>
                 </div>
                 
@@ -182,6 +227,21 @@ function eachDeveloperPostShow() {
         `;
     }).join('')}
 `;
+
+      const postDeleteBtn = document.querySelectorAll(".postDeleteBtn")
+      postDeleteBtn.forEach((btn)=>{
+        btn.addEventListener("click",async ()=>{
+          const postId = btn.getAttribute("postId")
+          const respons = await fetch(`/admin/userPostDelete/${postId}`)
+          if(respons.ok){
+            const postBox = btn.closest(".developerPost-box")
+            postBox.remove();
+          }
+          else{
+            console.log("post not deleted")
+          }
+        })
+      })
 
       const postContainerCloseBtn = document.querySelector(
         ".eachDeveloperPostsClose .closeBtn"
@@ -240,28 +300,26 @@ function editUserDetail(){
       // console.log(userId);
       
       userEditForm.innerHTML = `<div class="modal-content">
-          <span id="closeBtn" class="closeBtnUserProfile">&times;</span>
+          <span id="closeBtn" class="closeBtnUserProfile">&#x2702;</span>
           <h2>Update User A/c</h2>
-          <form  onsubmit="return submitForm(event)" >
-            <input type="text" name="userName" placeholder="userName" value="${userId.userName}">
-            <input type="text" name="fullName" placeholder="fullName" value="${userId.fullName}">
-            <input type="email" name="email" placeholder="Email" value="${userId.email}">
-            <select name="role" value="${userId.role}">
-              <option value="developer">developer</option>
-              <option value="viewer">viewer</option>
-            </select>
+          <form action="/admin/updateUserProfile" method="post">
+            <input type="text" name="userId" style="position:absolute; top:-100%;" value="${userId._id}" readonly>
+            <input type="text" name="userName" placeholder="Change userName ?" >
+                <input type="text" name="fullName" placeholder="Change fullName ?">
+                <input type="email" name="email" placeholder="Change Email ?" >
+                <select name="role" id="">
+                  <option value="" disabled selected>change role?</option>
+                  <option value="developer">developer</option>
+                  <option value="viewer">viewer</option>
+                </select>
             <div class="submitBtn">
-              <button type="submit" >Submit</button>
+              <button type="submit" class="submitForm">Submit</button>
             </div>
           </form>
 
         </div>`
         userEditForm.style.display = "block"
-        function submitForm(event){
-          event.preventDefault();
-          return false;
-        }
-
+      
         const closeBtn = document.querySelector(".closeBtnUserProfile");
         closeBtn.addEventListener("click",()=>{
           userEditForm.style.display = "none"
@@ -281,14 +339,14 @@ function flashMsgsTiming() {
   const errorMsgBox = document.querySelector("#errorMsgFromBackend");
   const successMsgFromBackend = document.querySelector("#successMsgFromBackend");
   const msgTimeCircle = document.querySelector(".circle");
-  let count = 0;
+  let count = 4;
 
   if (errorMsgBox) { 
     errorMsgBox.style.display = 'flex'; 
     const timeInt = setInterval(() => {
-      count++;
+      count--;
       msgTimeCircle.innerHTML = count;
-      if (count === 5) {
+      if (count === 0) {
         clearInterval(timeInt);
 
         errorMsgBox.style.transition = "opacity 0.5s, transform 0.5s";
@@ -304,9 +362,9 @@ function flashMsgsTiming() {
   if(successMsgFromBackend){
     successMsgFromBackend.style.display = 'flex'; 
     const timeInt = setInterval(() => {
-      count++;
+      count--;
       msgTimeCircle.innerHTML = count;
-      if (count === 3) {
+      if (count === 0) {
         clearInterval(timeInt);
 
         successMsgFromBackend.style.transition = "opacity 0.5s, transform 0.5s";
