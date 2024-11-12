@@ -2,6 +2,7 @@
 import mongoose, {Schema} from "mongoose";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt";
+import { type } from "os";
 
 
 
@@ -43,6 +44,13 @@ const userSchema = new Schema({
       {
         type:Schema.Types.ObjectId,
         ref:"Post",
+      }
+    ],
+    followers:[
+      {
+        type:Schema.Types.ObjectId,
+        ref:"User",
+        default: []
       }
     ],
     refreshToken:{

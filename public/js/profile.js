@@ -149,7 +149,7 @@ function postSeeBtn() {
           </div>
           <div class="postInfo">
             <div class="postName">
-              <h2>${postData.postName}</h2>
+              <h1>${postData.postName}</h1>
             </div>
           </div>
         </div>

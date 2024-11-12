@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="/css/admin/style.css" />
     <title>admin</title>
 </head>
@@ -23,6 +23,11 @@
         </div>
     <% } %>
 
+    <!-- -------------------For Post Details----------------- -->
+    <div id="postDetailedBox" class="post_DetailedBox">
+      
+       
+    </div>
     <!-- ---------------For Profile Info Updates-------------- -->
     <div id="profileUpdateModal" class="modalProfile">
         <div class="modal-content">
@@ -105,6 +110,7 @@
     </div>
 
     <div class="admin-dashboard">
+        
         <!-- Sidebar -->
         <div id="sidebar" class="profileSideBar">
             <div class="pined pinnedProfileBar">
@@ -331,8 +337,9 @@
                     <div class="eachDeveloperPostsClose">
                         <div class="closeBtn">&#x2702;</div>
                     </div>
+                    <h1 style="margin-left: 6%; display: none;">User don't have any post!</h1>
                     <div class="developerPost-row">
-
+                        
                     </div>
                 </div>
             </div>

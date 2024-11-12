@@ -206,10 +206,8 @@ function eachDeveloperPostShow() {
     btns.addEventListener("click", () => {
       postContainer.style.display = "block";
       const user = JSON.parse(btns.getAttribute("user"));
-      
-      postContainerRow.innerHTML = `
-    
-    ${user.posts.map(post => {
+      if(user.posts.length > 0){
+      postContainerRow.innerHTML = `${user.posts.map(post => {
         return `
             
                 <div class="developerPost-box">
@@ -219,15 +217,202 @@ function eachDeveloperPostShow() {
                     <p>Postname: ${post.postName}</p>
                     <div class="postBtns">
                         
+                        <button class="seePostDetailBtn" postId="${post._id}">See</button>
                         <button class="postDeleteBtn" postId="${post._id}">Delete</button>
                     </div>
                 </div>
                 
             
-        `;
-    }).join('')}
-`;
+        `;}).join('')}`;
+      
+      // ==============Post Detail===============
+      function postDetail(){
+        const postSeebtn = document.querySelectorAll(".seePostDetailBtn");
+        postSeebtn.forEach((btn)=>{
+          btn.addEventListener("click",()=>{
+            const postDetailedBox = document.querySelector("#postDetailedBox")
+            postDetailedBox.style.display = "block"
+            const userPostId = btn.getAttribute("postId")
+            // console.log(userPostId);
+            
+            
+            user.posts.forEach((post)=>{
+              if(post._id == userPostId){
+                let count = 0;
+                post.like.forEach((like)=>{
+                  count++
+                })
+                
+                postDetailedBox.innerHTML = ` <div class="postDetailedBoxSet">
+          <div class="postBox">
+            <div class="closeBtn">
+              <p>&#x2702;</p>
+            </div>
+            <div class="postInfoBox">
+              
+              <div class="postThumbnail">
+                <img src="${post.thumbnail}" alt="">
+              </div>
+              <div class="multiPicPostBox">
+              ${post.images.map((img) => `
+    <div class="pics">
+      <img src="${img.url}" alt="">
+    </div>
+  `).join('')}
+                
+                
+              </div>
+              <div class="userAndPostInfoBox">
+                <div class="likeBox">
+                  <div class="likeContainer">
+                    <span class="likeButton" id="likeButton">
+                      <i class="heartIcon" id="heartIcon"></i>
+                      <span class="likeCount" id="likeCount">${count}</span>
+                    </span>
+                  </div>
+                </div>
+                <div class="userInfo">
+                  <div class="profilePic">
+                    <img src="${user.dp}" alt="">
+                  </div>
+                  <div class="userName"><h2>${user.userName}</h2></div>
+                </div>
+                <div class="postInfo">
+                  <div class="postName">
+                    <h1>${post.postName}</h1>
+                  </div>
+                </div>
+                <div class="followBtnAndDownloadBtn">
+                  
+                </div>
+                
+              </div>
+            </div>
+            <div class="commentBox">
+              <div class="commentHeader">
+                <h3>Comments</h3>
+              </div>
+              <div class="commentsContainer">
+                <div class="commentsContainerSet">
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/ut.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">"Amazing work! 😍 The attention to detail is incredible!"</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/ronak.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@ronak_prj</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">"This is exactly what I needed! 👍 Keep up the awesome work!"</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/sandeep.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@sandeep_09</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">"Great job! 🎉 Your design skills are on point!"</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/ut.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/ronak.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/sandeep.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/ut.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/ronak.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
+                    </div>
+                  </div>
+                  <div class="userCommentBox">
+                    <div class="userProfilePic">
+                      <img src="/images/userProfile/sandeep.jpg" alt="">
+                    </div>
+                    <div class="userNameAndComment">
+                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
+                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              
+            </div>
+          </div>
+            </div>`
+                // -----------------Detailed post Thubmnail img change-------------
+      function thumbnailImgChange() {
+        const thumbnail = document.querySelector(".postThumbnail img");
+        const multiImgs = document.querySelectorAll(".pics img");
 
+        multiImgs.forEach((img) => {
+          img.addEventListener("click", () => {
+            const selectedImg = img.src;
+            const oldThumbnailImg = thumbnail.src;
+
+            thumbnail.src = selectedImg;
+            img.src = oldThumbnailImg;
+          });
+        });
+      }
+      thumbnailImgChange();
+
+                
+              }
+            })
+            
+
+            const closeBtn = document.querySelector(".closeBtn")
+            closeBtn.addEventListener("click",()=>{
+              postDetailedBox.style.display = "none"
+            })
+          })
+        })
+      }
+      postDetail()
+      //===========Post delete================
       const postDeleteBtn = document.querySelectorAll(".postDeleteBtn")
       postDeleteBtn.forEach((btn)=>{
         btn.addEventListener("click",async ()=>{
@@ -242,7 +427,10 @@ function eachDeveloperPostShow() {
           }
         })
       })
-
+      }else{
+        const dontHavePost = document.querySelector(".eachDeveloperPosts h1")
+        dontHavePost.style.display = "block";
+      }
       const postContainerCloseBtn = document.querySelector(
         ".eachDeveloperPostsClose .closeBtn"
       );

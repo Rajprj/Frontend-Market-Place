@@ -8,6 +8,13 @@
   width: 100%;
 }
 
+/* -------------For set post info in post detailed section---------- */
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox {
+  
+  justify-content: start;
+ 
+
+}
 /* ---------profile SideBar------------ */
 
 .profileSideBar a{

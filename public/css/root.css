@@ -478,7 +478,7 @@ nav{
     width: 40px;
     position: absolute;
     top: 1%;
-    left: -3.4%;
+    left: -3%;
     clip-path: polygon(25% 0%, 100% 0, 100% 100%, 25% 100%, 0% 50%);
     background-color: #fff;
     display: flex;
@@ -500,7 +500,7 @@ nav{
 
 #postDetailedBox .postDetailedBoxSet .postBox {
     height: 100%;
-    width: 77%;
+    width: 87%;
     background-color: #fff;
     display: flex;
     flex-direction: row;
@@ -509,7 +509,7 @@ nav{
 
 #postDetailedBox .postDetailedBoxSet .postBox .postInfoBox {
     height: 100%;
-    width: 55%;
+    width: 62%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -517,14 +517,15 @@ nav{
 }
 
 .postDetailedBoxSet .postBox .postInfoBox .postThumbnail {
-    height: 45%;
-    width: 90%;
+    height: 58%;
+    width: 95%;
     position: relative;
 }
 
 .postDetailedBoxSet .postBox .postInfoBox .postThumbnail img {
     height: 100%;
     width: 100%;
+    object-fit: contain;
     position: absolute;
     border-radius: 8px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
@@ -562,7 +563,7 @@ nav{
 }
 
 .postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox {
-    height: 30%;
+    height: 25%;
     width: 90%;
     display: flex;
     flex-direction: column;
@@ -633,10 +634,13 @@ nav{
 }
 
 .postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .userInfo .profilePic {
-    height: 100%;
-    width: 12%;
+    height: 4vw;
+    width: 4vw;
     margin-right: 12px;
     position: relative;
+    overflow: hidden;
+
+    border-radius: 50%;
 }
 
 .postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .userInfo .profilePic img {
@@ -727,7 +731,7 @@ nav{
 /* ---------------Comments section-------------- */
 #postDetailedBox .postDetailedBoxSet .postBox .commentBox {
     height: 100%;
-    width: 45%;
+    width: 40%;
     background-color: rgb(0, 0, 0);
     color: #fff;
     border-radius: 8px;

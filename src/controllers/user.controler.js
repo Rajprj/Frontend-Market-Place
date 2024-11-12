@@ -267,7 +267,7 @@ const deletePost = asyncHandler(async (req, res)=>{
         res.redirect("/profile");
     }
 })
-
+ 
 //For see detail post 
 const detailedPost = asyncHandler(async (req, res) => {
     try {

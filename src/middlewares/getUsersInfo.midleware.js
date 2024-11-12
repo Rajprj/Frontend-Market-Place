@@ -21,10 +21,8 @@ const getDashboard = asyncHandler(async (req, res, next) => {
             })
         );
         // developers.forEach((dev)=>{
-        //     dev.posts.forEach((post)=>{
-        //         console.log(post);
-                
-        //     })
+        //     console.log(dev.followers);
+            
         // })
 
         //post

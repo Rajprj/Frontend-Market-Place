@@ -5,13 +5,14 @@ import { verifyUser } from "./middlewares/auth.midleware.js"
 import { User } from "./models/user.model.js"
 import jwt from "jsonwebtoken"
 import { getDashboard } from "./middlewares/getUsersInfo.midleware.js"
+import { getUserPost } from "./middlewares/postDetailedInfoForIndex.midleware.js"
 
 
 const port = 6500
 
 dbConnection()
     .then(() => {
-        app.get("/", async (req, res) => {
+        app.get("/",getUserPost, async (req, res) => {
             const isLoggedIn = req.cookies?.accessToken ? true : false;
             let profileUser = null;
 
@@ -25,7 +26,7 @@ dbConnection()
                 }
             }
 
-            res.render("index", { isLoggedIn, profileUser });
+            res.render("index", { isLoggedIn, profileUser, userPosts: req.userPosts });
         });
 
         app.get("/regex", async (req, res) => {
