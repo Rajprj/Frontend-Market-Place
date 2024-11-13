@@ -155,9 +155,14 @@ const removeUser = asyncHandler(async (req,res)=>{
             return res.redirect("/admin")
         }
         else{
-            await User.deleteOne(findUser._id);
-            req.session.successMsg = "User successfully remove"
-            res.redirect("/admin");
+            if(findUser.posts.length > 0){
+                res.json({ success: false, errMsg: "First delete user's post!" });
+            }
+            else{
+                await User.deleteOne(findUser._id);
+                let success = true;
+                res.json({success : true});
+            }
         }
     } catch (error) {
         req.session.errorMessage = "Something went wrong while removing the user!"

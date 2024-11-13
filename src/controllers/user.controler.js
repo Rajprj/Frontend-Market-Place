@@ -278,13 +278,19 @@ const detailedPost = asyncHandler(async (req, res) => {
     //   console.log(post.like);
       
       res.json({
+        postUserId: post.user._id,
+        
         postName: post.postName,
         thumbnail: post.thumbnail,
         userProfilePic: post.user.dp,
         userName: post.user.userName,
         image: post.images,
-        likes: post.like
+        likes: post.like,
+        followers: post.user.followers,
+        following: post.user.followings
       });
+
+      
     } catch (err) {
         req.session.errorMessage = "Something went wrong while fetching details of post!";
         return res.redirect("/profile");
@@ -399,6 +405,81 @@ const changeRole = asyncHandler(async (req, res)=>{
     }
 })
 
+//For following developer
+const followingUser = asyncHandler(async (req,res)=>{
+    const followingUser = await User.findById(req.user._id)
+    const followedUser = await User.findById(req.params.id)
+    
+    let following = false;
+
+    if(followedUser.followers.indexOf(followingUser._id) === -1){
+        followedUser.followers.push(followingUser._id);
+        followingUser.followings.push(followedUser._id)
+        console.log("following");
+           
+        following = true;
+    }
+    else{
+
+        followedUser.followers.splice(followingUser._id,1)
+        followingUser.followings.splice(followedUser._id,1)
+        console.log("unfollow");
+        
+    }
+    followedUser.save({validateBeforeSave:true})
+    followingUser.save({validateBeforeSave:true})
+
+    res.json({ following });
+})
+
+//for following list
+const followingList = asyncHandler(async (req,res)=>{
+    try {
+        const user = await User.findById(req.params.id);
+        console.log(user.followings);
+        
+        const followingDetails = await Promise.all(
+            user.followings.map(async (followingId) => {
+                return await User.findById(followingId); // Individual request for each following ID
+            })
+        );
+        
+        if(!followingDetails){
+
+            return res.json({status : false, error : "server erro while fetching your following list"})
+        }
+        else{
+            return res.json({status: true, followingDetails})
+        }
+    } catch (error) {
+        return res.json({status : false, error : "server erro while fetching your following list"})
+    }
+    
+})
+ //for following list
+const followersList = asyncHandler(async (req,res)=>{
+    try {
+        const user = await User.findById(req.user._id);
+        // console.log(user.followings);
+        
+        const followersDetails = await Promise.all(
+            user.followers.map(async (followersId) => {
+                return await User.findById(followersId); // Individual request for each following ID
+            })
+        );
+        
+        if(!followersDetails){
+
+            return res.json({status : false, error : "server erro while fetching your following list"})
+        }
+        else{
+            return res.json({status: true, followersDetails})
+        }
+    } catch (error) {
+        return res.json({status : false, error : "server erro while fetching your following list"})
+    }
+    
+}) 
 export {
     registerUser,
     loginUser,
@@ -410,5 +491,8 @@ export {
     detailedPost,
     likePost,
     updateProfile,
-    changeRole
+    changeRole,
+    followingUser,
+    followingList,
+    followersList
 }

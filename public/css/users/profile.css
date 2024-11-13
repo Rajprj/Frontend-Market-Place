@@ -84,6 +84,127 @@
   /* object-fit: contain; */
 }
 
+.followersAndFollowingBox {
+  position: absolute;
+  left: 7.8%;
+  /* top: 32%; */
+  bottom: 12.7%;
+  display: flex; 
+  flex-direction: column;
+  justify-content: space-between; 
+  align-items: center; 
+  /* padding: 10px 20px; */
+  border-radius: 8px;
+  background-color: rgb(0, 0, 0);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  */
+  font-family: Arial, sans-serif;
+}
+
+
+.followersAndFollowingBox span {
+  text-decoration: none;
+  font-size: 18px;
+  color: #d9dde1;
+  font-weight: bold;
+  padding: 5px 0;
+  /* margin-bottom: 12px; */
+  transition: color 0.3s ease; 
+  cursor: pointer;
+}
+
+
+.followersAndFollowingBox span:hover {
+  color: #abacae;
+}
+
+
+/* ------------user followinglist-------------- */
+#followContainer,
+#followersContainer{
+  position: absolute;
+  top: 17%;
+  right: 2%;
+  height: 80vh;
+  width: 25%;
+  z-index: 2;
+  padding: 0px 6px;
+  display: none;
+  background-color: #f1f1f1;
+}
+#followContainer .followContainerSet,
+#followersContainer .followersContainerSet{
+  max-height: 90%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  border-top: 1px solid silver;
+  /* background-color: red; */
+}
+#followContainer .followContainerSet .userBox,
+#followersContainer .followersContainerSet .userBox{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-bottom: 12px;
+  margin-top: 7px;
+}
+#followContainer .followContainerSet .userBox .profilePic,
+#followersContainer .followersContainerSet .userBox .profilePic{
+  height: 3vw;
+  width: 3vw;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+
+}
+#followContainer .followContainerSet .userBox .profilePic img,
+#followersContainer .followersContainerSet .userBox .profilePic img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+#followContainer .followContainerSet .userBox .userName,
+#followersContainer .followersContainerSet .userBox .userName{
+  max-width: 102px;
+  overflow-x: scroll;
+  scrollbar-width: none;
+  /* background-color: red; */
+}
+#followContainer .followContainerSet .userBox .followBtn .follow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  border-radius: 8px;
+  color: #fff;
+  background: linear-gradient(45deg, #00aaff, #0077ff);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  font-size: var(--mediumFont);
+  font-weight: var(--largeFontWeight);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  text-transform: uppercase;
+  margin-right: 13px;
+}
+
+#followContainer .followContainerSet .userBox .followBtn span:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
+}
+
+#followContainer .followContainerSet .userBox .follow::before {
+  content: '+';
+  font-size: 16px;
+  font-weight: bold;
+  margin-right: 10px;
+  display: inline-block;
+}
+/* ----------userDetails---------- */
 .userDetail{
   /* background-color: red; */
   height: 9vh;
@@ -100,8 +221,9 @@
   height: 10vw;
   width: 10vw;
   left: 6%;
-  bottom: -14%;
-  border-radius: 13px;
+  top: 12%;
+  /* bottom: -14%; */
+  border-radius: 12px;
   overflow: hidden;
   /* background-color: red; */
 }

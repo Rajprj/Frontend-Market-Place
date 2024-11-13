@@ -669,7 +669,7 @@ nav{
     justify-content: start;
 }
 
-.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn a {
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn .follow {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -688,12 +688,12 @@ nav{
     margin-right: 13px;
 }
 
-.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn a:hover {
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn span:hover {
     transform: translateY(-3px);
     box-shadow: 0 12px 25px rgba(0, 0, 0, 0.3);
 }
 
-.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn a::before {
+.postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtn .follow::before {
     content: '+';
     font-size: 16px;
     font-weight: bold;
@@ -701,6 +701,33 @@ nav{
     display: inline-block;
 }
 
+.following {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    font-size: var(--mediumFont);
+    font-weight: var(--largeFontWeight);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+    text-transform: uppercase;
+    margin-right: 13px;
+    background: linear-gradient(45deg, #00ff77, #00aa55);
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 18px;
+    border-radius: 8px;
+    color: #fff;
+}
+
+.following::before {
+    content: '✓'; 
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 10px;
+    display: inline-block;
+}
 .postDetailedBoxSet .postBox .postInfoBox .userAndPostInfoBox .followBtnAndDownloadBtn .downloadBtn a {
     display: inline-flex;
     align-items: center;

@@ -80,6 +80,23 @@
 
         </div>
         <div id="profileBox">
+
+          <!-- ---------------for user followingList------------ -->
+           <div id="followContainer">
+            <div class="followHeader">
+              <h2 style="padding: 7px 5px;">Following</h2>
+            </div>
+              <div class="followContainerSet"></div>
+          
+           </div>
+           <!-- ---------------for followers list-------------- -->
+           <div id="followersContainer">
+            <div class="followHeader">
+              <h2 style="padding: 7px 5px;">Followers</h2>
+            </div>
+              <div class="followersContainerSet"></div>
+          
+           </div>
           <!-- ----------For Profiile Pic Updates----------- -->
           <div id="imageUploadModal" class="modal hidden">
             <div class="modal-content">
@@ -209,6 +226,12 @@
             </div>
             <div class="coverImg">
               <img src="/images/userProfile/profileCoverimg.jpg" alt="">
+            </div>
+            <div class="followersAndFollowingBox">
+              <% if(profileUser.role==='developer' ){ %>
+              <span class="followers" >Followers: <%= profileUser.followers.length %></span>
+              <% } %>
+              <span class="followings" userId="<%= profileUser._id %>">Following: <%= profileUser.followings.length %> </span>
             </div>
             <div class="userDetail">
               <div class="fulName">

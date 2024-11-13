@@ -164,26 +164,26 @@ function postSeeBtn() {
   </div>
 `;
       const likeButtonElement = document.getElementById("likeButton");
-      
+
       postData.likes.forEach(like => {
         if (postData.likes.indexOf(userId) === -1) {
           likeButtonElement.classList.remove("liked");
         }
-        else{
+        else {
           likeButtonElement.classList.add("liked");
         }
       })
-     
+
       // -------------------like post----------------
       likeButtonElement.addEventListener("click", async function () {
         const res = await fetch(`/users/likePost/${postId}`);
         const data = await res.json();
         countLike = data.countlike;
         document.getElementById("likeCount").textContent = countLike;
-        if(data.liked === true){
+        if (data.liked === true) {
           likeButtonElement.classList.add("liked");
         }
-        else{
+        else {
           likeButtonElement.classList.remove("liked");
         }
       });
@@ -250,6 +250,111 @@ function showChangeRole() {
 }
 showChangeRole();
 
+// =============show followings user==========
+function showFollowingsUser() {
+  
+  
+  const followingsBtn = document.querySelector(".followings");
+  const followContainer = document.querySelector("#followContainer");
+  const followContainerSet = document.querySelector(".followContainerSet");
+
+  followingsBtn.addEventListener("click", async () => {
+    followContainer.style.display = 'block';
+    console.log("open following list");
+    const userId = followingsBtn.getAttribute("userId");
+    // console.log(userId);
+    followContainerSet.innerHTML = "";
+
+    const res = await fetch(`/users/followingList/${userId}`);
+    const data = await res.json();
+
+    if (data.status) {
+      const listUser = data.followingDetails;
+      listUser.forEach((list) => {
+        console.log(list.userName);
+
+        // Create a new div element to hold the content
+        const followContent = document.createElement('div');
+        followContent.classList.add('userBox');
+        followContent.innerHTML = `
+          <div class="profilePic"><img src="${list.dp ? list.dp : "/images/profilePic.png"}" alt=""></div>
+          <p class="userName">${list.userName}</p>
+          <div class="followBtn" userId="${list._id}">
+            <span class="following" >Follow</span>
+          </div>
+        `;
+        // Append the created element to the container
+        followContainerSet.appendChild(followContent)
+      });
+      const unfollow = document.querySelectorAll(".followBtn")
+
+      unfollow.forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const unfollowSpan = document.querySelector(".followBtn span")
+          const followedUserId = btn.getAttribute("userId")
+          console.log(followedUserId);
+
+          const res = await fetch(`/users/followingOrRemove/${followedUserId}`)
+          const data = await res.json()
+          if (data.following == false) {
+            unfollowSpan.classList.remove("following")
+            unfollowSpan.classList.add("follow")
+          } else {
+            unfollowSpan.classList.add("following")
+            unfollowSpan.classList.remove("follow")
+          }
+        })
+      })
+    }
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!followContainer.contains(e.target) && e.target !== followingsBtn) {
+      followContainer.style.display = "none";
+    }
+  });
+}
+showFollowingsUser();
+
+// =============show followers user==========
+function showFollowersUser() {
+  const followersBtn = document.querySelector(".followers");
+  const followersContainer = document.querySelector("#followersContainer");
+  const followersContainerSet = document.querySelector(".followersContainerSet");
+
+  followersBtn.addEventListener("click", async () => {
+    followersContainer.style.display = 'block';
+    followersContainerSet.innerHTML = "";
+
+    const res = await fetch(`/users/followersList`);
+    const data = await res.json();
+
+    if (data.status) {
+      const listUser = data.followersDetails;
+      listUser.forEach((list) => {
+        console.log(list.userName);
+        const followContent = document.createElement('div');
+        followContent.classList.add('userBox');
+        followContent.innerHTML = `
+          <div class="profilePic"><img src="${list.dp ? list.dp : "/images/profilePic.png"}" alt=""></div>
+          <p class="userName">${list.userName}</p>
+          <div class="followBtn" userId="">
+            
+          </div>
+        `;
+        // Append the created element to the container
+        followersContainerSet.appendChild(followContent)
+      });
+    }
+  });
+
+  window.addEventListener("click", (e) => {
+    if (!followersContainer.contains(e.target) && e.target !== followersBtn) {
+      followersContainer.style.display = "none";
+    }
+  });
+}
+showFollowersUser();
 // ==============Flash Messages============
 function flashMsgsTiming() {
   const errorMsgBox = document.querySelector("#errorMsgFromBackend");
@@ -257,8 +362,8 @@ function flashMsgsTiming() {
   const msgTimeCircle = document.querySelector(".circle");
   let count = 4;
 
-  if (errorMsgBox) { 
-    errorMsgBox.style.display = 'flex'; 
+  if (errorMsgBox) {
+    errorMsgBox.style.display = 'flex';
     const timeInt = setInterval(() => {
       count--;
       msgTimeCircle.innerHTML = count;
@@ -271,12 +376,12 @@ function flashMsgsTiming() {
 
         setTimeout(() => {
           errorMsgBox.style.display = 'none';
-        }, 500); 
+        }, 500);
       }
     }, 1000);
   }
-  if(successMsgFromBackend){
-    successMsgFromBackend.style.display = 'flex'; 
+  if (successMsgFromBackend) {
+    successMsgFromBackend.style.display = 'flex';
     const timeInt = setInterval(() => {
       count--;
       msgTimeCircle.innerHTML = count;
@@ -289,7 +394,7 @@ function flashMsgsTiming() {
 
         setTimeout(() => {
           successMsgFromBackend.style.display = 'none';
-        }, 500); 
+        }, 500);
       }
     }, 1000);
   }

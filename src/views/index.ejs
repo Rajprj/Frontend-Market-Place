@@ -238,11 +238,12 @@
                     <% if(isLoggedIn){ %>
                       
                       <div class="seeContainer" 
-                      post='<%= JSON.stringify(post).replace(/'/g, "&#39;") %>' 
-                      profileUser='<%= profileUser._id %>' >
+                      post='<%= post._id %>'
+                      profileUser = '<%= profileUser._id %>' >
+                      
                  
                     <% }else{ %>
-                      <div class="seeContainer" post='<%= JSON.stringify(post).replace(/'/g, "&#39;") %>'>
+                      <div class="seeContainer" post='<%= post._id%>'>
                     <% } %>
                       <i class="eyeSymbol"></i>
                     </div>
@@ -251,7 +252,7 @@
                 </div>
                 <div class="userDetailsBox">
                   <div class="profileImgBox">
-                    <% if (!post.user.dp || post.user.dp === "" ) { %>
+                    <% if (!post.user.dp || post.user.dp === "" || post.user.dp === null ) { %>
                       <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
                     <% } else { %>
                       <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic" onerror="this.src='/images/profilePic.png'">

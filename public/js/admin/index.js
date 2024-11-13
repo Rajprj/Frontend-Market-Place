@@ -73,14 +73,14 @@ function showSendMsgBox() {
 
 
   // console.log(updateProfileBox);
-msgBtn.forEach((btn)=>{
-  btn.addEventListener("click", (event) => {
-    event.preventDefault();
-    
-    const user = JSON.parse(btn.getAttribute("userId"))
-    console.log(user);
-    
-    msgBox.innerHTML = `<div class="modal-content">
+  msgBtn.forEach((btn) => {
+    btn.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const user = JSON.parse(btn.getAttribute("userId"))
+      console.log(user);
+
+      msgBox.innerHTML = `<div class="modal-content">
             <span id="closeBtn" class="closeBtnSendMsg">&#x2702;</span>
             <h2>Add Admin</h2>
             <form action="/admin/sendMailUser" method="POST">
@@ -94,21 +94,21 @@ msgBtn.forEach((btn)=>{
 
         </div>`
 
-        msgBox.style.display = "block";
-const closeBtn = document.querySelector(".closeBtnSendMsg");
-console.log(closeBtn);
+      msgBox.style.display = "block";
+      const closeBtn = document.querySelector(".closeBtnSendMsg");
+      console.log(closeBtn);
 
-  closeBtn.addEventListener("click", () => {
-    msgBox.style.display = "none";
-  });
+      closeBtn.addEventListener("click", () => {
+        msgBox.style.display = "none";
+      });
 
-  window.addEventListener("click", (event) => {
-    if (event.target === msgBox) {
-      msgBox.style.display = "none";
-    }
-  });
-  });
-})
+      window.addEventListener("click", (event) => {
+        if (event.target === msgBox) {
+          msgBox.style.display = "none";
+        }
+      });
+    });
+  })
 
 }
 showSendMsgBox();
@@ -206,9 +206,9 @@ function eachDeveloperPostShow() {
     btns.addEventListener("click", () => {
       postContainer.style.display = "block";
       const user = JSON.parse(btns.getAttribute("user"));
-      if(user.posts.length > 0){
-      postContainerRow.innerHTML = `${user.posts.map(post => {
-        return `
+      if (user.posts.length > 0) {
+        postContainerRow.innerHTML = `${user.posts.map(post => {
+          return `
             
                 <div class="developerPost-box">
                     <img src="${post.thumbnail}" alt="Profile Picture" class="postThumbnail">
@@ -223,27 +223,28 @@ function eachDeveloperPostShow() {
                 </div>
                 
             
-        `;}).join('')}`;
-      
-      // ==============Post Detail===============
-      function postDetail(){
-        const postSeebtn = document.querySelectorAll(".seePostDetailBtn");
-        postSeebtn.forEach((btn)=>{
-          btn.addEventListener("click",()=>{
-            const postDetailedBox = document.querySelector("#postDetailedBox")
-            postDetailedBox.style.display = "block"
-            const userPostId = btn.getAttribute("postId")
-            // console.log(userPostId);
-            
-            
-            user.posts.forEach((post)=>{
-              if(post._id == userPostId){
-                let count = 0;
-                post.like.forEach((like)=>{
-                  count++
-                })
-                
-                postDetailedBox.innerHTML = ` <div class="postDetailedBoxSet">
+        `;
+        }).join('')}`;
+
+        // ==============Post Detail===============
+        function postDetail() {
+          const postSeebtn = document.querySelectorAll(".seePostDetailBtn");
+          postSeebtn.forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const postDetailedBox = document.querySelector("#postDetailedBox")
+              postDetailedBox.style.display = "block"
+              const userPostId = btn.getAttribute("postId")
+              // console.log(userPostId);
+
+
+              user.posts.forEach((post) => {
+                if (post._id == userPostId) {
+                  let count = 0;
+                  post.like.forEach((like) => {
+                    count++
+                  })
+
+                  postDetailedBox.innerHTML = ` <div class="postDetailedBoxSet">
           <div class="postBox">
             <div class="closeBtn">
               <p>&#x2702;</p>
@@ -382,52 +383,52 @@ function eachDeveloperPostShow() {
             </div>
           </div>
             </div>`
-                // -----------------Detailed post Thubmnail img change-------------
-      function thumbnailImgChange() {
-        const thumbnail = document.querySelector(".postThumbnail img");
-        const multiImgs = document.querySelectorAll(".pics img");
+                  // -----------------Detailed post Thubmnail img change-------------
+                  function thumbnailImgChange() {
+                    const thumbnail = document.querySelector(".postThumbnail img");
+                    const multiImgs = document.querySelectorAll(".pics img");
 
-        multiImgs.forEach((img) => {
-          img.addEventListener("click", () => {
-            const selectedImg = img.src;
-            const oldThumbnailImg = thumbnail.src;
+                    multiImgs.forEach((img) => {
+                      img.addEventListener("click", () => {
+                        const selectedImg = img.src;
+                        const oldThumbnailImg = thumbnail.src;
 
-            thumbnail.src = selectedImg;
-            img.src = oldThumbnailImg;
-          });
-        });
-      }
-      thumbnailImgChange();
+                        thumbnail.src = selectedImg;
+                        img.src = oldThumbnailImg;
+                      });
+                    });
+                  }
+                  thumbnailImgChange();
 
-                
-              }
-            })
-            
 
-            const closeBtn = document.querySelector(".closeBtn")
-            closeBtn.addEventListener("click",()=>{
-              postDetailedBox.style.display = "none"
+                }
+              })
+
+
+              const closeBtn = document.querySelector(".closeBtn")
+              closeBtn.addEventListener("click", () => {
+                postDetailedBox.style.display = "none"
+              })
             })
           })
+        }
+        postDetail()
+        //===========Post delete================
+        const postDeleteBtn = document.querySelectorAll(".postDeleteBtn")
+        postDeleteBtn.forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const postId = btn.getAttribute("postId")
+            const respons = await fetch(`/admin/userPostDelete/${postId}`)
+            if (respons.ok) {
+              const postBox = btn.closest(".developerPost-box")
+              postBox.remove();
+            }
+            else {
+              console.log("post not deleted")
+            }
+          })
         })
-      }
-      postDetail()
-      //===========Post delete================
-      const postDeleteBtn = document.querySelectorAll(".postDeleteBtn")
-      postDeleteBtn.forEach((btn)=>{
-        btn.addEventListener("click",async ()=>{
-          const postId = btn.getAttribute("postId")
-          const respons = await fetch(`/admin/userPostDelete/${postId}`)
-          if(respons.ok){
-            const postBox = btn.closest(".developerPost-box")
-            postBox.remove();
-          }
-          else{
-            console.log("post not deleted")
-          }
-        })
-      })
-      }else{
+      } else {
         const dontHavePost = document.querySelector(".eachDeveloperPosts h1")
         dontHavePost.style.display = "block";
       }
@@ -445,48 +446,52 @@ function eachDeveloperPostShow() {
 eachDeveloperPostShow();
 
 //===========userDelete==============
-function userDelete(){
+function userDelete() {
   const userDeleteBtn = document.querySelectorAll(".removeUser");
 
-userDeleteBtn.forEach((btn) => {
-  btn.addEventListener("click", async () => {
-    const userId = btn.getAttribute("userId");
+  userDeleteBtn.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const userId = btn.getAttribute("userId");
 
-    // Show a confirmation prompt
-    const confirmDelete = confirm("Are you sure you want to delete this user?");
-    if (!confirmDelete) return;
+      // Show a confirmation prompt
+      const confirmDelete = confirm("Are you sure you want to delete this user?");
+      if (!confirmDelete) return;
 
-    try {
-      const res = await fetch(`/admin/deleteUser/${userId}`);
-
-      if (res.ok) {
-        const userItem = btn.closest(".removeUserBox");
-        if (userItem) {
-          userItem.remove();
+      try {
+        const res = await fetch(`/admin/deleteUser/${userId}`);
+        const data = await res.json()
+        if (data.success) {
+          const userItem = btn.closest(".removeUserBox");
+          if (userItem) {
+            userItem.remove();
+          } else {
+            console.warn("user box not found");
+          }
         } else {
-          console.warn("user box not found");
+          if(data.errMsg){
+            flashMsgsTimingForAjax(data.errMsg)
+          }
+          console.log("not delete");
         }
-      } else {
-        console.error("not delete");
+      } catch (error) {
+        console.log("user not deleted");
+
       }
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    });
   });
-});
 }
 userDelete();
 
 // ============Edit user detail==========
-function editUserDetail(){
+function editUserDetail() {
   const userEditForm = document.querySelector(".modalUserProfile")
   const editBtn = document.querySelectorAll(".userEditBtn")
 
-  editBtn.forEach((btn)=>{
-    btn.addEventListener("click",()=>{
+  editBtn.forEach((btn) => {
+    btn.addEventListener("click", () => {
       const userId = JSON.parse(btn.getAttribute("user"))
       // console.log(userId);
-      
+
       userEditForm.innerHTML = `<div class="modal-content">
           <span id="closeBtn" class="closeBtnUserProfile">&#x2702;</span>
           <h2>Update User A/c</h2>
@@ -506,31 +511,31 @@ function editUserDetail(){
           </form>
 
         </div>`
-        userEditForm.style.display = "block"
-      
-        const closeBtn = document.querySelector(".closeBtnUserProfile");
-        closeBtn.addEventListener("click",()=>{
-          userEditForm.style.display = "none"
-        })
+      userEditForm.style.display = "block"
 
-        window.addEventListener("click",(e)=>{
-          if(e.target === userEditForm){
-            userEditForm.style.display = "none"
-          }
-        })
+      const closeBtn = document.querySelector(".closeBtnUserProfile");
+      closeBtn.addEventListener("click", () => {
+        userEditForm.style.display = "none"
+      })
+
+      window.addEventListener("click", (e) => {
+        if (e.target === userEditForm) {
+          userEditForm.style.display = "none"
+        }
+      })
     })
   })
 }
 editUserDetail()
 // ==============Flash Messages============
-function flashMsgsTiming() {
-  const errorMsgBox = document.querySelector("#errorMsgFromBackend");
-  const successMsgFromBackend = document.querySelector("#successMsgFromBackend");
-  const msgTimeCircle = document.querySelector(".circle");
-  let count = 4;
 
-  if (errorMsgBox) { 
-    errorMsgBox.style.display = 'flex'; 
+const errorMsgBox = document.querySelector("#errorMsgFromBackend");
+const successMsgFromBackend = document.querySelector("#successMsgFromBackend");
+if (errorMsgBox) {
+  let count = 4;
+  function flashMsgsTiming() {
+    const msgTimeCircle = document.querySelector(".circle");
+    errorMsgBox.style.display = 'flex';
     const timeInt = setInterval(() => {
       count--;
       msgTimeCircle.innerHTML = count;
@@ -543,12 +548,17 @@ function flashMsgsTiming() {
 
         setTimeout(() => {
           errorMsgBox.style.display = 'none';
-        }, 500); 
+        }, 500);
       }
     }, 1000);
   }
-  if(successMsgFromBackend){
-    successMsgFromBackend.style.display = 'flex'; 
+  flashMsgsTiming()
+}
+if (successMsgFromBackend) {
+  let count = 4;
+  function flashMsgsTiming() {
+    const msgTimeCircle = document.querySelector(".circle");
+    successMsgFromBackend.style.display = 'flex';
     const timeInt = setInterval(() => {
       count--;
       msgTimeCircle.innerHTML = count;
@@ -561,9 +571,39 @@ function flashMsgsTiming() {
 
         setTimeout(() => {
           successMsgFromBackend.style.display = 'none';
-        }, 500); 
+        }, 500);
       }
     }, 1000);
   }
+  flashMsgsTiming()
 }
-flashMsgsTiming();
+
+//===========for ajax req error msg===============
+function flashMsgsTimingForAjax(errMsg) {
+    const errorDiv = document.createElement("div");
+    errorDiv.id = "errorMsgFromBackend";
+    errorDiv.innerHTML = `<p>${errMsg} <span class="circle"></span></p>`;
+    document.body.appendChild(errorDiv);
+
+    const msgTimeCircle = document.querySelector(".circle");
+    errorDiv.style.display = 'flex';
+    let count = 4;
+    const timeInt = setInterval(() => {
+      count--;
+      msgTimeCircle.innerHTML = count;
+      if (count === 0) {
+        clearInterval(timeInt);
+
+        errorDiv.style.transition = "opacity 0.5s, transform 0.5s";
+        errorDiv.style.opacity = "0";
+        errorDiv.style.transform = "translateY(-20%)";
+
+        setTimeout(() => {
+          errorDiv.style.display = 'none';
+          errorDiv.remove();
+          return
+        }, 500);
+      }
+    }, 1000);
+  }
+
