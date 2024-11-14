@@ -60,6 +60,13 @@ const userSchema = new Schema({
         
       }
     ],
+    comment:[
+      {
+        type:Schema.Types.ObjectId,
+        ref:"Comment",
+        
+      }
+    ],
     refreshToken:{
         type:String,
     }

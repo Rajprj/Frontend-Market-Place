@@ -12,14 +12,14 @@ const port = 6500
 
 dbConnection()
     .then(() => {
-        app.get("/",getUserPost, async (req, res) => {
+        app.get("/", getUserPost, async (req, res) => {
             const isLoggedIn = req.cookies?.accessToken ? true : false;
             let profileUser = null;
 
             if (isLoggedIn) {
                 try {
                     const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
-                    profileUser = await User.findById(decodedToken._id)
+                    profileUser = await User.findById(decodedToken._id).populate("comment")
                 } catch (error) {
                     console.log(error);
 
@@ -46,14 +46,14 @@ dbConnection()
             res.render("regex", { isLoggedIn, profileUser });
         })
 
-        app.get("/uicode", async (req, res) => {
+        app.get("/uicode",getUserPost, async (req, res) => {
             const isLoggedIn = req.cookies?.accessToken ? true : false;
             let profileUser = null;
 
             if (isLoggedIn) {
                 try {
                     const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
-                    profileUser = await User.findById(decodedToken._id)
+                    profileUser = await User.findById(decodedToken._id).populate("comment")
                 } catch (error) {
                     console.log(error);
 
@@ -63,7 +63,14 @@ dbConnection()
             res.render("uicode", { isLoggedIn, profileUser });
         })
         app.get("/profile", verifyUser, async (req, res) => {
-            const profileUser = await User.findById(req.user._id).populate('posts')
+            const profileUser = await User.findById(req.user._id)
+                .populate({
+                    path: 'posts',
+                    populate: {
+                        path: 'comment'
+                    }
+                });
+
             // console.log(profileUser);
             const errorMessage = req.session.errorMessage;
             req.session.errorMessage = null;

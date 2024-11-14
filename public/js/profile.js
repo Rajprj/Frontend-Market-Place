@@ -101,11 +101,9 @@ function postSeeBtn() {
   seeBtns.forEach((seeBtn) => {
     seeBtn.addEventListener("click", async () => {
       const postId = seeBtn.getAttribute("postId");
-      const userId = seeBtn.getAttribute("userId");
-      console.log(userId);
+      const userId = JSON.parse(seeBtn.getAttribute("userId"));
 
       const response = await fetch(`/users/seeDetailPost/${postId}`);
-      // console.log("Post ID: ", postId);
       const postData = await response.json();
 
       postDetailedBox.style.display = "block";
@@ -114,6 +112,59 @@ function postSeeBtn() {
       postData.likes.forEach(like => {
         countLike++
       })
+
+      let userCommentBox = "";
+
+      let commentBox = "";
+      if (postData.postCommentCount == 0) {
+        commentBox = ""
+      }
+      else {
+        postData.postComment.forEach((comment) => {
+          commentBox += `
+            <div class="userCommentBox">
+                
+                <div class="userProfilePic">
+                    <img src="${comment.user.dp ? comment.user.dp : "/images/profilePic.png"}" alt="">
+                </div>
+                <div class="userNameAndComment">
+                    <div class="userName" style="margin-bottom: 12px;">
+                        <h4>${comment.user.userName}</h4>
+                    </div>
+                    <div class="comment">
+                        <p style="font-size: 15px;">${comment.commentText}</p>
+                    </div>
+                </div>
+            </div>
+          `;
+        });
+      }
+
+      if (userId.comment.length > 0) {
+        postData.postComment.forEach((comment) => {
+          console.log(comment.user._id + "userid");
+          if (comment.user._id == userId._id) {
+            userCommentBox += `
+                              <div class="userCommentBox">
+                                  <button class="deleteComment" commentId = ${comment._id}>&#128465;</button>
+                                  <div class="userProfilePic">
+                                      <img src="${comment.user.dp ? comment.user.dp : '/images/profilePic.png'}" alt="">
+                                  </div>
+                                  <div class="userNameAndComment">
+                                      <div class="userName" style="margin-bottom: 12px;">
+                                          <h4>${comment.user.userName}</h4>
+                                      </div>
+                                      <div class="comment">
+                                          <p style="font-size: 15px;">${comment.commentText}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          `;
+          }
+        });
+      }
+
+
       postDetailedBox.innerHTML = `
   <div class="postDetailedBoxSet">
     <div class="postBox">
@@ -158,7 +209,18 @@ function postSeeBtn() {
         <div class="commentHeader">
           <h3>Comments</h3>
         </div>
-        <div class="commentsContainer"></div>
+        <div class="commentsContainer">
+            <div class="commentsContainerSet">
+              ${userCommentBox}
+              ${commentBox}
+            </div>
+        </div>
+        <div class="addCommentBox">
+               <textarea placeholder="Add a comment..." rows="3"></textarea>
+               <button type="button" class="submitCommentBtn">
+                 <i class="fas fa-paper-plane"></i>
+               </button>
+            </div>
       </div>
     </div>
   </div>
@@ -166,14 +228,78 @@ function postSeeBtn() {
       const likeButtonElement = document.getElementById("likeButton");
 
       postData.likes.forEach(like => {
-        if (postData.likes.indexOf(userId) === -1) {
+        if (postData.likes.indexOf(userId._id) === -1) {
           likeButtonElement.classList.remove("liked");
         }
         else {
           likeButtonElement.classList.add("liked");
         }
       })
+ //-------------post Add comments---------------
+ if (userId) {
+  const addCommentBtn = document.querySelector(".addCommentBox button");
+  const comment = document.querySelector(".addCommentBox textarea");
+  const commentsContainerSet = document.querySelector(".commentsContainerSet")
+  addCommentBtn.addEventListener("click", async () => {
+    const commentText = comment.value;
+    const res = await fetch(`/users/addComment/${postId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ comment: commentText })
+    });
 
+    if (res.ok) {
+      console.log("Commented");
+      comment.value = "";
+      commentsContainerSet.innerHTML += `
+<div class="userCommentBox">
+<div class="userProfilePic">
+    <img src="${userId.dp ? userId.dp : "/images/profilePic.png"} ">
+</div>
+<div class="userNameAndComment">
+    <div class="userName" style="margin-bottom: 12px;">
+        <h4>${userId.userName}</h4>
+    </div>
+
+    <div class="comment">
+        <p style="font-size: 15px;">${commentText}</p>
+    </div>
+</div>
+</div>
+`;
+
+    
+    } else {
+      console.log("Failed to add comment");
+    }
+
+  });
+
+}
+
+//-------------Post comment delete-------------
+if(userId.comment.length > 0){
+  const deleteCommentBtn = document.querySelectorAll(".deleteComment")
+  console.log(deleteCommentBtn);
+  
+  deleteCommentBtn.forEach((btn)=>{
+    btn.addEventListener("click",async ()=>{
+      // console.log("clicked");
+      const commentBox = btn.closest(".userCommentBox")
+      const commentId = btn.getAttribute("commentId")
+      const res = await fetch(`/users/deleteComment/${commentId}`)
+      if(res.ok){
+        console.log("comment deleted");
+        commentBox.remove();
+      }else{
+        console.log("post not deleted");
+        
+      }
+    })
+  })
+}
       // -------------------like post----------------
       likeButtonElement.addEventListener("click", async function () {
         const res = await fetch(`/users/likePost/${postId}`);
@@ -226,12 +352,12 @@ postSeeBtn();
 
 // ==============Show Change Role================
 function showChangeRole() {
-  document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("changeRoleModel");
-    const changeRoleBtn = document.querySelector(".changeRole");
-    const closeBtn = document.querySelector(".closeBtnRole");
-    console.log(changeRoleBtn);
 
+  const modal = document.getElementById("changeRoleModel");
+  const changeRoleBtn = document.querySelector(".changeRole");
+  const closeBtn = document.querySelector(".closeBtnRole");
+  // console.log(changeRoleBtn);
+  if (changeRoleBtn) {
     changeRoleBtn.addEventListener("click", function (event) {
       event.preventDefault();
       modal.style.display = "block";
@@ -246,14 +372,14 @@ function showChangeRole() {
         modal.style.display = "none";
       }
     });
-  });
+  }
 }
 showChangeRole();
 
 // =============show followings user==========
 function showFollowingsUser() {
-  
-  
+
+
   const followingsBtn = document.querySelector(".followings");
   const followContainer = document.querySelector("#followContainer");
   const followContainerSet = document.querySelector(".followContainerSet");
@@ -261,11 +387,11 @@ function showFollowingsUser() {
   followingsBtn.addEventListener("click", async () => {
     followContainer.style.display = 'block';
     console.log("open following list");
-    const userId = followingsBtn.getAttribute("userId");
+
     // console.log(userId);
     followContainerSet.innerHTML = "";
 
-    const res = await fetch(`/users/followingList/${userId}`);
+    const res = await fetch(`/users/followingList`);
     const data = await res.json();
 
     if (data.status) {
@@ -290,7 +416,7 @@ function showFollowingsUser() {
 
       unfollow.forEach((btn) => {
         btn.addEventListener("click", async () => {
-          const unfollowSpan = document.querySelector(".followBtn span")
+          const unfollowSpan = btn.querySelector("span")
           const followedUserId = btn.getAttribute("userId")
           console.log(followedUserId);
 
@@ -338,7 +464,7 @@ function showFollowersUser() {
         followContent.innerHTML = `
           <div class="profilePic"><img src="${list.dp ? list.dp : "/images/profilePic.png"}" alt=""></div>
           <p class="userName">${list.userName}</p>
-          <div class="followBtn" userId="">
+          <div class="followBtn" >
             
           </div>
         `;

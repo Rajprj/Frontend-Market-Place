@@ -853,7 +853,35 @@ nav{
     justify-content: space-between;
     position: relative;
     margin-bottom: 22px;
+    position: relative;
     /* background-color: rgb(96, 75, 75); */
+}
+/* Parent Container */
+.deleteComment {
+    position: absolute;
+    top: 1%;
+    right: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 26px;
+    height: 26px;
+    background-color: #f8d7da; 
+    border-radius: 50%; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    cursor: pointer; 
+    font-size: 19px; 
+    font-weight: bold;
+    color: #721c24; 
+    transition: all 0.3s ease; 
+    z-index: 2;
+}
+
+/* Hover Effect */
+.deleteComment:hover {
+    background-color: #f5c6cb; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); 
+    color: #a71d2a; 
 }
 
 #postDetailedBox .postDetailedBoxSet .postBox .commentBox .commentsContainer .commentsContainerSet .userCommentBox .userProfilePic{

@@ -231,7 +231,7 @@
               <% if(profileUser.role==='developer' ){ %>
               <span class="followers" >Followers: <%= profileUser.followers.length %></span>
               <% } %>
-              <span class="followings" userId="<%= profileUser._id %>">Following: <%= profileUser.followings.length %> </span>
+              <span class="followings" >Following: <%= profileUser.followings.length %> </span>
             </div>
             <div class="userDetail">
               <div class="fulName">
@@ -275,7 +275,7 @@
                           <div class="userPostBox">
                             <div class="postImgBox showslider">
                               <div class="sideBgEffect">
-                                <div class="seeContainer" postId="<%= post._id %>" userId="<%= profileUser._id %>">
+                                <div class="seeContainer" postId="<%= post._id %>" userId='<%= JSON.stringify(profileUser).replace(/'/g, "&#39;") %>'>
                                   <i class="eyeSymbol"></i>
                                 </div>
                               </div>

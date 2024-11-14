@@ -25,6 +25,10 @@ const userPostSchema = new Schema({
     like:[{
         type:Schema.Types.ObjectId,
         ref:"User"
+    }],
+    comment:[{
+        type:Schema.Types.ObjectId,
+        ref:"Comment"
     }] 
 });
 

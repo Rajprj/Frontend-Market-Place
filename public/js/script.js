@@ -130,76 +130,7 @@ responsiveNav();
 //           </div>
 //       </div>`
 
-//       // ------------following or unfollow the user---------------
-//       if (profileUser !== userPost.user._id) {
-//         function followUnfollowUser() {
-//           const followBtn = document.querySelector(".followBtn")
-//           const followBtnA = document.querySelector(".followBtn span")
-//           followBtn.addEventListener("click", async () => {
-//             checkFollowBtnNotclicked = false;
-//             const res = await fetch(`/users/followingOrRemove/${userPost.user._id}`)
 
-//             const data = await res.json();
-//             if (res.ok) {
-//               console.log(data.following);
-//               if (data.following === true) {
-//                 followBtnA.classList.remove("follow")
-//                 followBtnA.classList.add("following")
-//                 followBtnA.innerHTML = "following"
-//                 if(data.followedId){
-//                   followersList.push(data.followedId)
-//                   // console.log(data.followedId);
-//                 }
-//               }
-//               else {
-//                 followBtnA.classList.remove("following")
-//                 followBtnA.classList.add("follow")
-//                 followBtnA.innerHTML = "follow"
-//                 if(data.followedId){
-//                   followersList.splice(data.followedId,1)
-//                   // console.log(data.followedId);
-
-//                 }
-//               }
-//             }
-//           })
-//         }
-//         followUnfollowUser()
-//       }
-//       // -----------------Detailed post Thubmnail img change-------------
-//       function thumbnailImgChange() {
-//         const thumbnail = document.querySelector(".postThumbnail img");
-//         const multiImgs = document.querySelectorAll(".pics img");
-
-//         multiImgs.forEach((img) => {
-//           img.addEventListener("click", () => {
-//             const selectedImg = img.src;
-//             const oldThumbnailImg = thumbnail.src;
-
-//             thumbnail.src = selectedImg;
-//             img.src = oldThumbnailImg;
-//           });
-//         });
-//       }
-//       thumbnailImgChange();
-
-//       //  ---------------close post Detail----------------
-//       const closeBtn = document.querySelector(".closeBtn")
-//       closeBtn.addEventListener("click", () => {
-
-//         postDetailedBox.style.display = "none"
-//       })
-//     })
-
-//     window.addEventListener("click", (e) => {
-//       if (e.target === postDetailedBox) {
-
-//         postDetailedBox.style.display = "none"
-//       }
-//     })
-//   })
-// }
-// postDetail()
 // ---------------post see button--------------
 function postSeeBtn() {
   const seeBtns = document.querySelectorAll(".seeContainer");
@@ -208,15 +139,41 @@ function postSeeBtn() {
   seeBtns.forEach((seeBtn) => {
     seeBtn.addEventListener("click", async () => {
       const postId = seeBtn.getAttribute("post");
-      const profileUser = seeBtn.getAttribute("profileUser");
-      console.log(profileUser);
+      const profileUser = JSON.parse(seeBtn.getAttribute("profileUser"));
+      // console.log(profileUser.comment);
 
       const response = await fetch(`/users/seeDetailPost/${postId}`);
       // console.log("Post ID: ", postId);
       const postData = await response.json();
-      console.log(postData.postUserId);
-      
+      // console.log(postData.postUserId);
+
+
+      let userCommentBox = "";
       let followAndDownBtn = "";
+      let commentBox = "";
+      if (postData.postCommentCount == 0) {
+        commentBox = ""
+      }
+      else {
+        postData.postComment.forEach((comment) => {
+          commentBox += `
+            <div class="userCommentBox">
+                
+                <div class="userProfilePic">
+                    <img src="${comment.user.dp ? comment.user.dp : "/images/profilePic.png"}" alt="">
+                </div>
+                <div class="userNameAndComment">
+                    <div class="userName" style="margin-bottom: 12px;">
+                        <h4>${comment.user.userName}</h4>
+                    </div>
+                    <div class="comment">
+                        <p style="font-size: 15px;">${comment.commentText}</p>
+                    </div>
+                </div>
+            </div>
+          `;
+        });
+      }
       if (!profileUser) {
         followAndDownBtn = `<div class="followBtn">
               <span class="follow">Follow</span>
@@ -226,20 +183,17 @@ function postSeeBtn() {
             </div>`
       }
       else {
-        if (profileUser !== postData.postUserId) {
+        if (profileUser._id !== postData.postUserId) {
           // console.log("user is not");
           let follow
           if (postData.followers.indexOf(profileUser) === -1) {
-            console.log("user is not following");
+            // console.log("user is not following");
             follow = `<span class="follow">Follow</span>`
           }
           else {
-            console.log("in following list");
+            // console.log("in following list");
             follow = `<span class="following">following</span>`
           }
-          // const follow = followingList.indexOf(profileUser) === -1
-          // ? `<span class="follow">Follow</span>`
-          // : `<span class="following">Following</span>`;
 
           followAndDownBtn = `
       <div class="followBtn">
@@ -250,6 +204,29 @@ function postSeeBtn() {
       </div>`;
         } else {
           followAndDownBtn = "";
+        }
+        if (profileUser.comment.length > 0) {
+          postData.postComment.forEach((comment) => {
+            console.log(comment.user._id + "userid");
+            if (comment.user._id == profileUser._id) {
+              userCommentBox += `
+                              <div class="userCommentBox">
+                                  <button class="deleteComment" commentId = ${comment._id}>&#128465;</button>
+                                  <div class="userProfilePic">
+                                      <img src="${comment.user.dp ? comment.user.dp : '/images/profilePic.png'}" alt="">
+                                  </div>
+                                  <div class="userNameAndComment">
+                                      <div class="userName" style="margin-bottom: 12px;">
+                                          <h4>${comment.user.userName}</h4>
+                                      </div>
+                                      <div class="comment">
+                                          <p style="font-size: 15px;">${comment.commentText}</p>
+                                      </div>
+                                  </div>
+                              </div>
+                          `;
+            }
+          });
         }
       }
 
@@ -304,41 +281,117 @@ function postSeeBtn() {
         <div class="commentHeader">
           <h3>Comments</h3>
         </div>
-        <div class="commentsContainer"></div>
+        <div class="commentsContainer">
+            <div class="commentsContainerSet">
+              ${userCommentBox}
+              ${commentBox}
+            </div>
+        </div>
+        <div class="addCommentBox">
+               <textarea placeholder="Add a comment..." rows="3"></textarea>
+               <button type="button" class="submitCommentBtn">
+                 <i class="fas fa-paper-plane"></i>
+               </button>
+            </div>
       </div>
     </div>
   </div>
 `;
-// ------------following or unfollow the user---------------
-      if (profileUser !== postData.postUserId) {
-        function followUnfollowUser() {
-          const followBtn = document.querySelector(".followBtn")
-          const followBtnA = document.querySelector(".followBtn span")
-          followBtn.addEventListener("click", async () => {
-            checkFollowBtnNotclicked = false;
-            const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
 
-            const data = await res.json();
-            if (res.ok) {
-              console.log(data.following);
-              if (data.following === true) {
-                followBtnA.classList.remove("follow")
-                followBtnA.classList.add("following")
-                followBtnA.innerHTML = "following"
-              }
-              else {
-                followBtnA.classList.remove("following")
-                followBtnA.classList.add("follow")
-                followBtnA.innerHTML = "follow"
-              }
-            }
-          })
-        }
-        followUnfollowUser()
+      //-------------post Add comments---------------
+      if (profileUser) {
+        const addCommentBtn = document.querySelector(".addCommentBox button");
+        const comment = document.querySelector(".addCommentBox textarea");
+        const commentsContainerSet = document.querySelector(".commentsContainerSet")
+        addCommentBtn.addEventListener("click", async () => {
+          const commentText = comment.value;
+          const res = await fetch(`/users/addComment/${postId}`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ comment: commentText })
+          });
+
+          if (res.ok) {
+            console.log("Commented");
+            comment.value = "";
+            commentsContainerSet.innerHTML += `
+  <div class="userCommentBox">
+      <div class="userProfilePic">
+          <img src="${profileUser.dp ? profileUser.dp : "/images/profilePic.png"} ">
+      </div>
+      <div class="userNameAndComment">
+          <div class="userName" style="margin-bottom: 12px;">
+              <h4>${profileUser.userName}</h4>
+          </div>
+
+          <div class="comment">
+              <p style="font-size: 15px;">${commentText}</p>
+          </div>
+      </div>
+  </div>
+`;
+
+          
+          } else {
+            console.log("Failed to add comment");
+          }
+
+        });
+
       }
 
-    
+      //-------------Post comment delete-------------
+      if(profileUser.comment.length > 0){
+        const deleteCommentBtn = document.querySelectorAll(".deleteComment")
+        console.log(deleteCommentBtn);
+        
+        deleteCommentBtn.forEach((btn)=>{
+          btn.addEventListener("click",async ()=>{
+            // console.log("clicked");
+            const commentBox = btn.closest(".userCommentBox")
+            const commentId = btn.getAttribute("commentId")
+            const res = await fetch(`/users/deleteComment/${commentId}`)
+            if(res.ok){
+              console.log("comment deleted");
+              commentBox.remove();
+            }else{
+              console.log("post not deleted");
+              
+            }
+          })
+        })
+      }
+      // ------------following or unfollow the user---------------
+      if (profileUser) {
+        if (profileUser._id !== postData.postUserId) {
+          function followUnfollowUser() {
+            const followBtn = document.querySelector(".followBtn")
+            const followBtnA = document.querySelector(".followBtn span")
+            followBtn.addEventListener("click", async () => {
+              checkFollowBtnNotclicked = false;
+              const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
 
+              const data = await res.json();
+              if (res.ok) {
+                console.log(data.following);
+                if (data.following === true) {
+                  followBtnA.classList.remove("follow")
+                  followBtnA.classList.add("following")
+                  followBtnA.innerHTML = "following"
+                }
+                else {
+                  followBtnA.classList.remove("following")
+                  followBtnA.classList.add("follow")
+                  followBtnA.innerHTML = "follow"
+                }
+              }
+            })
+          }
+          followUnfollowUser()
+        }
+      }
       // -----------------Detailed post Thubmnail img change-------------
       function thumbnailImgChange() {
         const thumbnail = document.querySelector(".postThumbnail img");

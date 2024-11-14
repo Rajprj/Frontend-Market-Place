@@ -29,21 +29,21 @@
       </div>
 
       <% if (isLoggedIn) { %>
-        
+
         <div class="profileRedirectBox">
-          <% if(profileUser.role === "admin"){ %>
+          <% if(profileUser.role==="admin" ){ %>
             <a href="/admin">
-          <% } else { %>
-            <a href="/profile">
-          <% } %>
-            <div class="imgboxProfile">
-              <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
-                <img src="/images/profilePic.png" alt="Default Profile Picture" />
-                <% } else { %>
-                  <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+              <% } else { %>
+                <a href="/profile">
                   <% } %>
-            </div>
-          </a>
+                    <div class="imgboxProfile">
+                      <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
+                        <img src="/images/profilePic.png" alt="Default Profile Picture" />
+                        <% } else { %>
+                          <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+                          <% } %>
+                    </div>
+                </a>
         </div>
         <% } else { %>
           <div class="loginRegister">
@@ -99,8 +99,8 @@
 
 
     <div id="postDetailedBox" class="post_DetailedBox">
-      
-      
+
+
     </div>
 
     <div id="page2">
@@ -222,77 +222,81 @@
                   <div class="sideBgEffect">
                     <div class="likeContainer">
                       <% if(isLoggedIn){ %>
-                        <% let userLiked = post.like.some((like) => like.toString() === profileUser._id.toString()); %>
-                        <% if(userLiked) { %>
-                          <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
-                        <% }else { %>
-                          <span class="likeButton" id="likeButton" postId="<%= post._id %>">
-                        <% } %>
-                      <% }else{ %>
-                        <span class="likeButton" id="likeButton" postId="<%= post._id %>">
-                      <% } %>
-                        <i class="heartIcon" id="heartIcon"></i>
-                        <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
-                      </span>
+                        <% let userLiked=post.like.some((like)=> like.toString() === profileUser._id.toString()); %>
+                          <% if(userLiked) { %>
+                            <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
+                              <% }else { %>
+                                <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                                  <% } %>
+                                    <% }else{ %>
+                                      <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                                        <% } %>
+                                          <i class="heartIcon" id="heartIcon"></i>
+                                          <span class="likeCount" id="likeCount_<%= post._id %>">
+                                            <%= post.like.length %>
+                                          </span>
+                                      </span>
                     </div>
                     <% if(isLoggedIn){ %>
-                      
-                      <div class="seeContainer" 
-                      post='<%= post._id %>'
-                      profileUser = '<%= profileUser._id %>' >
-                      
-                 
-                    <% }else{ %>
-                      <div class="seeContainer" post='<%= post._id%>'>
-                    <% } %>
-                      <i class="eyeSymbol"></i>
-                    </div>
+
+                      <div class="seeContainer" post='<%= post._id %>'
+                        profileUser='<%= JSON.stringify(profileUser).replace(/' /g, "&#39;" ) %>' >
+                        <% }else{ %>
+                          <div class="seeContainer" post='<%= post._id%>'>
+                            <% } %>
+                              <i class="eyeSymbol"></i>
+                          </div>
+                      </div>
+                      <img src="<%= post.thumbnail %>" alt="" />
                   </div>
-                  <img src="<%= post.thumbnail %>" alt="" />
-                </div>
-                <div class="userDetailsBox">
-                  <div class="profileImgBox">
-                    <% if (!post.user.dp || post.user.dp === "" || post.user.dp === null ) { %>
-                      <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
-                    <% } else { %>
-                      <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic" onerror="this.src='/images/profilePic.png'">
-                    <% } %>
-                    
-                  </div>
-                  <div class="postUserDetail">
-                    <div class="postCaption">
-                      <h2><%= post.postName %></h2>
+                  <div class="userDetailsBox">
+                    <div class="profileImgBox">
+                      <% if (!post.user.dp || post.user.dp==="" || post.user.dp===null ) { %>
+                        <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
+                        <% } else { %>
+                          <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic"
+                            onerror="this.src='/images/profilePic.png'">
+                          <% } %>
+
                     </div>
-                    <div class="userName">
-                      <h4><%= post.user.userName %></h4>
+                    <div class="postUserDetail">
+                      <div class="postCaption">
+                        <h2>
+                          <%= post.postName %>
+                        </h2>
+                      </div>
+                      <div class="userName">
+                        <h4>
+                          <%= post.user.userName %>
+                        </h4>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <% }) %>
+
+
             </div>
-          <% }) %>
-          
- 
+        </div>
+        <div class="redirectPostsPage">
+          <a href="#"> next </a>
         </div>
       </div>
-      <div class="redirectPostsPage">
-        <a href="#"> next </a>
-      </div>
-    </div>
 
-    <div id="page5">
-      <div class="leftSide">
-        <h1>start building your</h1>
-        <h1>app faster</h1>
-        <p>
-          Create your tools faster and with no additional effort & resources.
-        </p>
-      </div>
+      <div id="page5">
+        <div class="leftSide">
+          <h1>start building your</h1>
+          <h1>app faster</h1>
+          <p>
+            Create your tools faster and with no additional effort & resources.
+          </p>
+        </div>
 
-      <div class="rightSide">
-        <button>Start building</button>
+        <div class="rightSide">
+          <button>Start building</button>
+        </div>
       </div>
-    </div>
   </main>
 
   <footer>

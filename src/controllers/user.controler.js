@@ -5,6 +5,7 @@ import { apiError } from "../utils/apiError.js";
 import { uploadOnCloudinary } from "../utils/coludinary.js";
 import path from 'path';
 import fs from 'fs';
+import { Comment } from "../models/comments.model.js";
 
 
 
@@ -273,13 +274,17 @@ const detailedPost = asyncHandler(async (req, res) => {
     try {
       const postId = req.params.id;
       const post = await Post.findById(postId).populate('user');
-
-    //   console.log(post.user?.dp);
-    //   console.log(post.like);
+   
+    const postComment = await Promise.all(
+        post.comment.map(async (commentid) => {
+            return await Comment.findById(commentid).populate('user'); 
+        })
+    );
+    
+      
       
       res.json({
         postUserId: post.user._id,
-        
         postName: post.postName,
         thumbnail: post.thumbnail,
         userProfilePic: post.user.dp,
@@ -287,7 +292,10 @@ const detailedPost = asyncHandler(async (req, res) => {
         image: post.images,
         likes: post.like,
         followers: post.user.followers,
-        following: post.user.followings
+        following: post.user.followings,
+        // comments: post.comment
+        postComment: postComment,
+        postCommentCount: post.comment.length
       });
 
       
@@ -421,8 +429,15 @@ const followingUser = asyncHandler(async (req,res)=>{
     }
     else{
 
-        followedUser.followers.splice(followingUser._id,1)
-        followingUser.followings.splice(followedUser._id,1)
+        followedUser.followers = followedUser.followers.filter(
+            (followerId) => !followerId.equals(followingUser._id)
+        );
+        followingUser.followings = followingUser.followings.filter(
+            (followingId) => !followingId.equals(followedUser._id)
+        );
+        
+        console.log(followedUser._id);
+        
         console.log("unfollow");
         
     }
@@ -435,7 +450,7 @@ const followingUser = asyncHandler(async (req,res)=>{
 //for following list
 const followingList = asyncHandler(async (req,res)=>{
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.user._id);
         console.log(user.followings);
         
         const followingDetails = await Promise.all(
@@ -456,7 +471,8 @@ const followingList = asyncHandler(async (req,res)=>{
     }
     
 })
- //for following list
+
+//for following list
 const followersList = asyncHandler(async (req,res)=>{
     try {
         const user = await User.findById(req.user._id);
@@ -464,7 +480,7 @@ const followersList = asyncHandler(async (req,res)=>{
         
         const followersDetails = await Promise.all(
             user.followers.map(async (followersId) => {
-                return await User.findById(followersId); // Individual request for each following ID
+                return await User.findById(followersId); 
             })
         );
         
@@ -480,6 +496,64 @@ const followersList = asyncHandler(async (req,res)=>{
     }
     
 }) 
+
+//For user comments on posts
+const addComment = asyncHandler(async (req,res)=>{
+    const whoComment = req.user._id
+    const whichPost = await Post.findById(req.params.id);
+    const commentText = req.body.comment;
+    if(!commentText){
+        return res.json({status:false, error: "comment is required!"})
+    }
+
+    const commentOnPost = await Comment.create({
+        commentText: commentText,
+        user: whoComment._id,
+        post: whichPost._id
+    })
+
+    const findUser = await User.findById(whoComment._id)
+    const findPost = await Post.findById(whichPost._id)
+    if(!findPost){
+        console.log("post is not");
+        
+    }
+    findUser.comment.push(commentOnPost._id);
+    findPost.comment.push(commentOnPost._id);
+    await findUser.save({validateBeforeSave:true})
+    await findPost.save({validateBeforeSave:true})
+    return res.json({status:true})
+    
+})
+//For user Delete comment
+const deleteComments = asyncHandler(async (req,res)=>{
+    
+    const comment = await Comment.findById(req.params.id).populate("user", "post");
+    if (!comment) {
+        return res.json({ status: false, error: "Comment not found" });
+    }
+    
+    const user = req.user._id;
+    const post = comment.post._id;
+    if (!user || !post) {
+        return res.json({ status: false, error: "User or post not found" });
+    }
+    
+    const findUser = await User.findById(user);
+    findUser.comment = findUser.comment.filter(id => id.toString() !== comment._id.toString());
+    
+    const findPost = await Post.findById(post);
+    findPost.comment = findPost.comment.filter(id => id.toString() !== comment._id.toString());
+    
+    await Comment.deleteOne({ _id: comment._id });
+    
+    await findUser.save({ validateBeforeSave: true });
+    await findPost.save({ validateBeforeSave: true });
+    
+    return res.json({ status: true });
+    
+    
+})
 export {
     registerUser,
     loginUser,
@@ -494,5 +568,7 @@ export {
     changeRole,
     followingUser,
     followingList,
-    followersList
+    followersList,
+    addComment,
+    deleteComments
 }

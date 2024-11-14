@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { loginUser, logOutUser, registerUser, removeDp, uploadDp, addUserPost, deletePost, detailedPost, likePost, updateProfile, changeRole, followingUser, followingList, followersList } from "../controllers/user.controler.js";
+import { loginUser, logOutUser, registerUser, removeDp, uploadDp, addUserPost, deletePost, detailedPost, likePost, updateProfile, changeRole, followingUser, followingList, followersList, addComment, deleteComments } from "../controllers/user.controler.js";
 import { verifyUser } from "../middlewares/auth.midleware.js";
 import { upload } from "../middlewares/multer.midleware.js";
 
@@ -12,8 +12,10 @@ router.get("/logOut",verifyUser, logOutUser)
 router.post("/uploadDP",verifyUser,upload.single("dp"),uploadDp)
 router.get("/followingOrRemove/:id",verifyUser,followingUser)
 router.get("/removeDp",verifyUser,removeDp)
-router.get("/followingList/:id",verifyUser,followingList)
+router.get("/followingList",verifyUser,followingList)
 router.get("/followersList",verifyUser,followersList)
+router.get("/deleteComment/:id",verifyUser,deleteComments)
+router.post("/addComment/:id",verifyUser,addComment)
 router.post("/uploadPost", verifyUser,
     upload.fields([
         { name: "thumbnailUpload", maxCount: 1 },
