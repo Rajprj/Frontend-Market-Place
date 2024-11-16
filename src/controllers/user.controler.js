@@ -272,6 +272,8 @@ const deletePost = asyncHandler(async (req, res)=>{
 //For see detail post 
 const detailedPost = asyncHandler(async (req, res) => {
     try {
+        // console.log("detailed");
+        
       const postId = req.params.id;
       const post = await Post.findById(postId).populate('user');
    
@@ -304,22 +306,30 @@ const detailedPost = asyncHandler(async (req, res) => {
         return res.redirect("/profile");
     }
 });
-  
+
 //For like post
 const likePost = asyncHandler(async (req, res)=>{
-    const findUser = req.user._id;
+    // console.log("liked");
+    
+    const findUser = await User.findById(req.user._id);
+    if(!findUser){
+        return res.json({status:false, error:"you are not loggedIN"})
+    }
     const post = await Post.findById(req.params.id);
 
     let liked = false;
     // if post already liked
     if(post.like.indexOf(findUser._id) === -1){
         post.like.push(findUser._id)
+        findUser.ownLike.push(post._id)
         liked = true;
     }
     else{
         post.like.splice(post.like.indexOf(findUser._id), 1);
+        findUser.ownLike.splice(findUser.ownLike.indexOf(post._id),1)
     }
     await post.save({validateBeforeSave:true})
+    await findUser.save({validateBeforeSave:true})
 
     let countlike = 0;
     post.like.forEach(like=>{
@@ -416,8 +426,15 @@ const changeRole = asyncHandler(async (req, res)=>{
 //For following developer
 const followingUser = asyncHandler(async (req,res)=>{
     const followingUser = await User.findById(req.user._id)
+    if(!followingUser){
+        return res.json({status: false})
+    }
     const followedUser = await User.findById(req.params.id)
-    
+    if(!followedUser){
+        console.log("not found followedUser");
+        
+        return res.json({status: false})
+    }
     let following = false;
 
     if(followedUser.followers.indexOf(followingUser._id) === -1){

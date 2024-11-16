@@ -21,10 +21,8 @@ const getDashboard = asyncHandler(async (req, res, next) => {
             })
         );
         // developers.forEach((dev)=>{
-        //     console.log(dev.followers);
-            
+            // console.log(dev.followers);
         // })
-
         //post
         const userPosts = await Post.find().select("_id postName user").populate('user');
         // userPosts.forEach((post)=>{

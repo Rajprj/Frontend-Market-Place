@@ -1,3 +1,16 @@
+//l===============loader===============
+document.addEventListener("DOMContentLoaded", () => {
+  const loaderContainer = document.getElementById("loaderContainer");
+
+  setTimeout(() => {
+    loaderContainer.classList.add("hide");
+  }, 4000);
+
+  window.addEventListener("load", () => {
+    loaderContainer.classList.add("hide");
+  });
+});
+
 // =================Show naviBar for Update Use Profile==============
 function showSideNavi() {
   const hamBargar = document.querySelector("#sideNaviBtn");
@@ -102,10 +115,10 @@ function postSeeBtn() {
     seeBtn.addEventListener("click", async () => {
       const postId = seeBtn.getAttribute("postId");
       const userId = JSON.parse(seeBtn.getAttribute("userId"));
-
+      loaderContainer.classList.remove("hide");
       const response = await fetch(`/users/seeDetailPost/${postId}`);
       const postData = await response.json();
-
+      loaderContainer.classList.add("hide");
       postDetailedBox.style.display = "block";
       // console.log(postData.image);
       let countLike = 0;
@@ -242,6 +255,7 @@ function postSeeBtn() {
   const commentsContainerSet = document.querySelector(".commentsContainerSet")
   addCommentBtn.addEventListener("click", async () => {
     const commentText = comment.value;
+    loaderContainer.classList.remove("hide");
     const res = await fetch(`/users/addComment/${postId}`, {
       method: "POST",
       headers: {
@@ -251,7 +265,8 @@ function postSeeBtn() {
     });
 
     if (res.ok) {
-      console.log("Commented");
+      // console.log("Commented");
+      loaderContainer.classList.add("hide");
       comment.value = "";
       commentsContainerSet.innerHTML += `
 <div class="userCommentBox">
@@ -289,9 +304,12 @@ if(userId.comment.length > 0){
       // console.log("clicked");
       const commentBox = btn.closest(".userCommentBox")
       const commentId = btn.getAttribute("commentId")
+      loaderContainer.classList.remove("hide");
+      
       const res = await fetch(`/users/deleteComment/${commentId}`)
       if(res.ok){
-        console.log("comment deleted");
+        // console.log("comment deleted");
+        loaderContainer.classList.add("hide");
         commentBox.remove();
       }else{
         console.log("post not deleted");
@@ -390,10 +408,10 @@ function showFollowingsUser() {
 
     // console.log(userId);
     followContainerSet.innerHTML = "";
-
+    loaderContainer.classList.remove("hide");
     const res = await fetch(`/users/followingList`);
     const data = await res.json();
-
+    loaderContainer.classList.add("hide");
     if (data.status) {
       const listUser = data.followingDetails;
       listUser.forEach((list) => {
@@ -451,10 +469,10 @@ function showFollowersUser() {
   followersBtn.addEventListener("click", async () => {
     followersContainer.style.display = 'block';
     followersContainerSet.innerHTML = "";
-
+    loaderContainer.classList.remove("hide");
     const res = await fetch(`/users/followersList`);
     const data = await res.json();
-
+    loaderContainer.classList.add("hide");
     if (data.status) {
       const listUser = data.followersDetails;
       listUser.forEach((list) => {

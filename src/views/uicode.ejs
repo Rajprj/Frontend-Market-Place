@@ -10,6 +10,9 @@
 </head>
 
 <body>
+  <div id="loaderContainer">
+    <div class="loader"></div>
+  </div>
   <header>
     <!-- -------------navbar----------- -->
     <nav>
@@ -31,19 +34,19 @@
 
       <% if (isLoggedIn) { %>
         <div class="profileRedirectBox">
-          <% if(profileUser.role === "admin"){ %>
+          <% if(profileUser.role==="admin" ){ %>
             <a href="/admin">
-          <% } else { %>
-            <a href="/profile">
-          <% } %>
-            <div class="imgboxProfile" >
-              <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
-                <img src="/images/profilePic.png" alt="Default Profile Picture" />
-                <% } else { %>
-                  <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+              <% } else { %>
+                <a href="/profile">
                   <% } %>
-            </div>
-          </a>
+                    <div class="imgboxProfile">
+                      <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
+                        <img src="/images/profilePic.png" alt="Default Profile Picture" />
+                        <% } else { %>
+                          <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+                          <% } %>
+                    </div>
+                </a>
         </div>
         <% } else { %>
           <div class="loginRegister">
@@ -75,93 +78,72 @@
         <div class="postDetailsSetBox active">
           <div class="slider">
             <div class="slides">
-              <div class="slide b1">
-                <div class="postImgBox">
-                  <img src="/images/sliderpic1.webp" alt="">
-                </div>
-                <div class="postInfoBox">
-                  <div class="profilePic">
-                    <img src="/images/userProfile/ronak.jpg" alt="">
+              <% userPosts.slice(0, 3).forEach((post) => { %>
+                <div class="slide">
+                  <div class="postImgBox">
+                    <img src="<%= post.thumbnail %>" alt="Post Thumbnail">
                   </div>
-                  <div class="userNamePostdescription">
-                    <h1>Gamming Webpage Design</h1>
-                    <h4>ronak prajapati</h4>
-                  </div>
-                  <div class="followBtn">
-                    <a href="" class="follow">follow</a>
-                  </div>
-                  <div class="likeAndSeeBtns">
-                    <div class="likeContainer">
-                      <span class="likeButton" id="likeButton">
-                        <i class="heartIcon" id="heartIcon"></i>
-                        <span class="likeCount" id="likeCount">0</span>
-                      </span>
+                  <div class="postInfoBox">
+                    <div class="profilePic">
+                      <% if (!post.user.dp || post.user.dp === "" || post.user.dp === null) { %>
+                        <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
+                      <% } else { %>
+                        <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic" onerror="this.src='/images/profilePic.png'">
+                      <% } %>
                     </div>
-                    <div class="seeContainer">
-                      <i class="eyeSymbol"></i>
+                    <div class="userNamePostdescription">
+                      <h1><%= post.postName %></h1>
+                      <% if (isLoggedIn && profileUser && post.user) { %>
+                        <% if (profileUser._id.toString() == post.user._id.toString()) { %>
+                          <a href="profile" style="text-decoration: none; color: #000000;" title="Your profile">
+                            <h3><%= post.user.userName %></h3>
+                          </a>
+                        <% } else { %>
+                          <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>" style="text-decoration: none; color: #000000;" title="Visit <%= post.user.userName %>'s profile">
+                            <h3><%= post.user.userName %></h3>
+                          </a>
+                        <% } %>
+                      <% } else if (post.user) { %>
+                        <a href="/visitedProfile/<%= post.user._id %>" style="text-decoration: none; color: #000000;" title="Visit <%= post.user.userName %>'s profile">
+                          <h3><%= post.user.userName %></h3>
+                        </a>
+                      <% } else { %>
+                        <span style="color: red;">User not found</span>
+                      <% } %>
+                    </div>
+                    <div class="downloadBtn">
+                      <a href="" class="download">Download</a>
+                    </div>
+                    <div class="likeAndSeeBtns">
+                      <div class="likeContainer">
+                        <% if (isLoggedIn) { %>
+                          <% let userLiked = post.like.some((like) => like.toString() === profileUser._id.toString()); %>
+                          <% if (userLiked) { %>
+                            <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
+                          <% } else { %>
+                            <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                          <% } %>
+                        <% } else { %>
+                          <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                        <% } %>
+                            <i class="heartIcon" id="heartIcon"></i>
+                            <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
+                          </span>
+                      </div>
+                      <% if (isLoggedIn) { %>
+                        <div class="seeContainer" post="<%= post._id %>" profileUser="<%= JSON.stringify(profileUser).replace(/'/g, '&#39;') %>">
+                      <% } else { %>
+                        <div class="seeContainer" post="<%= post._id %>">
+                      <% } %>
+                          <i class="eyeSymbol"></i>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                
+              <% }) %>
+              
 
-              </div>
-              <div class="slide b1">
-                <div class="postImgBox">
-                  <img src="/images/sliderpic4.webp" alt="">
-                </div>
-                <div class="postInfoBox">
-                  <div class="profilePic">
-                    <img src="/images/userProfile/sandeep.jpg" alt="">
-                  </div>
-                  <div class="userNamePostdescription">
-                    <h1>tourism Webpage Design</h1>
-                    <h4>sandeep singh</h4>
-                  </div>
-                  <div class="followBtn">
-                    <a href="" class="follow">follow</a>
-                  </div>
-                  <div class="likeAndSeeBtns">
-                    <div class="likeContainer">
-                      <span class="likeButton" id="likeButton">
-                        <i class="heartIcon" id="heartIcon"></i>
-                        <span class="likeCount" id="likeCount">0</span>
-                      </span>
-                    </div>
-                    <div class="seeContainer">
-                      <i class="eyeSymbol"></i>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              <div class="slide b1">
-                <div class="postImgBox">
-                  <img src="/images/feedpost.webp" alt="">
-                </div>
-                <div class="postInfoBox">
-                  <div class="profilePic">
-                    <img src="/images/userProfile/ut.jpg" alt="">
-                  </div>
-                  <div class="userNamePostdescription">
-                    <h1>bloging Webpage Design</h1>
-                    <h4>utsav patel</h4>
-                  </div>
-                  <div class="followBtn">
-                    <a href="" class="follow">follow</a>
-                  </div>
-                  <div class="likeAndSeeBtns">
-                    <div class="likeContainer">
-                      <span class="likeButton" id="likeButton">
-                        <i class="heartIcon" id="heartIcon"></i>
-                        <span class="likeCount" id="likeCount">0</span>
-                      </span>
-                    </div>
-                    <div class="seeContainer">
-                      <i class="eyeSymbol"></i>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
 
             </div>
           </div>
@@ -172,286 +154,287 @@
     </div>
   </header>
 
-<main>
+  <main>
 
-  <!-- -----------Post Detailed Box--------------- -->
-  <div id="postDetailedBox" class="post_DetailedBox">
-      
-    <div class="postDetailedBoxSet">
-      
-      <div class="postBox">
-        <div class="closeBtn">
-          <p>&#x2702;</p>
+    <!-- -----------Post Detailed Box--------------- -->
+    <div id="postDetailedBox" class="post_DetailedBox">
+
+    </div>
+
+    <!-- ------------Page - 2-------------- -->
+    <div id="page2">
+      <div class="page2Main">
+        <div class="page2MainBox">
+          <% userPosts.forEach((post)=>{ %>
+            <div class="userPostBoxes">
+              <div class="postBGclip"></div>
+              <div class="userPostBox">
+                <div class="postImgBox showslider">
+                  <div class="sideBgEffect">
+                    <div class="likeContainer">
+                      <% if(isLoggedIn){ %>
+                        <% let userLiked=post.like.some((like)=> like.toString() === profileUser._id.toString()); %>
+                          <% if(userLiked) { %>
+                            <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
+                              <% }else { %>
+                                <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                                  <% } %>
+                                    <% }else{ %>
+                                      <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                                        <% } %>
+                                          <i class="heartIcon" id="heartIcon"></i>
+                                          <span class="likeCount" id="likeCount_<%= post._id %>">
+                                            <%= post.like.length %>
+                                          </span>
+                                      </span>
+                    </div>
+                    <% if(isLoggedIn){ %>
+
+                      <div class="seeContainer" post='<%= post._id %>'
+                        profileUser='<%= JSON.stringify(profileUser).replace(/' /g, "&#39;" ) %>' >
+                        <% }else{ %>
+                          <div class="seeContainer" post='<%= post._id%>'>
+                            <% } %>
+                              <i class="eyeSymbol"></i>
+                          </div>
+                      </div>
+                      <img src="<%= post.thumbnail %>" alt="" />
+                  </div>
+                  <div class="userDetailsBox">
+                    <div class="profileImgBox">
+                      <% if (!post.user.dp || post.user.dp==="" || post.user.dp===null ) { %>
+                        <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
+                        <% } else { %>
+                          <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic"
+                            onerror="this.src='/images/profilePic.png'">
+                          <% } %>
+
+                    </div>
+                    <div class="postUserDetail">
+                      <div class="postCaption">
+                        <h2>
+                          <%= post.postName %>
+                        </h2>
+                      </div>
+                      <div class="userName">
+                        <% if (isLoggedIn && profileUser && post.user) { %>
+                          <% if (profileUser._id.toString() == post.user._id.toString()) { %>
+                            <a href="profile" style="text-decoration: none; color: #fff;" title="Your profile">
+                              <h3><%= post.user.userName %></h3>
+                            </a>
+                          <% } else { %>
+                            <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>" style="text-decoration: none; color: #fff;" title="Visit <%= post.user.userName %>'s profile">
+                              <h3><%= post.user.userName %></h3>
+                            </a>
+                          <% } %>
+                        <% } else if (post.user) { %>
+                          <a href="/visitedProfile/<%= post.user._id %>" style="text-decoration: none; color: #fff;" title="Visit <%= post.user.userName %>'s profile">
+                            <h3><%= post.user.userName %></h3>
+                          </a>
+                        <% } else { %>
+                          <span style="color: red;">User not found</span>
+                        <% } %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% }) %>
+            </div>
         </div>
-        <div class="postInfoBox">
-          
-          <div class="postThumbnail">
-            <img src="/images/sliderpic4.webp" alt="">
+      </div>
+      <div id="page3">
+        <div class="leftBox box">
+          <% userPosts.slice(0, 1).forEach((post) => { %>
+          <div class="postImgBox">
+            <img src="<%= post.thumbnail %>" alt="">
           </div>
-          <div class="multiPicPostBox">
-            <div class="pics">
-              <img src="/images/userProfile/detail.jpg" alt="">
-            </div>
-            <div class="pics">
-              <img src="/images/userProfile/detail2.jpg" alt="">
-            </div>
-            <div class="pics">
-              <img src="/images/userProfile/detail3.jpg" alt="">
-            </div>
-            <div class="pics">
-              <img src="/images/userProfile/detail4.jpg" alt="">
-            </div>
-          </div>
-          <div class="userAndPostInfoBox">
-            <div class="likeBox">
+          <div class="postDetailBox">
+            <div class="likeAndSeeBox">
               <div class="likeContainer">
-                <span class="likeButton" id="likeButton">
-                  <i class="heartIcon" id="heartIcon"></i>
-                  <span class="likeCount" id="likeCount">567</span>
-                </span>
+                <% if (isLoggedIn) { %>
+                  <% let userLiked = post.like.some((like) => like.toString() === profileUser._id.toString()); %>
+                  <% if (userLiked) { %>
+                    <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
+                  <% } else { %>
+                    <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                  <% } %>
+                <% } else { %>
+                  <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                <% } %>
+                    <i class="heartIcon" id="heartIcon"></i>
+                    <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
+                  </span>
+              </div>
+              <% if (isLoggedIn) { %>
+                <div class="seeContainer" post="<%= post._id %>" profileUser="<%= JSON.stringify(profileUser).replace(/'/g, '&#39;') %>">
+              <% } else { %>
+                <div class="seeContainer" post="<%= post._id %>">
+              <% } %>
+                  <i class="eyeSymbol"></i>
+                </div>
+              
+            </div>
+            <div class="profileInfo">
+              <div class="imgBox">
+                <% if (!post.user.dp || post.user.dp === "" || post.user.dp === null) { %>
+                  <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
+                <% } else { %>
+                  <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic" onerror="this.src='/images/profilePic.png'">
+                <% } %>
+              </div>
+              <div class="userNameFollowers">
+                <% if (isLoggedIn && profileUser && post.user) { %>
+                  <% if (profileUser._id.toString() == post.user._id.toString()) { %>
+                    <a href="profile" style="text-decoration: none; color: #000000;" title="Your profile">
+                      <h2><%= post.user.userName %></h2>
+                    </a>
+                  <% } else { %>
+                    <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>" style="text-decoration: none; color: #000000;" title="Visit <%= post.user.userName %>'s profile">
+                      <h2><%= post.user.userName %></h2>
+                    </a>
+                  <% } %>
+                <% } else if (post.user) { %>
+                  <a href="/visitedProfile/<%= post.user._id %>" style="text-decoration: none; color: #000000;" title="Visit <%= post.user.userName %>'s profile">
+                    <h2><%= post.user.userName %></h2>
+                  </a>
+                <% } else { %>
+                  <span style="color: red;">User not found</span>
+                <% } %>
+                <h3>Followers : <%= post.user.followers.length %></h3>
               </div>
             </div>
-            <div class="userInfo">
-              <div class="profilePic">
-                <img src="/images/userProfile/bhavy.jpg" alt="">
-              </div>
-              <div class="userName"><h2>Bhavy12</h2></div>
+            <div class="postDescription">
+              <h2><%= post.postName %></h2>
             </div>
-            <div class="postInfo">
-              <div class="postName">
-                <h2>Tourism Explore WebPage</h2>
-              </div>
+            <div class="downloadBtn" style="margin-left: 24px;">
+              <a href="#">Download</a>
             </div>
-            <div class="followBtnAndDownloadBtn">
-              <div class="followBtn">
-                <a href="#">Follow</a>
+          </div>
+          <% }) %>
+        </div>
+        <div class="rightBox box">
+          <% const randomIndex = Math.floor(Math.random() * userPosts.length); 
+              const post = userPosts[randomIndex]; %>
+          <% if (post) { %>
+            <div class="postImgBox">
+              <img src="<%= post.thumbnail %>" alt="">
+            </div>
+            <div class="postDetailBox">
+              <div class="likeAndSeeBox">
+                <div class="likeContainer">
+                  <% if (isLoggedIn) { %>
+                    <% let userLiked = post.like.some((like) => like.toString() === profileUser._id.toString()); %>
+                    <% if (userLiked) { %>
+                      <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
+                    <% } else { %>
+                      <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                    <% } %>
+                  <% } else { %>
+                    <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                  <% } %>
+                      <i class="heartIcon" id="heartIcon"></i>
+                      <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
+                    </span>
+                </div>
+                <% if (isLoggedIn) { %>
+                  <div class="seeContainer" post="<%= post._id %>" profileUser="<%= JSON.stringify(profileUser).replace(/'/g, '&#39;') %>">
+                <% } else { %>
+                  <div class="seeContainer" post="<%= post._id %>">
+                <% } %>
+                    <i class="eyeSymbol"></i>
+                  </div>
+                
               </div>
-              <div class="downloadBtn">
+              <div class="profileInfo">
+                <div class="imgBox">
+                  <% if (!post.user.dp || post.user.dp === "" || post.user.dp === null) { %>
+                    <img src="/images/profilePic.png" alt="Default Profile Picture" class="profile-pic">
+                  <% } else { %>
+                    <img src="<%= post.user.dp %>" alt="Profile Picture" class="profile-pic" onerror="this.src='/images/profilePic.png'">
+                  <% } %>
+                </div>
+                <div class="userNameFollowers">
+                  <% if (isLoggedIn && profileUser && post.user) { %>
+                    <% if (profileUser._id.toString() == post.user._id.toString()) { %>
+                      <a href="profile" style="text-decoration: none; color: #000000;" title="Your profile">
+                        <h2><%= post.user.userName %></h2>
+                      </a>
+                    <% } else { %>
+                      <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>" style="text-decoration: none; color: #000000;" title="Visit <%= post.user.userName %>'s profile">
+                        <h2><%= post.user.userName %></h2>
+                      </a>
+                    <% } %>
+                  <% } else if (post.user) { %>
+                    <a href="/visitedProfile/<%= post.user._id %>" style="text-decoration: none; color: #070707;" title="Visit <%= post.user.userName %>'s profile">
+                      <h2><%= post.user.userName %></h2>
+                    </a>
+                  <% } else { %>
+                    <span style="color: red;">User not found</span>
+                  <% } %>
+                  <h3>Followers : <%= post.user.followers.length %></h3>
+                </div>
+              </div>
+              <div class="postDescription">
+                <h2><%= post.postName %></h2>
+              </div>
+              <div class="downloadBtn" style="margin-left: 24px;">
                 <a href="#">Download</a>
               </div>
             </div>
-            
-          </div>
-        </div>
-        <div class="commentBox">
-          <div class="commentHeader">
-            <h3>Comments</h3>
-          </div>
-          <div class="commentsContainer">
-            <div class="commentsContainerSet">
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/ut.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">"Amazing work! 😍 The attention to detail is incredible!"</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/ronak.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@ronak_prj</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">"This is exactly what I needed! 👍 Keep up the awesome work!"</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/sandeep.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@sandeep_09</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">"Great job! 🎉 Your design skills are on point!"</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/ut.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/ronak.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/sandeep.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/ut.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/ronak.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
-                </div>
-              </div>
-              <div class="userCommentBox">
-                <div class="userProfilePic">
-                  <img src="/images/userProfile/sandeep.jpg" alt="">
-                </div>
-                <div class="userNameAndComment">
-                  <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                  <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="addCommentBox">
-            <textarea placeholder="Add a comment..." rows="3"></textarea>
-            <button type="button" class="submitCommentBtn">
-              <i class="fas fa-paper-plane"></i>
-            </button>
-          </div>
-          
+            <% } %>
         </div>
       </div>
+  </main>
+  <footer>
+    <div class="leftContain">
+      <img src="./images/logo.png" alt="" />
+      <h3>CodeMe</h3>
     </div>
-  </div>
+    <div class="rightContain">
+      <div class="elems">
+        <h1>product</h1>
+        <h6>low code plateform</h6>
+        <h6>automation</h6>
+        <h6>git-version control</h6>
+        <h6>components</h6>
+        <h6>ui desing</h6>
+      </div>
+      <div class="elems">
+        <h1>resources</h1>
+        <h6>low code plateform</h6>
+        <h6>automation</h6>
+        <h6>git-version control</h6>
+        <h6>components</h6>
+        <h6>ui desing</h6>
+        <h6>git-version control</h6>
+        <h6>components</h6>
+        <h6>ui desing</h6>
+      </div>
+      <div class="elems">
+        <h1>solution</h1>
+        <h6>low code plateform</h6>
+        <h6>automation</h6>
+        <h6>git-version control</h6>
+        <h6>components</h6>
+        <h6>ui desing</h6>
+      </div>
+      <div class="elems">
+        <h1>integration</h1>
+        <h6>low code plateform</h6>
 
-  <!-- ------------Page - 2-------------- -->
-  <div id="page2">
-    <div class="page2Main">
-      <div class="page2MainBox">
-        <% for(let i=0; i<6; i++){ %>
-        
-        <% } %>
+        <h6>ui desing</h6>
+      </div>
+      <div class="elems">
+        <h1>why CodeMe</h1>
+        <h6>low code plateform</h6>
+        <h6>automation</h6>
+        <h6>git-version control</h6>
+        <h6>components</h6>
+        <h6>ui desing</h6>
       </div>
     </div>
-  </div>
-  <div id="page3">
-    <div class="leftBox box">
-      <div class="postImgBox">
-        <img src="images/userProfile/IMG-20240811-WA0004.jpg" alt="">
-      </div>
-      <div class="postDetailBox">
-        <div class="likeAndSeeBox">
-          <div class="likeContainer">
-            <span class="likeButton" id="likeButton">
-              <i class="heartIcon" id="heartIcon"></i>
-              <span class="likeCount" id="likeCount">0</span>
-            </span>
-          </div>
-          <div class="seeContainer">
-            <i class="eyeSymbol"></i>
-          </div>
-        </div>
-        <div class="profileInfo">
-          <div class="imgBox">
-            <img src="/images/userProfile/sandeep.jpg" alt="">
-          </div>
-          <div class="userNameFollowers">
-            <h2>sandeep singh</h2>
-            <h3>Followers : 4k</h3>
-          </div>
-        </div>
-        <div class="postDescription">
-          <h2>Game loft page Design for well page</h2>
-        </div>
-        <div class="followBox">
-          <a href="#">follow</a>
-        </div>
-      </div>
-    </div>
-    <div class="rightBox box">
-      <div class="postImgBox">
-        <img src="images/userProfile/IMG-20240811-WA0011.jpg" alt="">
-      </div>
-      <div class="postDetailBox">
-        
-        <div class="profileInfo">
-          <div class="imgBox">
-            <img src="/images/userProfile/bhavy.jpg" alt="">
-          </div>
-          <div class="userNameFollowers">
-            <h2>sandeep singh</h2>
-            <h3>Followers : 4k</h3>
-          </div>
-        </div>
-        <div class="postDescription">
-          <h2>Game loft page Design for well page</h2>
-        </div>
-        <div class="followBox">
-          <a href="#">follow</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
-<footer>
-  <div class="leftContain">
-    <img src="./images/logo.png" alt="" />
-    <h3>CodeMe</h3>
-  </div>
-  <div class="rightContain">
-    <div class="elems">
-      <h1>product</h1>
-      <h6>low code plateform</h6>
-      <h6>automation</h6>
-      <h6>git-version control</h6>
-      <h6>components</h6>
-      <h6>ui desing</h6>
-    </div>
-    <div class="elems">
-      <h1>resources</h1>
-      <h6>low code plateform</h6>
-      <h6>automation</h6>
-      <h6>git-version control</h6>
-      <h6>components</h6>
-      <h6>ui desing</h6>
-      <h6>git-version control</h6>
-      <h6>components</h6>
-      <h6>ui desing</h6>
-    </div>
-    <div class="elems">
-      <h1>solution</h1>
-      <h6>low code plateform</h6>
-      <h6>automation</h6>
-      <h6>git-version control</h6>
-      <h6>components</h6>
-      <h6>ui desing</h6>
-    </div>
-    <div class="elems">
-      <h1>integration</h1>
-      <h6>low code plateform</h6>
-
-      <h6>ui desing</h6>
-    </div>
-    <div class="elems">
-      <h1>why CodeMe</h1>
-      <h6>low code plateform</h6>
-      <h6>automation</h6>
-      <h6>git-version control</h6>
-      <h6>components</h6>
-      <h6>ui desing</h6>
-    </div>
-  </div>
-</footer>
+  </footer>
   <!-- ------------Scripts----------- -->
   <script src="/js/uicode.js"></script>
 </body>

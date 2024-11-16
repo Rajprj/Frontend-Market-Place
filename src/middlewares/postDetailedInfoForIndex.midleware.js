@@ -10,8 +10,11 @@ const getUserPost = asyncHandler(async (req, res, next) => {
         const randomPosts = userPosts
         .sort(() => 0.5 - Math.random())  
         .slice(0, 6);
-
-        req.userPosts = randomPosts
+        // userPosts.forEach((post)=>{
+        //     // console.log(post.user.followers.length);
+            
+        // })
+        req.userPosts = randomPosts   
         next();
     } catch (error) {
         console.error("Error fetching dashboard data:", error);

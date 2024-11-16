@@ -12,6 +12,9 @@
 </head>
 
 <body>
+  <div id="loaderContainer">
+    <div class="loader"></div>
+  </div>
   <header>
     <nav>
       <div class="logo">
@@ -225,17 +228,15 @@
                         <% let userLiked=post.like.some((like)=> like.toString() === profileUser._id.toString()); %>
                           <% if(userLiked) { %>
                             <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
-                              <% }else { %>
-                                <span class="likeButton" id="likeButton" postId="<%= post._id %>">
-                                  <% } %>
-                                    <% }else{ %>
-                                      <span class="likeButton" id="likeButton" postId="<%= post._id %>">
-                                        <% } %>
-                                          <i class="heartIcon" id="heartIcon"></i>
-                                          <span class="likeCount" id="likeCount_<%= post._id %>">
-                                            <%= post.like.length %>
-                                          </span>
-                                      </span>
+                          <% }else { %>
+                            <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                          <% } %>
+                      <% }else{ %>
+                          <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                      <% } %>
+                          <i class="heartIcon" id="heartIcon"></i>
+                          <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
+                          </span>
                     </div>
                     <% if(isLoggedIn){ %>
 
@@ -266,9 +267,24 @@
                         </h2>
                       </div>
                       <div class="userName">
-                        <h4>
-                          <%= post.user.userName %>
-                        </h4>
+                        <% if (isLoggedIn && profileUser && post.user) { %>
+                          <% if (profileUser._id.toString() == post.user._id.toString()) { %>
+                            <a href="profile" style="text-decoration: none; color: #fff;" title="Your profile">
+                              <%= post.user.userName %>
+                            </a>
+                          <% } else { %>
+                            <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>" style="text-decoration: none; color: #fff;" title="Visit <%= post.user.userName %>'s profile">
+                              <%= post.user.userName %>
+                            </a>
+                          <% } %>
+                        <% } else if (post.user) { %>
+                          <a href="/visitedProfile/<%= post.user._id %>" style="text-decoration: none; color: #fff;" title="Visit <%= post.user.userName %>'s profile">
+                            <%= post.user.userName %>
+                          </a>
+                        <% } else { %>
+                          <span style="color: red;">User not found</span>
+                        <% } %>
+                        
                       </div>
                     </div>
                   </div>
@@ -280,7 +296,7 @@
             </div>
         </div>
         <div class="redirectPostsPage">
-          <a href="#"> next </a>
+          <a href="uicode"> next </a>
         </div>
       </div>
 

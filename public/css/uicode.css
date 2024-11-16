@@ -1,7 +1,32 @@
+
 @import url('root.css');
 
+ .downloadBtn a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 22px;
+    border-radius: 10px;
+    color: #fff;
+    background: linear-gradient(45deg, #8e44ad, #e74c3c); /* Deep purple to bright red/pink gradient */
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    font-size: var(--mediumFont);
+    font-weight: var(--largeFontWeight);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-transform: uppercase;
+}
 
+ .downloadBtn a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+}
 
+ .downloadBtn a:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
 /* ----------Page - 1---------- */
 
 #page1 {
@@ -77,19 +102,20 @@
 
 .postDetailsSetBox .slider .slides .slide .postInfoBox {
     height: 20%;
-    width: 66%;
+    min-width: 30%;
     display: flex;
     flex-direction: row;
     align-items: center;
-    /* justify-content: space-around; */
+    justify-content: space-between;
     /* background-color: red; */
+
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
 }
 
 .postDetailsSetBox .slider .slides .slide .postInfoBox .profilePic {
-    height: 70%;
-    width: 10%;
+    height: 100px;
+    width: 100px;
     background-color: white;
     border-radius: 10px;
     overflow: hidden;
@@ -157,9 +183,9 @@
 }
 
 .postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns {
-    height: 76%;
-    width: 8%;
+   
     margin-left: 12px;
+    margin-right: 15px;
     /* background-color: blue; */
     display: flex;
     flex-direction: column;
@@ -175,6 +201,7 @@
     justify-content: center;
     background-color: transparent;
     position: relative;
+    margin: 5px;
 }
 
 .postDetailsSetBox .slider .slides .slide .postInfoBox .likeAndSeeBtns .likeContainer .likeButton {
@@ -241,12 +268,18 @@
 .postDetailsSetBox .slider .slides .slide .postImgBox {
     height: 450px;
     width: 90%;
-    background-color: rgb(67, 50, 50);
+    position: relative;
+    background-color: rgb(255, 255, 255);
 }
 
 .postDetailsSetBox .slider .slides .slide .postImgBox img {
     height: 100%;
     width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     object-fit: cover;
 }
 

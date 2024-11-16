@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <div id="loaderContainer">
+        <div class="loader"></div>
+      </div>
     <% if (typeof errorMessage !== 'undefined' && errorMessage) { %>
         <div id="errorMsgFromBackend">
             <p><%= errorMessage %> <span class="circle"></span></p>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/users/profile.css">
+  <title>profile</title>
+</head>
+
+<body>
+  <div id="loaderContainer">
+    <div class="loader"></div>
+  </div>
+  <% if (typeof errorMessage !=='undefined' && errorMessage) { %>
+    <div id="errorMsgFromBackend">
+      <p>
+        <%= errorMessage %> <span class="circle"></span>
+      </p>
+    </div>
+    <% } %>
+    <% if (typeof successMsg !=='undefined' && successMsg) { %>
+      <div id="successMsgFromBackend">
+        <p>
+          <%= successMsg %> <span class="circle"></span>
+        </p>
+      </div>
+      <% } %>
+      <main id="profilePage">
+        <!-- -----------Post Detailed Box--------------- -->
+        <div id="postDetailedBox" class="post_DetailedBox">
+
+        </div>
+        <div id="sidebar" class="profileSideBar">
+          <div class="pined pinnedProfileBar">
+            <div class="headParts profileBarHead">
+              <div class="sideLogo">
+                <img src="/images/logo.png" alt="">
+              </div>
+              <h1>CodeMe</h1>
+            </div>
+
+            <div class="otherRegex">
+              <a href="/">
+
+                <div class="parts profileParts">
+                  <div class="sideLogoParts">
+                    <img src="/images/sidebarImages/home1-removebg-preview.png" alt="">
+                  </div>
+                  <h6>Home</h>
+                </div>
+              </a>
+              <a href="/regex">
+
+                <div class="parts profileParts">
+                  <div class="sideLogoParts">
+                    <img src="/images/sidebarImages/regex-removebg-preview.png" alt="">
+                  </div>
+                  <h6>Regex</h>
+                </div>
+              </a>
+              
+              <a href="uicode">
+
+                <div class="parts profileParts">
+                  <div class="sideLogoParts">
+                    <img src="/images/sidebarImages/code-removebg-preview.png" alt="">
+                  </div>
+                  <h6>Code+UI</h>
+                </div>
+            </div>
+            </a>
+          </div>
+
+        </div>
+        <div id="profileBox">
+
+          
+          <!-- ---------------Profile Header-------------- -->
+          <div class="profileHeader">
+            <div class="bghighlight"></div>
+            
+
+            
+            <div class="coverImg">
+              <img src="/images/userProfile/profileCoverimg.jpg" alt="">
+            </div>
+            <div class="followersAndFollowingBox">
+              <% if(profileUser.role==='developer' ){ %>
+              <span class="followers" >Followers: <%= profileUser.followers.length %></span>
+              <% } %>
+              <span class="followings" >Following: <%= profileUser.followings.length %> </span>
+            </div>
+            <div class="userDetail">
+              <div class="fulName">
+                <h1>
+                  <%= profileUser.fullName %>
+                </h1>
+              </div>
+              <div class="userName">
+                <h4>
+                  <%= profileUser.userName %> / <%= profileUser.role %>
+                </h4>
+              </div>
+            </div>
+            <div class="profilePic">
+              <% if (!profileUser.dp || profileUser.dp==="" ) { %>
+                <img src="/images/profilePic.png" alt="Default Profile Picture">
+                <% } else { %>
+                  <img src="<%= profileUser.dp %>" alt="Profile Picture">
+                  <% } %>
+
+            </div>
+          </div>
+
+          <div class="profilePostBody">
+            <div class="page3MainBox">
+                <% profileUser.posts.forEach(function(post){ %>
+                    <div class="userPostBoxes">
+                      <div class="postBGclip"></div>
+                      <div class="userPostBox">
+                        <div class="postImgBox showslider">
+                          <div class="sideBgEffect">
+                            <div class="likeContainer">
+                              <% if(visitedUser){ %>
+                                <% let userLiked=post.like.some((like)=> like.toString() === visitedUser._id.toString()); %>
+                                  <% if(userLiked) { %>
+                                    <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
+                                  <% }else { %>
+                                    <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                                  <% } %>
+                              <% }else{ %>
+                                  <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                              <% } %>
+                                  <i class="heartIcon" id="heartIcon"></i>
+                                  <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
+                                  </span>
+                            </div>
+                            <% if(!visitedUser){ %>
+                              <div class="seeContainer" post="<%= post._id %>">
+                            <% } else { %>
+                              <div class="seeContainer" post="<%= post._id %>" visitor="<%= JSON.stringify(visitedUser).replace(/'/g, '&#39;') %>">
+                            <% } %>
+                              <i class="eyeSymbol"></i>
+                            </div>
+                          </div>
+                          <img src="<%= post.thumbnail %>" alt="" />
+                        </div>
+                        <div class="userDetailsBox">
+
+                          <div class="postUserDetail">
+                            <div class="postCaption">
+                              <h2>
+                                <%= post.postName %>
+                              </h2>
+                            </div>
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <% })%>
+                  
+                
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <script src="/js/visitedProfile.js"></script>
+</body>
+
+</html>

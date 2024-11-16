@@ -10,6 +10,9 @@
 </head>
 
 <body>
+  <div id="loaderContainer">
+    <div class="loader"></div>
+  </div>
   <% if (typeof errorMessage !=='undefined' && errorMessage) { %>
     <div id="errorMsgFromBackend">
       <p>
@@ -57,15 +60,7 @@
                   <h6>Regex</h>
                 </div>
               </a>
-              <!-- <a href="#">
-
-                        <div class="parts profileParts">
-                            <div class="sideLogoParts">
-                                <img src="/images/userProfile/sidebarprofile/ui-removebg-preview.png" alt="">
-                            </div>
-                            <h6>UI-Designs</h>
-                            </div>
-                    </a> -->
+              
               <a href="uicode">
 
                 <div class="parts profileParts">
@@ -164,7 +159,7 @@
             <div class="modal-content">
               <span id="closeBtn" class="closeBtnPost">&times;</span>
               <h2>Update your A/c</h2>
-              <form action="/users/uploadPost" method="post" enctype="multipart/form-data">
+              <form action="/users/uploadPost" method="post" enctype="multipart/form-data" id="postForm">
                 <!-- Post Name -->
                 <div class="form-group">
                   <label for="postName">Post Name:</label>

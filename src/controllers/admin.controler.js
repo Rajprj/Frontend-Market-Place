@@ -1,29 +1,30 @@
 import { User } from "../models/user.model.js";
 import { Post } from "../models/post.model.js";
+import { Comment } from "../models/comments.model.js";
 import { asyncHandler } from "../utils/asyncHendler.js";
 import nodemailer from "nodemailer";
 import Mailgen from "mailgen";
 
 
 // For add new Admin
-const addAdmin = asyncHandler(async (req,res)=>{
-    const{userName, email, fullName, password} = req.body;
+const addAdmin = asyncHandler(async (req, res) => {
+    const { userName, email, fullName, password } = req.body;
 
     //check all fields are filled 
-    if([userName, email, fullName, password].some((fields)=>fields?.trim() === "")){
+    if ([userName, email, fullName, password].some((fields) => fields?.trim() === "")) {
         req.session.errorMessage = "All fields are required!"
         return res.redirect("/admin");
     }
 
     //check if admin already exist
     const existedAdmin = await User.findOne({
-        $or : [{userName}, {email}],
+        $or: [{ userName }, { email }],
     })
-    if(existedAdmin){
+    if (existedAdmin) {
         // throw new apiError(404," already exist")
         req.session.errorMessage = "Admin already exists";
         return res.redirect("/admin");
-        
+
     }
 
     // create admin
@@ -32,7 +33,7 @@ const addAdmin = asyncHandler(async (req,res)=>{
         fullName,
         email,
         password,
-        role : "admin"
+        role: "admin"
     });
 
     if (!user) {
@@ -44,25 +45,25 @@ const addAdmin = asyncHandler(async (req,res)=>{
 })
 
 //For edit Admin profile details
-const editProfile = asyncHandler(async (req,res)=>{
+const editProfile = asyncHandler(async (req, res) => {
     try {
-        const{userName, email, fullName} = req.body;
-        if([userName, email, fullName].some((fields)=> fields?.trim() === "")){
+        const { userName, email, fullName } = req.body;
+        if ([userName, email, fullName].some((fields) => fields?.trim() === "")) {
             req.session.errorMessage = "Pleace fill the All fields"
             return res.redirect("/admin")
         }
-    
+
         const existAdmin = await User.findOne({
-            $or:[{userName},{email}],
-            _id: { $ne: req.user._id } 
+            $or: [{ userName }, { email }],
+            _id: { $ne: req.user._id }
         })
-        if(existAdmin){
+        if (existAdmin) {
             req.session.errorMessage = "Admin already exist!"
             return res.redirect("/admin")
         }
-        
-        
-        
+
+
+
         await User.findByIdAndUpdate(
             req.user._id,
             {
@@ -74,7 +75,7 @@ const editProfile = asyncHandler(async (req,res)=>{
             },
             { new: true }
         );
-    
+
         res.redirect("/admin");
     } catch (error) {
         req.session.errorMessage = "Server error while updating the profile, Please wait!"
@@ -83,47 +84,47 @@ const editProfile = asyncHandler(async (req,res)=>{
 })
 
 //For edit user profile details
-const editUserProfile = asyncHandler(async (req,res)=>{
+const editUserProfile = asyncHandler(async (req, res) => {
     try {
-        const {userId,userName, fullName, email, role} = req.body;
-    
+        const { userId, userName, fullName, email, role } = req.body;
+
         const findUser = await User.findById(userId);
-        if(!findUser){
+        if (!findUser) {
             req.session.errorMessage = "User not found!";
-                return res.redirect("/admin");
-            
+            return res.redirect("/admin");
+
         }
         // check if fields are empty
         const updateFields = {};
-        if(userName) {
+        if (userName) {
             const existedUser = await User.findOne({
                 userName,
-                _id: { $ne: userId } 
+                _id: { $ne: userId }
             })
-            if(existedUser){
+            if (existedUser) {
                 req.session.errorMessage = "Username is already exist!";
                 return res.redirect("/admin");
             }
-            else{
+            else {
                 updateFields.userName = userName
             }
         }
-        if(fullName) updateFields.fullName = fullName
-        if(email){
+        if (fullName) updateFields.fullName = fullName
+        if (email) {
             const existedUser = await User.findOne({
                 email,
-                _id: { $ne: userId } 
+                _id: { $ne: userId }
             })
-            if(existedUser){
+            if (existedUser) {
                 req.session.errorMessage = "Email is already exist!";
                 return res.redirect("/admin");
-            } else{
+            } else {
                 updateFields.email = email
             }
-            }
-        if(role) {
-            if(role == "viewer"){
-                if(findUser.posts.length >0){
+        }
+        if (role) {
+            if (role == "viewer") {
+                if (findUser.posts.length > 0) {
                     req.session.errorMessage = "First delete user's posts";
                     return res.redirect("/admin");
                 }
@@ -131,50 +132,103 @@ const editUserProfile = asyncHandler(async (req,res)=>{
             updateFields.role = role
         }
         // console.log(updateFields);
-        
-    await User.updateOne({ _id: findUser._id}, { $set: updateFields })
-    .then(result => {
-        req.session.successMsg = "User successfully edited"
-        res.redirect("/admin")
-    })
-    .catch(error => {
-        req.session.errorMessage = "Something went wrong while updating the user"
-        res.redirect("/admin")
-    });
+
+        await User.updateOne({ _id: findUser._id }, { $set: updateFields })
+            .then(result => {
+                req.session.successMsg = "User successfully edited"
+                res.redirect("/admin")
+            })
+            .catch(error => {
+                req.session.errorMessage = "Something went wrong while updating the user"
+                res.redirect("/admin")
+            });
     } catch (error) {
         req.session.errorMessage = "Server error while updating the profile, Please wait!"
         return res.redirect("/admin")
     }
 })
 //For delete user
-const removeUser = asyncHandler(async (req,res)=>{
+const removeUser = asyncHandler(async (req, res) => {
     try {
-        const findUser = await User.findById(req.params.id)
-        if(!findUser){
+        const findUser = await User.findById(req.params.id).populate({ path: 'followers', }).populate({ path: 'followings' }).populate({ path: 'ownLike' }).populate({ path: 'comment' })
+
+
+        // console.log(findUser.comment);
+
+        if (!findUser) {
             req.session.errorMessage = "User not found!"
             return res.redirect("/admin")
         }
-        else{
-            if(findUser.posts.length > 0){
+        else {
+            if (findUser.posts.length > 0) {
                 res.json({ success: false, errMsg: "First delete user's post!" });
             }
-            else{
+            else {
+
+                if (findUser.followings.length > 0) {
+                    await Promise.all(
+                        findUser.followings.map(async (following) => {
+                            following.followers = following.followers.filter(
+                                (followerId) => !followerId.equals(findUser._id)
+                            );
+                            await following.save();
+                        })
+                    );
+                }
+
+                if (findUser.followers.length > 0) {
+                    await Promise.all(
+                        findUser.followers.map(async (follower) => {
+                            follower.followings = follower.followings.filter(
+                                (followingId) => !followingId.equals(findUser._id)
+                            );
+                            await follower.save();
+                        })
+                    );
+                }
+                if (findUser.ownLike.length > 0) {
+                    await Promise.all(
+                        findUser.ownLike.map(async (post) => {
+                            post.like = post.like.filter(
+                                (likeId) => !likeId.equals(findUser._id)
+                            )
+                            await post.save();
+                        })
+                    )
+                }
+                if (findUser.comment.length > 0) {   
+                    for (const eachComment of findUser.comment) {
+                        const comm = await Comment.findById(eachComment._id).populate('post');
+                        
+                        if (comm && comm.post) {
+                            
+                            comm.post.comment = comm.post.comment.filter((id) => !id.equals(comm._id));
+                            
+                            
+                            await comm.post.save();
+                            
+                            
+                            await Comment.deleteOne({ _id: comm._id });
+                        }
+                    }
+                }
+                
                 await User.deleteOne(findUser._id);
                 let success = true;
-                res.json({success : true});
+                res.json({ success: true });
             }
         }
     } catch (error) {
         req.session.errorMessage = "Something went wrong while removing the user!"
-            return res.redirect("/admin")
+        return res.redirect("/admin")
     }
 })
 
 //For send mail
-const sendMail = asyncHandler(async (req,res)=>{
-    const {email, msg} = req.body; // Expecting email field in request body
+const sendMail = asyncHandler(async (req, res) => {
+    const { email, msg } = req.body; // Expecting email field in request body
     console.log(email);
-    
+
     // Mail transporter configuration
     let config = {
         service: "gmail",
@@ -207,24 +261,24 @@ const sendMail = asyncHandler(async (req,res)=>{
 })
 
 //For user post delete
-const deleteUserpost = asyncHandler(async (req,res)=>{
-    const userPost= await Post.findById( req.params.id).populate("user");
-    if(!userPost){
+const deleteUserpost = asyncHandler(async (req, res) => {
+    const userPost = await Post.findById(req.params.id).populate("user");
+    if (!userPost) {
         req.session.errorMessage = "Post not found!"
         res.redirect("/admin")
     }
 
     const user = await User.findById(userPost.user._id);
     console.log(user);
-    
-    user.posts.splice(userPost._id,1);
+
+    user.posts.splice(userPost._id, 1);
     await Post.deleteOne(userPost._Id);
-    user.save({validateBeforeSave:true})
-    
+    user.save({ validateBeforeSave: true })
+
     req.session.successMsg = "post deleted successfully"
     res.redirect("/admin")
 })
-export{
+export {
     addAdmin,
     editProfile,
     removeUser,

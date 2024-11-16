@@ -46,6 +46,10 @@ const userSchema = new Schema({
         ref:"Post",
       }
     ],
+    ownLike:[{
+      type:Schema.Types.ObjectId,
+      ref:"Post"
+  }],
     followers:[
       {
         type:Schema.Types.ObjectId,

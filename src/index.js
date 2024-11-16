@@ -60,7 +60,7 @@ dbConnection()
                 }
             }
 
-            res.render("uicode", { isLoggedIn, profileUser });
+            res.render("uicode", { isLoggedIn, profileUser,userPosts: req.userPosts  });
         })
         app.get("/profile", verifyUser, async (req, res) => {
             const profileUser = await User.findById(req.user._id)
@@ -82,6 +82,21 @@ dbConnection()
                 res.redirect("login");
             }
             res.render("profile", { profileUser, errorMessage, successMsg })
+        })
+        app.get("/visitedProfile/:visitedUserId" ,async (req, res) => {
+            
+            const errorMessage = req.session.errorMessage;
+            req.session.errorMessage = null;
+            const successMsg = req.session.successMsg;
+            req.session.successMsg = null;
+            const profileUser = await User.findById(req.params.visitedUserId).populate('posts');
+            const visitorId = req.query.visitorId;
+            // console.log(visitorId);
+            
+            const visitedUser = await User.findById(visitorId).populate('comment')
+            console.log(visitedUser);
+            
+            res.render("visitedProfile", {profileUser, visitedUser})
         })
         app.get("/login", (req, res) => {
             res.render("login")

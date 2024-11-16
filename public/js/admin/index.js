@@ -1,5 +1,14 @@
+document.addEventListener("DOMContentLoaded", () => {
+  const loaderContainer = document.getElementById("loaderContainer");
 
+  setTimeout(() => {
+    loaderContainer.classList.add("hide");
+  }, 4000);
 
+  window.addEventListener("load", () => {
+    loaderContainer.classList.add("hide");
+  });
+});
 // =================Show naviBar for Update Use Profile==============
 function showSideNavi() {
   const hamBargar = document.querySelector("#sideNaviBtn");
@@ -418,8 +427,10 @@ function eachDeveloperPostShow() {
         postDeleteBtn.forEach((btn) => {
           btn.addEventListener("click", async () => {
             const postId = btn.getAttribute("postId")
+            loaderContainer.classList.remove("hide");
             const respons = await fetch(`/admin/userPostDelete/${postId}`)
             if (respons.ok) {
+              loaderContainer.classList.add("hide");
               const postBox = btn.closest(".developerPost-box")
               postBox.remove();
             }
@@ -458,8 +469,10 @@ function userDelete() {
       if (!confirmDelete) return;
 
       try {
+        loaderContainer.classList.remove("hide");
         const res = await fetch(`/admin/deleteUser/${userId}`);
         const data = await res.json()
+        loaderContainer.classList.add("hide");
         if (data.success) {
           const userItem = btn.closest(".removeUserBox");
           if (userItem) {

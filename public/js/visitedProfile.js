@@ -1,3 +1,4 @@
+//l===============loader===============
 document.addEventListener("DOMContentLoaded", () => {
   const loaderContainer = document.getElementById("loaderContainer");
 
@@ -10,7 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-
 // ---------------post see button--------------
 function postSeeBtn() {
   const seeBtns = document.querySelectorAll(".seeContainer");
@@ -19,14 +19,15 @@ function postSeeBtn() {
   seeBtns.forEach((seeBtn) => {
     seeBtn.addEventListener("click", async () => {
       const postId = seeBtn.getAttribute("post");
-      const profileUser = JSON.parse(seeBtn.getAttribute("profileUser"));
-      // console.log(profileUser.role);
+      const profileUser = JSON.parse(seeBtn.getAttribute("visitor"));
+      // console.log(profileUser);
       loaderContainer.classList.remove("hide");
       const response = await fetch(`/users/seeDetailPost/${postId}`);
       // console.log("Post ID: ", postId);
       const postData = await response.json();
-      // console.log(postData.postUserId);
       loaderContainer.classList.add("hide");
+      // console.log(postData.postUserId);
+
 
       let userCommentBox = "";
       let followAndDownBtn = "";
@@ -67,11 +68,11 @@ function postSeeBtn() {
           // console.log("user is not");
           let follow
           if (postData.followers.indexOf(profileUser._id) === -1) {
-            console.log("user is not following");
+            // console.log("user is not following");
             follow = `<span class="follow">Follow</span>`
           }
           else {
-            console.log("in following list");
+            // console.log("in following list");
             follow = `<span class="following">following</span>`
           }
 
@@ -87,7 +88,7 @@ function postSeeBtn() {
         }
         if (profileUser.comment.length > 0) {
           postData.postComment.forEach((comment) => {
-            console.log(comment.user._id + "userid");
+            // console.log(comment.user._id + "userid");
             if (comment.user._id == profileUser._id) {
               userCommentBox += `
                               <div class="userCommentBox">
@@ -179,7 +180,7 @@ function postSeeBtn() {
 `;
 
       //-------------post Add comments---------------
-      if (profileUser && profileUser.role != 'admin') {
+      if (profileUser) {
         const addCommentBtn = document.querySelector(".addCommentBox button");
         const comment = document.querySelector(".addCommentBox textarea");
         const commentsContainerSet = document.querySelector(".commentsContainerSet")
@@ -195,8 +196,8 @@ function postSeeBtn() {
           });
 
           if (res.ok) {
-            // console.log("Commented");
             loaderContainer.classList.add("hide");
+            // console.log("Commented");
             comment.value = "";
             commentsContainerSet.innerHTML += `
   <div class="userCommentBox">
@@ -225,10 +226,10 @@ function postSeeBtn() {
       } 
 
       //-------------Post comment delete-------------
-      if(profileUser && profileUser.role != 'admin'){
+      if(profileUser){
       if(profileUser.comment.length > 0){
         const deleteCommentBtn = document.querySelectorAll(".deleteComment")
-        console.log(deleteCommentBtn);
+        // console.log(deleteCommentBtn);
         
         deleteCommentBtn.forEach((btn)=>{
           btn.addEventListener("click",async ()=>{
@@ -250,7 +251,7 @@ function postSeeBtn() {
       }
     }
       // ------------following or unfollow the user---------------
-      if (profileUser && profileUser.role != 'admin') {
+      if (profileUser) {
         if (profileUser._id !== postData.postUserId) {
           function followUnfollowUser() {
             const followBtn = document.querySelector(".followBtn")
@@ -261,7 +262,7 @@ function postSeeBtn() {
 
               const data = await res.json();
               if (res.ok) {
-                console.log(data.following);
+                // console.log(data.following);
                 if (data.following === true) {
                   followBtnA.classList.remove("follow")
                   followBtnA.classList.add("following")
@@ -313,6 +314,7 @@ function postSeeBtn() {
   });
 }
 postSeeBtn();
+
 // -------------------like post----------------
 
 const likeButtonElements = document.querySelectorAll(".likeButton");
@@ -341,3 +343,4 @@ likeButtonElements.forEach((likeBtn) => {
     }
   });
 });
+  
