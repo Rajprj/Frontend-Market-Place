@@ -3,7 +3,8 @@ import { Post } from "../models/post.model.js";
 import { Comment } from "../models/comments.model.js";
 import { asyncHandler } from "../utils/asyncHendler.js";
 import nodemailer from "nodemailer";
-import Mailgen from "mailgen";
+import { Contact } from "../models/contact.model.js";
+
 
 
 // For add new Admin
@@ -219,22 +220,38 @@ const removeUser = asyncHandler(async (req, res) => {
             }
         }
     } catch (error) {
-        req.session.errorMessage = "Something went wrong while removing the user!"
-        return res.redirect("/admin")
+        res.json({ success: false, errMsg: "Something went wrong while removeing the user!" });
+    }
+})
+//For delete contact
+const removeContact = asyncHandler(async (req, res) => {
+    try {
+        const findContact = await Contact.findById(req.params.id)
+        if (!findContact) {
+            res.json({ success: false, errMsg: "Contact not found!" });
+        }
+        else {
+                
+                await Contact.deleteOne(findContact._id);
+                let success = true;
+                res.json({ success: true });
+            }
+        } catch (error) {
+       
+        res.json({ success: false, errMsg: "Something went wrong while removing the Contact!" });
     }
 })
 
 //For send mail
 const sendMail = asyncHandler(async (req, res) => {
-    const { email, msg } = req.body; // Expecting email field in request body
-    console.log(email);
+    const { email, msg } = req.body; 
+    // console.log(email);
 
-    // Mail transporter configuration
     let config = {
         service: "gmail",
         auth: {
             user: "frontendmarketplace561@gmail.com",
-            pass: "vgkv eepf vzij swij" // Ensure you use App Password or enable Less Secure App Access
+            pass: "vgkv eepf vzij swij" 
         }
     };
 
@@ -264,25 +281,29 @@ const sendMail = asyncHandler(async (req, res) => {
 const deleteUserpost = asyncHandler(async (req, res) => {
     const userPost = await Post.findById(req.params.id).populate("user");
     if (!userPost) {
-        req.session.errorMessage = "Post not found!"
-        res.redirect("/admin")
+        res.json({ success: false, errMsg: "Post not found!" });
     }
 
     const user = await User.findById(userPost.user._id);
-    console.log(user);
+    // console.log(user);
 
-    user.posts.splice(userPost._id, 1);
+    user.posts = user.posts.filter(
+        (postId) => !postId.equals(userPost._id)
+    );
+    // user.posts.splice(userPost._id, 1);
     await Post.deleteOne(userPost._Id);
     user.save({ validateBeforeSave: true })
 
-    req.session.successMsg = "post deleted successfully"
     res.redirect("/admin")
 })
+
+
 export {
     addAdmin,
     editProfile,
     removeUser,
     editUserProfile,
     sendMail,
-    deleteUserpost
+    deleteUserpost,
+    removeContact
 }

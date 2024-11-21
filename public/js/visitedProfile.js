@@ -180,7 +180,7 @@ function postSeeBtn() {
 `;
 
       //-------------post Add comments---------------
-      if (profileUser) {
+      if (profileUser && profileUser.role !== "admin") {
         const addCommentBtn = document.querySelector(".addCommentBox button");
         const comment = document.querySelector(".addCommentBox textarea");
         const commentsContainerSet = document.querySelector(".commentsContainerSet")
@@ -251,7 +251,7 @@ function postSeeBtn() {
       }
     }
       // ------------following or unfollow the user---------------
-      if (profileUser) {
+      if (profileUser && profileUser.role !== "admin") {
         if (profileUser._id !== postData.postUserId) {
           function followUnfollowUser() {
             const followBtn = document.querySelector(".followBtn")

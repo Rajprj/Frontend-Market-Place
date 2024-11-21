@@ -717,6 +717,7 @@ body p {
 .developer-container .profile-pic {
     width: 100px;
     height: 100px;
+    object-fit: cover;
     border-radius: 50%;
     margin-bottom: 10px;
 }
@@ -1316,6 +1317,7 @@ body p {
 #viewerContainer .editBtn,
 #viewerContainer .deleteBtn {
     padding: 6px 12px;
+    width: 80%;
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -1340,5 +1342,84 @@ body p {
 }
 
 #viewerContainer .deleteBtn:hover {
+    background-color:#c0392b;
+}
+
+
+/* ===== Contact Container ===== */
+#contactContainer {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+#contactContainer h2 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#contactContainer table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    color: #555;
+}
+
+#contactContainer th,
+#contactContainer td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+#contactContainer th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+    color: #333;
+}
+
+#contactContainer td {
+    color: #666;
+}
+
+#contactContainer a {
+    color: #1a73e8;
+    text-decoration: none;
+}
+
+#contactContainer a:hover {
+    text-decoration: underline;
+}
+
+#contactContainer .editBtn,
+#contactContainer .deleteBtn {
+    padding: 6px 12px;
+    width: 80%;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    margin: 0 2px;
+    font-weight: bold;
+    color: #fff;
+    font-weight: 600;
+}
+
+#contactContainer .editBtn {
+    background-color: #2d98da;
+}
+
+#contactContainer .deleteBtn {
+    background-color: #eb4d4b;
+}
+
+
+#contactContainer .editBtn:hover {
+    background-color: #1c7bbd;
+}
+
+#contactContainer .deleteBtn:hover {
     background-color:#c0392b;
 }

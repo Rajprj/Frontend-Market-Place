@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(() => {
     loaderContainer.classList.add("hide");
-  }, 4000);
+  }, 7000);
 
   window.addEventListener("load", () => {
     loaderContainer.classList.add("hide");
@@ -76,6 +76,8 @@ function showAddAdminBox() {
   });
 }
 showAddAdminBox();
+
+// ==========show User send message===============
 function showSendMsgBox() {
   const msgBtn = document.querySelectorAll(".userMessage");
   const msgBox = document.querySelector(".modalSendMsg");
@@ -88,7 +90,7 @@ function showSendMsgBox() {
 
       const user = JSON.parse(btn.getAttribute("userId"))
       console.log(user);
-
+      
       msgBox.innerHTML = `<div class="modal-content">
             <span id="closeBtn" class="closeBtnSendMsg">&#x2702;</span>
             <h2>Add Admin</h2>
@@ -166,17 +168,20 @@ function sidebarListContainerShow() {
   const adminDashboard = document.getElementById("adminDashboard");
   const developerManagement = document.getElementById("developerManagement");
   const viewerManagement = document.getElementById("viewerManagement");
+  const contactManagement = document.getElementById("contactManagement");
 
   // HTML elements for containers
   const dashboardContainer = document.getElementById("dashboardContainer");
   const developerContainer = document.getElementById("developerContainer");
   const viewerContainer = document.getElementById("viewerContainer");
+  const contactContainer = document.getElementById("contactContainer");
 
   // Function to hide all containers
   function hideAllContainers() {
     dashboardContainer.style.display = "none";
     developerContainer.style.display = "none";
     viewerContainer.style.display = "none";
+    contactContainer.style.display = "none";
   }
 
   // Show dashboard container when Admin Dashboard is clicked
@@ -194,6 +199,10 @@ function sidebarListContainerShow() {
   viewerManagement.addEventListener("click", () => {
     hideAllContainers();
     viewerContainer.style.display = "block";
+  });
+  contactManagement.addEventListener("click", () => {
+    hideAllContainers();
+    contactContainer.style.display = "block";
   });
 
   // Initially hide the developerContainer
@@ -252,7 +261,28 @@ function eachDeveloperPostShow() {
                   post.like.forEach((like) => {
                     count++
                   })
-
+                  let commentBox = ""
+                  if(post.comment.length > 0){
+                    post.comment.forEach((comment) => {
+                      commentBox += `
+                        <div class="userCommentBox">
+                            
+                            <div class="userProfilePic">
+                                <img src="${comment.user.dp ? comment.user.dp : "/images/profilePic.png"}" alt="">
+                            </div>
+                            <div class="userNameAndComment">
+                                <div class="userName" style="margin-bottom: 12px;">
+                                    <h4>${comment.user.userName}</h4>
+                                </div>
+                                <div class="comment">
+                                    <p style="font-size: 15px;">${comment.commentText}</p>
+                                </div>
+                            </div>
+                        </div>
+                      `;
+                    });
+                  }
+                  
                   postDetailedBox.innerHTML = ` <div class="postDetailedBoxSet">
           <div class="postBox">
             <div class="closeBtn">
@@ -304,86 +334,7 @@ function eachDeveloperPostShow() {
               </div>
               <div class="commentsContainer">
                 <div class="commentsContainerSet">
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/ut.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">"Amazing work! 😍 The attention to detail is incredible!"</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/ronak.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@ronak_prj</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">"This is exactly what I needed! 👍 Keep up the awesome work!"</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/sandeep.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@sandeep_09</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">"Great job! 🎉 Your design skills are on point!"</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/ut.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/ronak.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/sandeep.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/ut.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/ronak.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit.  dolore?</p></div>
-                    </div>
-                  </div>
-                  <div class="userCommentBox">
-                    <div class="userProfilePic">
-                      <img src="/images/userProfile/sandeep.jpg" alt="">
-                    </div>
-                    <div class="userNameAndComment">
-                      <div class="userName" style="margin-bottom: 12px;"><h4>@Utsav004</h4></div>
-                      <div class="comment"><p style="font-size: 15px;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia consequuntur accuslaborum labore maxime voluptatum dolore?</p></div>
-                    </div>
+                    ${commentBox}
                   </div>
                 </div>
               </div>
@@ -472,7 +423,7 @@ function userDelete() {
         loaderContainer.classList.remove("hide");
         const res = await fetch(`/admin/deleteUser/${userId}`);
         const data = await res.json()
-        loaderContainer.classList.add("hide");
+        loaderContainer.classList.add ("hide");
         if (data.success) {
           const userItem = btn.closest(".removeUserBox");
           if (userItem) {
@@ -494,6 +445,44 @@ function userDelete() {
   });
 }
 userDelete();
+//===========Contact Message Delete==============
+function contactDelete() {
+  const contactDeleteBtn = document.querySelectorAll(".removeContact");
+
+  contactDeleteBtn.forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const contactId = btn.getAttribute("contactId");
+
+      // Show a confirmation prompt
+      const confirmDelete = confirm("Are you sure you want to delete this Message?");
+      if (!confirmDelete) return;
+
+      try {
+        loaderContainer.classList.remove("hide");
+        const res = await fetch(`/admin/deleteContact/${contactId}`);
+        const data = await res.json()
+        loaderContainer.classList.add ("hide");
+        if (data.success) {
+          const userItem = btn.closest(".removeContactBox");
+          if (userItem) {
+            userItem.remove();
+          } else {
+            console.warn("Contact box not found");
+          }
+        } else {
+          if(data.errMsg){
+            flashMsgsTimingForAjax(data.errMsg)
+          }
+          console.log("not delete");
+        }
+      } catch (error) {
+        console.log("contact not deleted");
+
+      }
+    });
+  });
+}
+contactDelete();
 
 // ============Edit user detail==========
 function editUserDetail() {
@@ -618,5 +607,5 @@ function flashMsgsTimingForAjax(errMsg) {
         }, 500);
       }
     }, 1000);
-  }
+}
 

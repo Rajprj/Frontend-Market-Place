@@ -94,12 +94,25 @@ dbConnection()
             // console.log(visitorId);
             
             const visitedUser = await User.findById(visitorId).populate('comment')
-            console.log(visitedUser);
+            // console.log(visitedUser);
             
             res.render("visitedProfile", {profileUser, visitedUser})
         })
         app.get("/login", (req, res) => {
+            
             res.render("login")
+        })
+        app.get('/forgetPassword', (req, res) => {
+           
+            res.render('forgetPassword', {
+              userName: "",      
+              success: null,     
+              pass: "" ,  
+            });
+          });
+        
+        app.get("/contact", (req, res) => {
+            res.render("contact")
         })
         app.get("/register", (req, res) => {
             res.render("register")
@@ -127,6 +140,7 @@ dbConnection()
                         developers: req.developers,
                         viewers: req.viewers,
                         userPosts: req.userPosts,
+                        contacts: req.contacts,
                         errorMessage,
                         successMsg
                     });

@@ -124,7 +124,7 @@ function postSeeBtn() {
           `;
         });
       }
-      if (!profileUser) {
+      if (!profileUser ) {
         followAndDownBtn = `<div class="followBtn">
               <span class="follow">Follow</span>
             </div>
@@ -249,7 +249,7 @@ function postSeeBtn() {
 `;
 
       //-------------post Add comments---------------
-      if (profileUser) {
+      if (profileUser && profileUser.role != 'admin') {
         const addCommentBtn = document.querySelector(".addCommentBox button");
         const comment = document.querySelector(".addCommentBox textarea");
         const commentsContainerSet = document.querySelector(".commentsContainerSet")
@@ -295,30 +295,33 @@ function postSeeBtn() {
       } 
 
       //-------------Post comment delete-------------
-      if(profileUser.comment.length > 0){
-        const deleteCommentBtn = document.querySelectorAll(".deleteComment")
-        // console.log(deleteCommentBtn);
-        
-        deleteCommentBtn.forEach((btn)=>{
-          btn.addEventListener("click",async ()=>{
-            // console.log("clicked");
-            const commentBox = btn.closest(".userCommentBox")
-            const commentId = btn.getAttribute("commentId")
-            loaderContainer.classList.remove("hide");
-            const res = await fetch(`/users/deleteComment/${commentId}`)
-            if(res.ok){
-              // console.log("comment deleted");
-              loaderContainer.classList.add("hide");
-              commentBox.remove();
-            }else{
-              console.log("post not deleted");
-              
-            }
+      if(profileUser && profileUser.role != 'admin'){
+        if(profileUser.comment.length > 0){
+          const deleteCommentBtn = document.querySelectorAll(".deleteComment")
+          // console.log(deleteCommentBtn);
+          
+          deleteCommentBtn.forEach((btn)=>{
+            btn.addEventListener("click",async ()=>{
+              // console.log("clicked");
+              const commentBox = btn.closest(".userCommentBox")
+              const commentId = btn.getAttribute("commentId")
+              loaderContainer.classList.remove("hide");
+              const res = await fetch(`/users/deleteComment/${commentId}`)
+              if(res.ok){
+                // console.log("comment deleted");
+                loaderContainer.classList.add("hide");
+                commentBox.remove();
+              }else{
+                console.log("post not deleted");
+                
+              }
+            })
           })
-        })
+        }
       }
+     
       // ------------following or unfollow the user---------------
-      if (profileUser) {
+      if (profileUser && profileUser.role != 'admin') {
         if (profileUser._id !== postData.postUserId) {
           function followUnfollowUser() {
             const followBtn = document.querySelector(".followBtn")

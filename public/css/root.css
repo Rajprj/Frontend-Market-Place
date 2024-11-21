@@ -96,11 +96,11 @@ body{
   
 /* ==============Flash Messages============== */
 #errorMsgFromBackend {
-    position: absolute;
+    position: fixed;
     top: 10%;
     left: 50%;
     transform: translateX(-50%);
-    z-index: 2;
+    z-index: 12;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

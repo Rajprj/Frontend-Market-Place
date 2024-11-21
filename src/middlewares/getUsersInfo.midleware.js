@@ -1,6 +1,7 @@
 import { Post } from "../models/post.model.js";
 import { User } from "../models/user.model.js";
 import { asyncHandler } from "../utils/asyncHendler.js";
+import { Contact } from "../models/contact.model.js"
 
 const getDashboard = asyncHandler(async (req, res, next) => {
     try {
@@ -13,7 +14,17 @@ const getDashboard = asyncHandler(async (req, res, next) => {
         // console.log(postCount);
         
         //for developer
-        const developers = await User.find({ role: "developer" }).select("userName email fullName role dp").populate('posts');
+        const developers = await User.find({ role: "developer" })
+        .select("userName email fullName role dp")
+        .populate({
+          path: "posts", // Populate the 'post' field
+          populate: {
+            path: "comment",
+            populate:{
+                path:"user"
+            } 
+          },
+        });
         await Promise.all(
             developers.map(async (developer) => {
                 const posts = await Post.find({ user: developer._id });
@@ -32,8 +43,7 @@ const getDashboard = asyncHandler(async (req, res, next) => {
 
         // viewer
         const viewers = await User.find({ role: "viewer" }).select("userName email fullName");
-        // Fetch posts
-        
+        const contacts = await Contact.find().select("email message");
 
        
         req.viewerCount = viewerCount;
@@ -42,7 +52,7 @@ const getDashboard = asyncHandler(async (req, res, next) => {
         req.developers = developers;
         req.viewers = viewers;
         req.userPosts = userPosts;
-        
+        req.contacts = contacts;
 
         // Continue to the next middleware or route handler
         

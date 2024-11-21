@@ -181,6 +181,15 @@
                             <h6>Viewer Management</h>
                         </div>
                     </a>
+                    <a href="#" id="contactManagement">
+
+                        <div class="parts profileParts">
+                            <div class="sideLogoParts">
+                                <img src="/images/sidebarImages/user.png" alt="">
+                            </div>
+                            <h6>Contact Management</h>
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
@@ -358,6 +367,7 @@
                             <th>Email</th>
                             <th>Edit</th>
                             <th>Delete</th>
+                            <th>Message</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -374,6 +384,39 @@
                                 </td>
                                 <td><button class="editBtn userEditBtn" user='<%= JSON.stringify(viewer).replace(/'/g, "&#39;") %>'>Edit</button></td>
                                 <td><button class="deleteBtn removeUser" userId="<%= viewer._id%>" >Delete</button></td>
+                                <td><button class="userMessage " userId='<%= JSON.stringify(viewer).replace(/'/g, "&#39;") %>' style=" background-color: #2a9d8f; width: 80%;">Message</button></td>
+                            </tr>
+                            <% }) %>
+
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ================Contact Management=============== -->
+            <div id="contactContainer" class="contact-container" style="display: none;">
+                <h2>Contact Management</h2>
+                <table id="contactTable">
+                    <thead>
+                        <tr>
+                            <th>Email</th>
+                            <th>Message</th>
+                            <th>Delete</th>
+                            <th>Message</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% contacts.forEach(contact=>{ %>
+                            <tr class="removeContactBox">
+                                
+                                
+                                <td>
+                                    <%= contact.email %>
+                                </td>
+                                <td style="max-width: 300px;">
+                                  <%= contact.message %>
+                                </td>
+                                <td><button class="deleteBtn removeContact" contactId="<%= contact._id%>" >Delete</button></td>
+                                <td><button class="userMessage " userId='<%= JSON.stringify(contact).replace(/'/g, "&#39;") %>' style=" background-color: #2a9d8f; width: 80%;">Reply</button></td>
                             </tr>
                             <% }) %>
 

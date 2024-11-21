@@ -1,5 +1,5 @@
 import { Post } from "../models/post.model.js";
-import { User } from "../models/user.model.js";
+
 import { asyncHandler } from "../utils/asyncHendler.js";
 
 const getUserPost = asyncHandler(async (req, res, next) => {

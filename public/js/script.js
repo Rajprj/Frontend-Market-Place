@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   setTimeout(() => {
     loaderContainer.classList.add("hide");
-  }, 4000);
+  }, 7000);
 
   window.addEventListener("load", () => {
     loaderContainer.classList.add("hide");
@@ -20,7 +20,6 @@ function postSeeBtn() {
     seeBtn.addEventListener("click", async () => {
       const postId = seeBtn.getAttribute("post");
       const profileUser = JSON.parse(seeBtn.getAttribute("profileUser"));
-      // console.log(profileUser.role);
       loaderContainer.classList.remove("hide");
       const response = await fetch(`/users/seeDetailPost/${postId}`);
       // console.log("Post ID: ", postId);
@@ -59,7 +58,7 @@ function postSeeBtn() {
               <span class="follow">Follow</span>
             </div>
             <div class="downloadBtn">
-              <a href="">Download</a>
+              <a>Download</a>
             </div>`
       }
       else {
@@ -67,11 +66,11 @@ function postSeeBtn() {
           // console.log("user is not");
           let follow
           if (postData.followers.indexOf(profileUser._id) === -1) {
-            console.log("user is not following");
+            // console.log("user is not following");
             follow = `<span class="follow">Follow</span>`
           }
           else {
-            console.log("in following list");
+            // console.log("in following list");
             follow = `<span class="following">following</span>`
           }
 
@@ -80,7 +79,7 @@ function postSeeBtn() {
         ${follow}
       </div>
       <div class="downloadBtn">
-        <a href="">Download</a>
+        <a href="/users/download/${postId}">Download</a>
       </div>`;
         } else {
           followAndDownBtn = "";
@@ -179,11 +178,16 @@ function postSeeBtn() {
 `;
 
       //-------------post Add comments---------------
-      if (profileUser && profileUser.role != 'admin') {
-        const addCommentBtn = document.querySelector(".addCommentBox button");
-        const comment = document.querySelector(".addCommentBox textarea");
-        const commentsContainerSet = document.querySelector(".commentsContainerSet")
-        addCommentBtn.addEventListener("click", async () => {
+
+      const addCommentBtn = document.querySelector(".addCommentBox button");
+      const comment = document.querySelector(".addCommentBox textarea");
+      const commentsContainerSet = document.querySelector(".commentsContainerSet")
+
+      addCommentBtn.addEventListener("click", async () => {
+        if (profileUser && profileUser.role != 'admin') {
+          if(profileUser.role == 'admin'){
+            flashMsgsTimingForAjax("Admin can't comment on developer's post!")
+          }
           const commentText = comment.value;
           loaderContainer.classList.remove("hide");
           const res = await fetch(`/users/addComment/${postId}`, {
@@ -214,41 +218,47 @@ function postSeeBtn() {
       </div>
   </div>
 `;
-
-          
           } else {
             console.log("Failed to add comment");
           }
+        } else {
+          if(profileUser && profileUser.role == 'admin'){
+            flashMsgsTimingForAjax("Admin can't comment on developer's post!")
+          }
+          else{
+            flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+          }
+        }
+      });
 
-        });
 
-      } 
+
 
       //-------------Post comment delete-------------
-      if(profileUser && profileUser.role != 'admin'){
-      if(profileUser.comment.length > 0){
-        const deleteCommentBtn = document.querySelectorAll(".deleteComment")
-        console.log(deleteCommentBtn);
-        
-        deleteCommentBtn.forEach((btn)=>{
-          btn.addEventListener("click",async ()=>{
-            // console.log("clicked");
-            const commentBox = btn.closest(".userCommentBox")
-            const commentId = btn.getAttribute("commentId")
-            loaderContainer.classList.remove("hide");
-            const res = await fetch(`/users/deleteComment/${commentId}`)
-            if(res.ok){
-              // console.log("comment deleted");
-              loaderContainer.classList.add("hide");
-              commentBox.remove();
-            }else{
-              console.log("post not deleted");
-              
-            }
+      if (profileUser && profileUser.role != 'admin') {
+        if (profileUser.comment.length > 0) {
+          const deleteCommentBtn = document.querySelectorAll(".deleteComment")
+          console.log(deleteCommentBtn);
+
+          deleteCommentBtn.forEach((btn) => {
+            btn.addEventListener("click", async () => {
+              // console.log("clicked");
+              const commentBox = btn.closest(".userCommentBox")
+              const commentId = btn.getAttribute("commentId")
+              loaderContainer.classList.remove("hide");
+              const res = await fetch(`/users/deleteComment/${commentId}`)
+              if (res.ok) {
+                // console.log("comment deleted");
+                loaderContainer.classList.add("hide");
+                commentBox.remove();
+              } else {
+                console.log("post not deleted");
+
+              }
+            })
           })
-        })
+        }
       }
-    }
       // ------------following or unfollow the user---------------
       if (profileUser && profileUser.role != 'admin') {
         if (profileUser._id !== postData.postUserId) {
@@ -341,3 +351,34 @@ likeButtonElements.forEach((likeBtn) => {
     }
   });
 });
+
+
+//===========for ajax req error msg===============
+function flashMsgsTimingForAjax(errMsg) {
+  
+  const errorDiv = document.createElement("div");
+  errorDiv.id = "errorMsgFromBackend";
+  errorDiv.innerHTML = `<p>${errMsg} <span class="circle"></span></p>`;
+  document.body.appendChild(errorDiv);
+
+  const msgTimeCircle = document.querySelector(".circle");
+  errorDiv.style.display = 'flex';
+  let count = 4;
+  const timeInt = setInterval(() => {
+    count--;
+    msgTimeCircle.innerHTML = count;
+    if (count === 0) {
+      clearInterval(timeInt);
+
+      errorDiv.style.transition = "opacity 0.5s, transform 0.5s";
+      errorDiv.style.opacity = "0";
+      errorDiv.style.transform = "translateY(-20%)";
+
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+        errorDiv.remove();
+        return
+      }, 500);
+    }
+  }, 1000);
+}
