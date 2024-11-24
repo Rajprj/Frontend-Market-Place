@@ -5,8 +5,8 @@
   "type": "module",
   "main": "index.js",
   "engines": {
-  "node": ">=16.0.0"
-},
+    "node": ">=16.0.0"
+  },
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js"
@@ -14,7 +14,7 @@
   "author": "Raaj prj",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "cloudinary": "^2.4.0",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.10",
