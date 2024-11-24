@@ -3,7 +3,7 @@ import  mongoose ,{Schema} from 'mongoose';
 const otpSchema = new Schema({
   userName: { type: String, required: true },
   otp: { type: String, required: true },
-  createdAt: { type: Date, default: Date.now, expires: 50 }, // Auto-delete document after 15 seconds
+  createdAt: { type: Date, default: Date.now, expires: 60 }, // Auto-delete document after 15 seconds
 });
 
 // Compile the OTP model

@@ -218,7 +218,7 @@ function eachDeveloperPostShow() {
   const postContainer = document.querySelector(".eachDeveloperPosts");
   const postContainerRow = document.querySelector(".eachDeveloperPosts .developerPost-row");
   const developerPostBtn = document.querySelectorAll(".postCountBtn");
-
+  const dontHavePost = document.querySelector(".eachDeveloperPosts h1")
 
   developerPostBtn.forEach((btns) => {
     btns.addEventListener("click", () => {
@@ -391,14 +391,17 @@ function eachDeveloperPostShow() {
           })
         })
       } else {
-        const dontHavePost = document.querySelector(".eachDeveloperPosts h1")
+        
         dontHavePost.style.display = "block";
       }
       const postContainerCloseBtn = document.querySelector(
         ".eachDeveloperPostsClose .closeBtn"
       );
       postContainerCloseBtn.addEventListener("click", () => {
+        dontHavePost.style.display = "none";
+        postContainerRow.innerHTML = ""
         postContainer.style.display = "none";
+     
       });
     });
   });
