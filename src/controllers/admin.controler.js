@@ -279,19 +279,21 @@ const sendMail = asyncHandler(async (req, res) => {
 
 //For user post delete
 const deleteUserpost = asyncHandler(async (req, res) => {
-    const userPost = await Post.findById(req.params.id).populate("user");
+    const userPost = await Post.findById(req.params.id);
     if (!userPost) {
         res.json({ success: false, errMsg: "Post not found!" });
     }
-
+    console.log(userPost._id);
     const user = await User.findById(userPost.user._id);
-    // console.log(user);
+    console.log(user._id);
 
     user.posts = user.posts.filter(
         (postId) => !postId.equals(userPost._id)
     );
     // user.posts.splice(userPost._id, 1);
-    await Post.deleteOne(userPost._Id);
+    
+    
+    await Post.deleteOne({ _id: userPost._id });
     user.save({ validateBeforeSave: true })
 
     res.redirect("/admin")
