@@ -7,29 +7,35 @@
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.5.1/styles/atom-one-dark.min.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
   <link rel="stylesheet" href="/css/index.css" />
   <title>FrontEnd Market Place</title>
 </head>
 
 <body>
-  
+
   <div id="loaderContainer">
     <div class="loader"></div>
   </div>
   <header>
     <nav>
-      <div class="logo">
-        <div class="image"><img src="./images/logo.png" alt="logo" /></div>
-        <div class="title">CodeMe</div>
-      </div>
+      <a href="/">
+
+        <div class="logo">
+          <div class="image"><img src="./images/logo.png" alt="logo" /></div>
+          <div class="title">CodeMe</div>
+        </div>
+      </a>
 
       <div class="menu">
         <ul>
-          <li class="list"><a href="#">home</a></li>
+
           <li class="list"><a href="regex">regex</a></li>
           <!-- <li class="list"><a href="#">UI</a></li> -->
           <li class="list"><a href="uicode">UI+Code</a></li>
           <li class="list"><a href="contact">Contact</a></li>
+          <li class="list"><a href="aboutus">AboutUs</a></li>
         </ul>
       </div>
 
@@ -230,15 +236,17 @@
                         <% let userLiked=post.like.some((like)=> like.toString() === profileUser._id.toString()); %>
                           <% if(userLiked) { %>
                             <span class="likeButton liked" id="likeButton" postId="<%= post._id %>">
-                          <% }else { %>
-                            <span class="likeButton" id="likeButton" postId="<%= post._id %>">
-                          <% } %>
-                      <% }else{ %>
-                          <span class="likeButton" id="likeButton" postId="<%= post._id %>">
-                      <% } %>
-                          <i class="heartIcon" id="heartIcon"></i>
-                          <span class="likeCount" id="likeCount_<%= post._id %>"><%= post.like.length %></span>
-                          </span>
+                              <% }else { %>
+                                <span class="likeButton" id="likeButton" postId="<%= post._id %>">
+                                  <% } %>
+                                    <% }else{ %>
+                                      <span class="likeButton" id="likeButton" postId="<%= post._id %>" user="null">
+                                        <% } %>
+                                          <i class="heartIcon" id="heartIcon"></i>
+                                          <span class="likeCount" id="likeCount_<%= post._id %>">
+                                            <%= post.like.length %>
+                                          </span>
+                                      </span>
                     </div>
                     <% if(isLoggedIn){ %>
 
@@ -270,23 +278,27 @@
                       </div>
                       <div class="userName">
                         <% if (isLoggedIn && profileUser && post.user) { %>
-                          <% if (profileUser._id.toString() == post.user._id.toString()) { %>
+                          <% if (profileUser._id.toString()==post.user._id.toString()) { %>
                             <a href="profile" style="text-decoration: none; color: #fff;" title="Your profile">
                               <%= post.user.userName %>
                             </a>
-                          <% } else { %>
-                            <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>" style="text-decoration: none; color: #fff;" title="Visit <%= post.user.userName %>'s profile">
-                              <%= post.user.userName %>
-                            </a>
-                          <% } %>
-                        <% } else if (post.user) { %>
-                          <a href="/visitedProfile/<%= post.user._id %>" style="text-decoration: none; color: #fff;" title="Visit <%= post.user.userName %>'s profile">
-                            <%= post.user.userName %>
-                          </a>
-                        <% } else { %>
-                          <span style="color: red;">User not found</span>
-                        <% } %>
-                        
+                            <% } else { %>
+                              <a href="/visitedProfile/<%= post.user._id %>?visitorId=<%= profileUser._id %>"
+                                style="text-decoration: none; color: #fff;"
+                                title="Visit <%= post.user.userName %>'s profile">
+                                <%= post.user.userName %>
+                              </a>
+                              <% } %>
+                                <% } else if (post.user) { %>
+                                  <a href="/visitedProfile/<%= post.user._id %>"
+                                    style="text-decoration: none; color: #fff;"
+                                    title="Visit <%= post.user.userName %>'s profile">
+                                    <%= post.user.userName %>
+                                  </a>
+                                  <% } else { %>
+                                    <span style="color: red;">User not found</span>
+                                    <% } %>
+
                       </div>
                     </div>
                   </div>
@@ -317,53 +329,58 @@
       </div>
   </main>
 
-  <footer>
-    <div class="leftContain">
-      <img src="./images/logo.png" alt="" />
-      <h3>CodeMe</h3>
-    </div>
-    <div class="rightContain">
-      <div class="elems">
-        <h1>product</h1>
-        <h6>low code plateform</h6>
-        <h6>automation</h6>
-        <h6>git-version control</h6>
-        <h6>components</h6>
-        <h6>ui desing</h6>
+ 
+   
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- About Section -->
+      <div class="footer-section about">
+        <h4>About Frontend Market Place</h4>
+        <p>Your go-to platform for sharing, learning, and growing as a frontend developer. Explore resources, showcase
+          your creativity, and connect with like-minded professionals.</p>
       </div>
-      <div class="elems">
-        <h1>resources</h1>
-        <h6>low code plateform</h6>
-        <h6>automation</h6>
-        <h6>git-version control</h6>
-        <h6>components</h6>
-        <h6>ui desing</h6>
-        <h6>git-version control</h6>
-        <h6>components</h6>
-        <h6>ui desing</h6>
-      </div>
-      <div class="elems">
-        <h1>solution</h1>
-        <h6>low code plateform</h6>
-        <h6>automation</h6>
-        <h6>git-version control</h6>
-        <h6>components</h6>
-        <h6>ui desing</h6>
-      </div>
-      <div class="elems">
-        <h1>integration</h1>
-        <h6>low code plateform</h6>
 
-        <h6>ui desing</h6>
+      <!-- Explore Section -->
+      <div class="footer-section explore">
+        <h4>Explore</h4>
+        <ul>
+          <li><a href="#">Featured Projects</a></li>
+          <li><a href="#">Trending Designs</a></li>
+          <li><a href="#">Code Snippets</a></li>
+          <li><a href="#">Developer Blogs</a></li>
+          <li><a href="#">Open Source Projects</a></li>
+        </ul>
       </div>
-      <div class="elems">
-        <h1>why CodeMe</h1>
-        <h6>low code plateform</h6>
-        <h6>automation</h6>
-        <h6>git-version control</h6>
-        <h6>components</h6>
-        <h6>ui desing</h6>
+
+      <!-- Resources Section -->
+      <div class="footer-section resources">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#">Your Profile</a></li>
+          <li><a href="#">Regex</a></li>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">UI+Code</a></li>
+        </ul>
       </div>
+
+      <!-- Connect Section -->
+      <div class="footer-section connect">
+        <h4>Connect With Us</h4>
+        <p>Join the conversation on social media:</p>
+        <div class="social-icons">
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-instagram"></i></a>
+
+        </div>
+        <p>Or email us at: <a href="mailto:frontendmarketplace561@gmail.com">frontendmarketplace561@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2024 Frontend Market Place. Crafted with ❤️ by developers, for developers.</p>
     </div>
   </footer>
 

@@ -117,6 +117,22 @@ dbConnection()
         app.get("/register", (req, res) => {
             res.render("register")
         })
+        app.get("/aboutus",async (req, res) => {
+            const isLoggedIn = req.cookies?.accessToken ? true : false;
+            let profileUser = null;
+
+            if (isLoggedIn) {
+                try {
+                    const decodedToken = jwt.verify(req.cookies.accessToken, "sadfASFAFsfsf")
+                    profileUser = await User.findById(decodedToken._id)
+                } catch (error) {
+                    console.log(error);
+
+                }
+            }
+
+            res.render("aboutus", { isLoggedIn, profileUser});
+        })
         app.get("/admin", verifyUser, getDashboard, async (req, res) => {
             try {
                 const admin = await User.findById(req.user._id);

@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ---------------post see button--------------
+
 function postSeeBtn() {
   const seeBtns = document.querySelectorAll(".seeContainer");
   const postDetailedBox = document.querySelector("#postDetailedBox");
@@ -19,7 +20,7 @@ function postSeeBtn() {
   seeBtns.forEach((seeBtn) => {
     seeBtn.addEventListener("click", async () => {
       const postId = seeBtn.getAttribute("post");
-      const profileUser = JSON.parse(seeBtn.getAttribute("profileUser"));
+      let profileUser = JSON.parse(seeBtn.getAttribute("profileUser"));
       loaderContainer.classList.remove("hide");
       const response = await fetch(`/users/seeDetailPost/${postId}`);
       // console.log("Post ID: ", postId);
@@ -185,7 +186,7 @@ function postSeeBtn() {
 
       addCommentBtn.addEventListener("click", async () => {
         if (profileUser && profileUser.role != 'admin') {
-          if(profileUser.role == 'admin'){
+          if (profileUser.role == 'admin') {
             flashMsgsTimingForAjax("Admin can't comment on developer's post!")
           }
           const commentText = comment.value;
@@ -222,10 +223,10 @@ function postSeeBtn() {
             console.log("Failed to add comment");
           }
         } else {
-          if(profileUser && profileUser.role == 'admin'){
+          if (profileUser && profileUser.role == 'admin') {
             flashMsgsTimingForAjax("Admin can't comment on developer's post!")
           }
-          else{
+          else {
             flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
           }
         }
@@ -260,12 +261,15 @@ function postSeeBtn() {
         }
       }
       // ------------following or unfollow the user---------------
-      if (profileUser && profileUser.role != 'admin') {
-        if (profileUser._id !== postData.postUserId) {
-          function followUnfollowUser() {
-            const followBtn = document.querySelector(".followBtn")
-            const followBtnA = document.querySelector(".followBtn span")
-            followBtn.addEventListener("click", async () => {
+
+      function followUnfollowUser() {
+        const followBtn = document.querySelector(".followBtn")
+        const followBtnA = document.querySelector(".followBtn span")
+
+        followBtn.addEventListener("click", async () => {
+
+          if (profileUser && profileUser.role != 'admin') {
+            if (profileUser._id !== postData.postUserId) {
               checkFollowBtnNotclicked = false;
               const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
 
@@ -283,11 +287,21 @@ function postSeeBtn() {
                   followBtnA.innerHTML = "follow"
                 }
               }
-            })
+            }
+
           }
-          followUnfollowUser()
-        }
+          else {
+            if (profileUser && profileUser.role == 'admin') {
+              flashMsgsTimingForAjax("Admin can't follow developer!")
+            }
+            else {
+              flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+            }
+          }
+        })
+
       }
+      followUnfollowUser()
       // -----------------Detailed post Thubmnail img change-------------
       function thumbnailImgChange() {
         const thumbnail = document.querySelector(".postThumbnail img");
@@ -329,8 +343,9 @@ const likeButtonElements = document.querySelectorAll(".likeButton");
 likeButtonElements.forEach((likeBtn) => {
   likeBtn.addEventListener("click", async function () {
     // console.log("clicked");
-
-    const postId = likeBtn.getAttribute("postId");
+    let profileUser = likeBtn.getAttribute("user")
+    if(profileUser !== 'null'){
+      const postId = likeBtn.getAttribute("postId");
     const res = await fetch(`/users/likePost/${postId}`);
     if (res.ok) {
       const data = await res.json();
@@ -349,13 +364,18 @@ likeButtonElements.forEach((likeBtn) => {
       // Redirect to login if not authenticated
       window.location.href = "/login";
     }
+    }
+    else{
+      flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+    }
+    
   });
 });
 
 
 //===========for ajax req error msg===============
 function flashMsgsTimingForAjax(errMsg) {
-  
+
   const errorDiv = document.createElement("div");
   errorDiv.id = "errorMsgFromBackend";
   errorDiv.innerHTML = `<p>${errMsg} <span class="circle"></span></p>`;

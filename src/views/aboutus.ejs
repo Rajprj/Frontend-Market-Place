@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/aboutus.css">
+</head>
+<body>
+    <nav>
+        <a href="/">
+  
+          <div class="logo">
+            <div class="image"><img src="./images/logo.png" alt="logo" /></div>
+            <div class="title">CodeMe</div>
+          </div>
+        </a>
+  
+        <div class="menu">
+          <ul>
+  
+            <li class="list"><a href="regex">regex</a></li>
+            <!-- <li class="list"><a href="#">UI</a></li> -->
+            <li class="list"><a href="uicode">UI+Code</a></li>
+            <li class="list"><a href="contact">Contact</a></li>
+            <li class="list"><a href="aboutus">AboutUs</a></li>
+          </ul>
+        </div>
+  
+        <% if (isLoggedIn) { %>
+  
+          <div class="profileRedirectBox">
+            <% if(profileUser.role==="admin" ){ %>
+              <a href="/admin">
+                <% } else { %>
+                  <a href="/profile">
+                    <% } %>
+                      <div class="imgboxProfile">
+                        <% if (!profileUser || !profileUser.dp || profileUser.dp==="" ) { %>
+                          <img src="/images/profilePic.png" alt="Default Profile Picture" />
+                          <% } else { %>
+                            <img src="<%= profileUser.dp %>" alt="Profile Picture" />
+                            <% } %>
+                      </div>
+                  </a>
+          </div>
+          <% } else { %>
+            <div class="loginRegister">
+              <a href="/login">
+                <div id="homeLoginBtn">login</div>
+              </a>
+              <a href="/register">
+                <div id="homeRegisterBtn">register</div>
+              </a>
+            </div>
+            <% } %>
+              <div class="sideNavbrgar">
+                <div id="sideNaviBtn" class="sideShowNavi">
+                  <div class="setNaviBtn">
+                    <div class="lines"></div>
+                    <div class="lines"></div>
+                    <div class="lines"></div>
+                  </div>
+                </div>
+              </div>
+      </nav>
+  <header class="about-header">
+    
+    <div class="header-content">
+      <h1 class="fade-in">About Frontend Market Place</h1>
+      <p class="fade-in">Empowering Developers to Create, Collaborate, and Innovate.</p>
+    </div>
+  </header>
+
+  <section class="about-content">
+    <div class="about-section">
+      <div class="about-image">
+        <img src="/images/collaboration.avif" alt="Collaboration">
+      </div>
+      <div class="about-text slide-in-right">
+        <h2>Our Vision</h2>
+        <p>
+          At Frontend Market Place, we envision a world where frontend developers have access to a thriving platform to showcase their skills, share ideas, and connect with a global community.
+        </p>
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-text slide-in-left">
+        <h2>What We Offer</h2>
+        <p>
+          From sharing reusable code snippets to collaborating on real-world projects, we offer tools and resources that empower both developers and viewers to achieve more. Whether you’re looking to learn or share, our platform has something for everyone.
+        </p>
+      </div>
+      <div class="about-image">
+        <img src="/images/creativity.jpg" alt="Creativity">
+      </div>
+    </div>
+
+    <div class="about-section">
+      <div class="about-image">
+        <img src="/images/community.jpg" alt="Community">
+      </div>
+      <div class="about-text slide-in-right">
+        <h2>Join the Community</h2>
+        <p>
+          Be part of a vibrant network of developers. Together, we can push the boundaries of frontend development and inspire the next generation of creators.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer" style="border-top: 2px solid white; width: 100%;">
+    <div class="footer-container">
+      <!-- About Section -->
+      <div class="footer-section about">
+        <h4 style="color:aliceblue" >About Frontend Market Place</h4>
+        <p>Your go-to platform for sharing, learning, and growing as a frontend developer. Explore resources, showcase
+          your creativity, and connect with like-minded professionals.</p>
+      </div>
+
+      <!-- Explore Section -->
+      <div class="footer-section explore">
+        <h4 style="color:aliceblue">Explore</h4>
+        <ul>
+          <li><a href="#">Featured Projects</a></li>
+          <li><a href="#">Trending Designs</a></li>
+          <li><a href="#">Code Snippets</a></li>
+          <li><a href="#">Developer Blogs</a></li>
+          <li><a href="#">Open Source Projects</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources Section -->
+      <div class="footer-section resources">
+        <h4 style="color:aliceblue">Quick Links</h4>
+        <ul>
+          <li><a href="#">Your Profile</a></li>
+          <li><a href="#">Regex</a></li>
+          <li><a href="#">Dashboard</a></li>
+          <li><a href="#">Contact Us</a></li>
+          <li><a href="#">UI+Code</a></li>
+        </ul>
+      </div>
+
+      <!-- Connect Section -->
+      <div class="footer-section connect">
+        <h4 style="color:aliceblue">Connect With Us</h4>
+        <p>Join the conversation on social media:</p>
+        <div class="social-icons">
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-twitter"></i></a>
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" style="color: #000;" target="_blank"><i class="fab fa-instagram"></i></a>
+
+        </div>
+        <p>Or email us at: <a href="mailto:frontendmarketplace561@gmail.com">frontendmarketplace561@gmail.com</a></p>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p style="color:aliceblue">&copy; 2024 Frontend Market Place. Crafted with ❤️ by developers, for developers.</p>
+    </div>
+  </footer>
+</body>
+</html>

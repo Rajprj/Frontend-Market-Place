@@ -23,14 +23,25 @@ pre code.hljs {
     line-height: 1;
     color: #fff;
     text-align: center;
+    animation: scaleFadeIn 2s ease-in-out;
 }
-
+@keyframes scaleFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 #page1 h6 {
     margin-top: 4%;
     font-weight: 300;
     color: #6d717a;
     font-size: 2vw;
     text-align: center;
+    animation: fadeInPage1 2s ease-in-out 0.1s;
 }
 
 #page1 a {
@@ -47,6 +58,7 @@ pre code.hljs {
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: fadeInPage1 2s ease-in-out 0.1s;
 }
 
 #page1 a img {

@@ -377,6 +377,9 @@ function eachDeveloperPostShow() {
         const postDeleteBtn = document.querySelectorAll(".postDeleteBtn")
         postDeleteBtn.forEach((btn) => {
           btn.addEventListener("click", async () => {
+            const confirmDelete = confirm("Are you sure you want to delete this post?");
+            if (!confirmDelete) return;
+
             const postId = btn.getAttribute("postId")
             loaderContainer.classList.remove("hide");
             const respons = await fetch(`/admin/userPostDelete/${postId}`)
