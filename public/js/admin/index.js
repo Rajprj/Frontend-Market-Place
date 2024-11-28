@@ -93,7 +93,7 @@ function showSendMsgBox() {
       
       msgBox.innerHTML = `<div class="modal-content">
             <span id="closeBtn" class="closeBtnSendMsg">&#x2702;</span>
-            <h2>Add Admin</h2>
+            <h2>Send Message</h2>
             <form action="/admin/sendMailUser" method="POST">
                 
                 <input type="email" name="email" placeholder="Email" value="${user.email}" readonly>
@@ -432,6 +432,7 @@ function userDelete() {
         loaderContainer.classList.add ("hide");
         if (data.success) {
           const userItem = btn.closest(".removeUserBox");
+          successFlashMsgsTimingForAjax(data.succMsg)
           if (userItem) {
             userItem.remove();
           } else {
@@ -586,6 +587,34 @@ if (successMsgFromBackend) {
   flashMsgsTiming()
 }
 
+//===========for ajax req success msg===============
+function successFlashMsgsTimingForAjax(succMsg) {
+    const errorDiv = document.createElement("div");
+    errorDiv.id = "successMsgFromBackend";
+    errorDiv.innerHTML = `<p>${succMsg} <span class="circle"></span></p>`;
+    document.body.appendChild(errorDiv);
+
+    const msgTimeCircle = document.querySelector(".circle");
+    errorDiv.style.display = 'flex';
+    let count = 4;
+    const timeInt = setInterval(() => {
+      count--;
+      msgTimeCircle.innerHTML = count;
+      if (count === 0) {
+        clearInterval(timeInt);
+
+        errorDiv.style.transition = "opacity 0.5s, transform 0.5s";
+        errorDiv.style.opacity = "0";
+        errorDiv.style.transform = "translateY(-20%)";
+
+        setTimeout(() => {
+          errorDiv.style.display = 'none';
+          errorDiv.remove();
+          return
+        }, 500);
+      }
+    }, 1000);
+}
 //===========for ajax req error msg===============
 function flashMsgsTimingForAjax(errMsg) {
     const errorDiv = document.createElement("div");

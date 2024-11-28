@@ -150,7 +150,7 @@ function postSeeBtn() {
         ${follow}
       </div>
       <div class="downloadBtn">
-        <a href="">Download</a>
+        <a href="/users/download/${postId}">Download</a>
       </div>`;
         } else {
           followAndDownBtn = "";
@@ -288,6 +288,7 @@ function postSeeBtn() {
           
           } else {
             console.log("Failed to add comment");
+            loaderContainer.classList.add("hide");
           }
 
         });
@@ -396,7 +397,8 @@ likeButtonElements.forEach((likeBtn) => {
     if (res.ok) {
       const data = await res.json();
       const countLike = data.countlike;
-
+      console.log(countLike);
+      
       // Update the specific like count for the post
       document.getElementById(`likeCount_${postId}`).innerHTML = countLike;
 

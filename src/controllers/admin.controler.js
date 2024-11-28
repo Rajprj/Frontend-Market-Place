@@ -216,7 +216,7 @@ const removeUser = asyncHandler(async (req, res) => {
                 
                 await User.deleteOne(findUser._id);
                 let success = true;
-                res.json({ success: true });
+                res.json({ success: true , succMsg: "User delete successfully" });
             }
         }
     } catch (error) {

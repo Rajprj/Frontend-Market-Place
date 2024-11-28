@@ -302,6 +302,8 @@ if(userId.comment.length > 0){
   deleteCommentBtn.forEach((btn)=>{
     btn.addEventListener("click",async ()=>{
       // console.log("clicked");
+     
+
       const commentBox = btn.closest(".userCommentBox")
       const commentId = btn.getAttribute("commentId")
       loaderContainer.classList.remove("hide");
@@ -544,3 +546,7 @@ function flashMsgsTiming() {
   }
 }
 flashMsgsTiming();
+
+function confirmDelete() {
+  return confirm("Are you sure you want to delete this post?");
+}

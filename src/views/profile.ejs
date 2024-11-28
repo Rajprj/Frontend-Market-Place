@@ -20,286 +20,297 @@
       </p>
     </div>
     <% } %>
-    <% if (typeof successMsg !=='undefined' && successMsg) { %>
-      <div id="successMsgFromBackend">
-        <p>
-          <%= successMsg %> <span class="circle"></span>
-        </p>
-      </div>
-      <% } %>
-      <main id="profilePage">
-        <!-- -----------Post Detailed Box--------------- -->
-        <div id="postDetailedBox" class="post_DetailedBox">
-
+      <% if (typeof successMsg !=='undefined' && successMsg) { %>
+        <div id="successMsgFromBackend">
+          <p>
+            <%= successMsg %> <span class="circle"></span>
+          </p>
         </div>
-        <div id="sidebar" class="profileSideBar">
-          <div class="pined pinnedProfileBar">
-            <div class="headParts profileBarHead">
-              <div class="sideLogo">
-                <img src="/images/logo.png" alt="">
-              </div>
-              <h1>CodeMe</h1>
+        <% } %>
+          <main id="profilePage">
+            <!-- -----------Post Detailed Box--------------- -->
+            <div id="postDetailedBox" class="post_DetailedBox">
+
             </div>
-
-            <div class="otherRegex">
-              <a href="/">
-
-                <div class="parts profileParts">
-                  <div class="sideLogoParts">
-                    <img src="/images/sidebarImages/home1-removebg-preview.png" alt="">
+            <div id="sidebar" class="profileSideBar">
+              <div class="pined pinnedProfileBar">
+                <div class="headParts profileBarHead">
+                  <div class="sideLogo">
+                    <img src="/images/logo.png" alt="">
                   </div>
-                  <h6>Home</h>
-                </div>
-              </a>
-              <a href="/regex">
-
-                <div class="parts profileParts">
-                  <div class="sideLogoParts">
-                    <img src="/images/sidebarImages/regex-removebg-preview.png" alt="">
-                  </div>
-                  <h6>Regex</h>
-                </div>
-              </a>
-              
-              <a href="uicode">
-
-                <div class="parts profileParts">
-                  <div class="sideLogoParts">
-                    <img src="/images/sidebarImages/code-removebg-preview.png" alt="">
-                  </div>
-                  <h6>Code+UI</h>
-                </div>
-            </div>
-            </a>
-          </div>
-
-        </div>
-        <div id="profileBox">
-
-          <!-- ---------------for user followingList------------ -->
-           <div id="followContainer">
-            <div class="followHeader">
-              <h2 style="padding: 7px 5px;">Following</h2>
-            </div>
-              <div class="followContainerSet"></div>
-          
-           </div>
-           <!-- ---------------for followers list-------------- -->
-           <div id="followersContainer">
-            <div class="followHeader">
-              <h2 style="padding: 7px 5px;">Followers</h2>
-            </div>
-              <div class="followersContainerSet"></div>
-          
-           </div>
-          <!-- ----------For Profiile Pic Updates----------- -->
-          <div id="imageUploadModal" class="modal hidden">
-            <div class="modal-content">
-              <span id="closeBtn" class="closeBtnDp">&times;</span>
-              <h2>Upload Profile Picture</h2>
-              <form action="/users/uploadDP" method="POST" enctype="multipart/form-data">
-                <input type="file" name="dp" accept="image/*" required />
-                <button type="submit" class="uploadBtn">Upload</button>
-              </form>
-              <% if(!profileUser.dp || profileUser.dp==="" ) { %>
-
-                <button type="button" class="removeBtn" disabled>Remove</button>
-                <% } else { %>
-
-                  <a href="/users/removeDp">
-                    <button type="submit" class="removeBtn">Remove</button>
-                  </a>
-                  <% } %>
-            </div>
-          </div>
-
-          <!-- ---------------For Profile Info Updates-------------- -->
-          <div id="profileUpdateModal" class="modalProfile">
-            <div class="modal-content">
-              <span id="closeBtn" class="closeBtnProfile">&times;</span>
-              <h2>Update your A/c</h2>
-              <form action="/users/updateProfile" method="POST">
-                <input type="text" name="userName" placeholder="Change userName ?" >
-                <input type="text" name="fullName" placeholder="Change fullName ?">
-                <input type="email" name="email" placeholder="Change Email ?" >
-                <select name="role" id="">
-                  <option value="" disabled selected>change role?</option>
-                  <option value="developer">developer</option>
-                  <option value="viewer">viewer</option>
-                </select>
-                <div class="submitBtn">
-                  <button type="submit">Submit</button>
-                </div>
-              </form>
-
-            </div>
-          </div>
-
-          <!-- -------------------For change role -------------- -->
-          <div id="changeRoleModel" class="modalRole">
-            <div class="modal-content">
-              <span id="closeBtn" class="closeBtnRole">&times;</span>
-              <h2>Change Your Role</h2>
-              <form action="/users/changeRole" method="POST">
-
-                <select name="role" id="">
-                  <option value="developer">developer</option>
-                  <option value="viewer">viewer</option>
-                </select>
-
-                <div class="submitBtn">
-                  <button type="submit">submit</button>
-                </div>
-              </form>
-
-            </div>
-          </div>
-          <!-- ---------------For Post Upload-------------- -->
-          <div id="postUploadModal" class="modalPost">
-            <div class="modal-content">
-              <span id="closeBtn" class="closeBtnPost">&times;</span>
-              <h2>Add your post</h2>
-              <form action="/users/uploadPost" method="post" enctype="multipart/form-data" id="postForm">
-                <!-- Post Name -->
-                <div class="form-group">
-                  <label for="postName">Post Name:</label>
-                  <input type="text" id="postName" name="postName" placeholder="Enter post name" required>
+                  <h1>CodeMe</h1>
                 </div>
 
-                <!-- Code Upload (ZIP or RAR) -->
-                <div class="form-group">
-                  <label for="codeUpload">Upload Code (ZIP/RAR):</label>
-                  <input type="file" id="codeUpload" name="codeUpload" accept=".zip, .rar" required>
-                  <small>Upload your code as a ZIP or RAR file</small>
-                </div>
+                <div class="otherRegex">
+                  <a href="/">
 
-                <!-- Thumbnail Image Upload -->
-                <div class="form-group">
-                  <label for="thumbnailUpload">Upload Thumbnail Image:</label>
-                  <input type="file" id="thumbnailUpload" name="thumbnailUpload" accept="image/*" required>
-                  <small>Upload a single image for the post thumbnail (JPEG, PNG)</small>
-                </div>
-
-                <!-- Multiple Images for Slider -->
-                <div class="form-group">
-                  <label for="sliderImages">Upload Slider Images:</label>
-                  <input type="file" id="sliderImages" name="sliderImages" accept="image/*" multiple required>
-                </div>
-
-                <!-- Submit Button -->
-                <div class="form-group">
-                  <button type="submit">Post Project</button>
-                </div>
-              </form>
-
-
-
-            </div>
-          </div>
-          <!-- ---------------Profile Header-------------- -->
-          <div class="profileHeader">
-            <div class="bghighlight"></div>
-            <div id="sideNaviBtn">
-              <div class="setNaviBtn">
-                <div class="lines"></div>
-                <div class="lines"></div>
-                <div class="lines"></div>
-              </div>
-            </div>
-
-            <!-- ---------side profile edit nav----------- -->
-            <div class="profileSideNavi hideNaviBar">
-              <div class="setNavibox">
-
-                <a href="" class="editProfile"><span class="elemsBox">Edit profile</span></a>
-                <a href="" class="editdp"><span class="elemsBox">Edit Dp</span></a>
-                <% if(profileUser.role==='developer' ){ %>
-                  <a href="" class="addPost"><span class="elemsBox">Add Post</span></a>
-                  <% } %>
-                    <a href="/users/logOut"><span class="elemsBox">Log Out</span></a>
-              </div>
-            </div>
-            <div class="coverImg">
-              <img src="/images/userProfile/profileCoverimg.jpg" alt="">
-            </div>
-            <div class="followersAndFollowingBox">
-              <% if(profileUser.role==='developer' ){ %>
-              <span class="followers" >Followers: <%= profileUser.followers.length %></span>
-              <% } %>
-              <span class="followings" >Following: <%= profileUser.followings.length %> </span>
-            </div>
-            <div class="userDetail">
-              <div class="fulName">
-                <h1>
-                  <%= profileUser.fullName %>
-                </h1>
-              </div>
-              <div class="userName">
-                <h4>
-                  <%= profileUser.userName %> / <%= profileUser.role %>
-                </h4>
-              </div>
-            </div>
-            <div class="profilePic">
-              <% if (!profileUser.dp || profileUser.dp==="" ) { %>
-                <img src="/images/profilePic.png" alt="Default Profile Picture">
-                <% } else { %>
-                  <img src="<%= profileUser.dp %>" alt="Profile Picture">
-                  <% } %>
-
-            </div>
-          </div>
-
-          <div class="profilePostBody">
-            <div class="page3MainBox">
-              <% if(profileUser.role==='viewer' ){ %>
-                <div class="dontHavePost">
-                  Change your role and Add your first post <div class="changeRole"
-                    style="color: rgb(68, 68, 251); margin-left: 12px; cursor: pointer;">change</div>
-                </div>
-                <% } else { %>
-                  <% if(profileUser.posts.length===0){ %>
-                    <div class="dontHavePost">
-                      Add your first post <div class="addPost"
-                        style="color: rgb(68, 68, 251); margin-left: 12px; cursor: pointer;">Add+</div>
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/home1-removebg-preview.png" alt="">
+                      </div>
+                      <h6>Home</h>
                     </div>
-                    <% } else {%>
-                      <% profileUser.posts.forEach(function(post){ %>
-                        <div class="userPostBoxes">
-                          <div class="postBGclip"></div>
-                          <div class="userPostBox">
-                            <div class="postImgBox showslider">
-                              <div class="sideBgEffect">
-                                <div class="seeContainer" postId="<%= post._id %>" userId='<%= JSON.stringify(profileUser).replace(/'/g, "&#39;") %>'>
-                                  <i class="eyeSymbol"></i>
-                                </div>
-                              </div>
-                              <img src="<%= post.thumbnail %>" alt="" />
-                            </div>
-                            <div class="userDetailsBox">
+                  </a>
+                  <a href="/regex">
 
-                              <div class="postUserDetail">
-                                <div class="postCaption">
-                                  <h2>
-                                    <%= post.postName %>
-                                  </h2>
-                                </div>
-                              </div>
-                              <div class="deletePost">
-                                <a href="/users/delete/post/<%= post._id %>"><img src="/images/delete.png" alt=""></a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <% })%>
-                          <%}%>
-                            <% } %>
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/regex-removebg-preview.png" alt="">
+                      </div>
+                      <h6>Regex</h>
+                    </div>
+                  </a>
+                  <a href="/aboutus">
+
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/aboutus.png" alt="">
+                      </div>
+                      <h6>About-Us</h>
+                    </div>
+                  </a>
+
+                  <a href="uicode">
+
+                    <div class="parts profileParts">
+                      <div class="sideLogoParts">
+                        <img src="/images/sidebarImages/code-removebg-preview.png" alt="">
+                      </div>
+                      <h6>Code+UI</h>
+                    </div>
+                </div>
+                </a>
+              </div>
+
             </div>
-          </div>
-        </div>
-      </main>
+            <div id="profileBox">
 
-      <script src="/js/profile.js"></script>
+              <!-- ---------------for user followingList------------ -->
+              <div id="followContainer">
+                <div class="followHeader">
+                  <h2 style="padding: 7px 5px;">Following</h2>
+                </div>
+                <div class="followContainerSet"></div>
+
+              </div>
+              <!-- ---------------for followers list-------------- -->
+              <div id="followersContainer">
+                <div class="followHeader">
+                  <h2 style="padding: 7px 5px;">Followers</h2>
+                </div>
+                <div class="followersContainerSet"></div>
+
+              </div>
+              <!-- ----------For Profiile Pic Updates----------- -->
+              <div id="imageUploadModal" class="modal hidden">
+                <div class="modal-content">
+                  <span id="closeBtn" class="closeBtnDp">&times;</span>
+                  <h2>Upload Profile Picture</h2>
+                  <form action="/users/uploadDP" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="dp" accept="image/*" required />
+                    <button type="submit" class="uploadBtn">Upload</button>
+                  </form>
+                  <% if(!profileUser.dp || profileUser.dp==="" ) { %>
+
+                    <button type="button" class="removeBtn" disabled>Remove</button>
+                    <% } else { %>
+
+                      <a href="/users/removeDp">
+                        <button type="submit" class="removeBtn">Remove</button>
+                      </a>
+                      <% } %>
+                </div>
+              </div>
+
+              <!-- ---------------For Profile Info Updates-------------- -->
+              <div id="profileUpdateModal" class="modalProfile">
+                <div class="modal-content">
+                  <span id="closeBtn" class="closeBtnProfile">&times;</span>
+                  <h2>Update your A/c</h2>
+                  <form action="/users/updateProfile" method="POST">
+                    <input type="text" name="userName" placeholder="Change userName ?">
+                    <input type="text" name="fullName" placeholder="Change fullName ?">
+                    <input type="email" name="email" placeholder="Change Email ?">
+                    <select name="role" id="">
+                      <option value="" disabled selected>change role?</option>
+                      <option value="developer">developer</option>
+                      <option value="viewer">viewer</option>
+                    </select>
+                    <div class="submitBtn">
+                      <button type="submit">Submit</button>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+
+              <!-- -------------------For change role -------------- -->
+              <div id="changeRoleModel" class="modalRole">
+                <div class="modal-content">
+                  <span id="closeBtn" class="closeBtnRole">&times;</span>
+                  <h2>Change Your Role</h2>
+                  <form action="/users/changeRole" method="POST">
+
+                    <select name="role" id="">
+                      <option value="developer">developer</option>
+                      <option value="viewer">viewer</option>
+                    </select>
+
+                    <div class="submitBtn">
+                      <button type="submit">submit</button>
+                    </div>
+                  </form>
+
+                </div>
+              </div>
+              <!-- ---------------For Post Upload-------------- -->
+              <div id="postUploadModal" class="modalPost">
+                <div class="modal-content">
+                  <span id="closeBtn" class="closeBtnPost">&times;</span>
+                  <h2>Add your post</h2>
+                  <form action="/users/uploadPost" method="post" enctype="multipart/form-data" id="postForm">
+                    <!-- Post Name -->
+                    <div class="form-group">
+                      <label for="postName">Post Name:</label>
+                      <input type="text" id="postName" name="postName" placeholder="Enter post name" required>
+                    </div>
+
+                    <!-- Code Upload (ZIP or RAR) -->
+                    <div class="form-group">
+                      <label for="codeUpload">Upload Code (ZIP/RAR):</label>
+                      <input type="file" id="codeUpload" name="codeUpload" accept=".zip, .rar" required>
+                      <small>Upload your code as a ZIP or RAR file</small>
+                    </div>
+
+                    <!-- Thumbnail Image Upload -->
+                    <div class="form-group">
+                      <label for="thumbnailUpload">Upload Thumbnail Image:</label>
+                      <input type="file" id="thumbnailUpload" name="thumbnailUpload" accept="image/*" required>
+                      <small>Upload a single image for the post thumbnail (JPEG, PNG)</small>
+                    </div>
+
+                    <!-- Multiple Images for Slider -->
+                    <div class="form-group">
+                      <label for="sliderImages">Upload Slider Images:</label>
+                      <input type="file" id="sliderImages" name="sliderImages" accept="image/*" multiple required>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-group">
+                      <button type="submit">Post Project</button>
+                    </div>
+                  </form>
+
+
+
+                </div>
+              </div>
+              <!-- ---------------Profile Header-------------- -->
+              <div class="profileHeader">
+                <div class="bghighlight"></div>
+                <div id="sideNaviBtn">
+                  <div class="setNaviBtn">
+                    <div class="lines"></div>
+                    <div class="lines"></div>
+                    <div class="lines"></div>
+                  </div>
+                </div>
+
+                <!-- ---------side profile edit nav----------- -->
+                <div class="profileSideNavi hideNaviBar">
+                  <div class="setNavibox">
+
+                    <a href="" class="editProfile"><span class="elemsBox">Edit profile</span></a>
+                    <a href="" class="editdp"><span class="elemsBox">Edit Dp</span></a>
+                    <% if(profileUser.role==='developer' ){ %>
+                      <a href="" class="addPost"><span class="elemsBox">Add Post</span></a>
+                      <% } %>
+                        <a href="/users/logOut"><span class="elemsBox">Log Out</span></a>
+                  </div>
+                </div>
+                <div class="coverImg">
+                  <img src="/images/userProfile/profileCoverimg.jpg" alt="">
+                </div>
+                <div class="followersAndFollowingBox">
+                  <% if(profileUser.role==='developer' ){ %>
+                    <span class="followers">Followers: <%= profileUser.followers.length %></span>
+                    <% } %>
+                      <span class="followings">Following: <%= profileUser.followings.length %> </span>
+                </div>
+                <div class="userDetail">
+                  <div class="fulName">
+                    <h1>
+                      <%= profileUser.fullName %>
+                    </h1>
+                  </div>
+                  <div class="userName">
+                    <h4>
+                      <%= profileUser.userName %> / <%= profileUser.role %>
+                    </h4>
+                  </div>
+                </div>
+                <div class="profilePic">
+                  <% if (!profileUser.dp || profileUser.dp==="" ) { %>
+                    <img src="/images/profilePic.png" alt="Default Profile Picture">
+                    <% } else { %>
+                      <img src="<%= profileUser.dp %>" alt="Profile Picture">
+                      <% } %>
+
+                </div>
+              </div>
+
+              <div class="profilePostBody">
+                <div class="page3MainBox">
+                  <% if(profileUser.role==='viewer' ){ %>
+                    <div class="dontHavePost">
+                      Change your role and Add your first post <div class="changeRole"
+                        style="color: rgb(68, 68, 251); margin-left: 12px; cursor: pointer;">change</div>
+                    </div>
+                    <% } else { %>
+                      <% if(profileUser.posts.length===0){ %>
+                        <div class="dontHavePost">
+                          Add your first post <div class="addPost"
+                            style="color: rgb(68, 68, 251); margin-left: 12px; cursor: pointer;">Add+</div>
+                        </div>
+                        <% } else {%>
+                          <% profileUser.posts.forEach(function(post){ %>
+                            <div class="userPostBoxes">
+                              <div class="postBGclip"></div>
+                              <div class="userPostBox">
+                                <div class="postImgBox showslider">
+                                  <div class="sideBgEffect">
+                                    <div class="seeContainer" postId="<%= post._id %>"
+                                      userId='<%= JSON.stringify(profileUser).replace(/' /g, "&#39;" ) %>'>
+                                      <i class="eyeSymbol"></i>
+                                    </div>
+                                  </div>
+                                  <img src="<%= post.thumbnail %>" alt="" />
+                                </div>
+                                <div class="userDetailsBox">
+
+                                  <div class="postUserDetail">
+                                    <div class="postCaption">
+                                      <h2>
+                                        <%= post.postName %>
+                                      </h2>
+                                    </div>
+                                  </div>
+                                  <div class="deletePost">
+                                    <a href="/users/delete/post/<%= post._id %>" onclick="return confirmDelete()"><img
+                                        src="/images/delete.png" alt=""></a>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <% })%>
+                              <%}%>
+                                <% } %>
+                </div>
+              </div>
+            </div>
+          </main>
+
+          <script src="/js/profile.js"></script>
 </body>
 
 </html>
