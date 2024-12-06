@@ -31,7 +31,7 @@ body {
   .header-content p {
     font-size: 1.5rem;
     color: #ccc;
-    animation: fadeIn 2s ease-in-out 0.5s;
+    animation: fadeInHeader 2s ease-in-out 0.5s;
   }
   
   /* About Content Section */
@@ -91,7 +91,7 @@ body {
   
   
   /* Animations */
-  @keyframes fadeIn {
+  @keyframes fadeInHeader {
     from {
       opacity: 0;
       transform: translateY(20px);

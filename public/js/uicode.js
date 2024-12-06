@@ -13,71 +13,71 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // =============post Slider============
 function postSlider() {
-    var currentIndex = 0;
-    const slides = document.querySelector(".slides");
-    const totalSlides = document.querySelectorAll(".slide").length;
-    const preBtn = document.querySelector(".prev");
-    const nextBtn = document.querySelector(".next");
-    const dotsContainer = document.querySelector(".dotsContainer");
-  
-    // Create dots dynamically
-    for (let i = 0; i < totalSlides; i++) {
-      let dot = document.createElement("span");
-      dot.classList.add("dot");
-      if (i === 0) dot.classList.add("active"); // Set the first dot as active
-      dotsContainer.appendChild(dot);
-    }
-    const dots = document.querySelectorAll(".dot");
-  
-    function showSlide(index) {
-      const slideWidth = document.querySelector(".slide").clientWidth;
-      slides.style.transform = `translateX(-${index * slideWidth}px)`;
-      updateDots(index);
-    }
-  
-    // Update active dot
-    function updateDots(index) {
-      dots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === index);
-      });
-    }
-  
-    nextBtn.addEventListener("click", () => {
-      currentIndex = (currentIndex + 1) % totalSlides;
-      showSlide(currentIndex);
-    });
-  
-    preBtn.addEventListener("click", () => {
-      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-      showSlide(currentIndex);
-    });
-  
-    // Add click event for dots
+  var currentIndex = 0;
+  const slides = document.querySelector(".slides");
+  const totalSlides = document.querySelectorAll(".slide").length;
+  const preBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+  const dotsContainer = document.querySelector(".dotsContainer");
+
+  // Create dots dynamically
+  for (let i = 0; i < totalSlides; i++) {
+    let dot = document.createElement("span");
+    dot.classList.add("dot");
+    if (i === 0) dot.classList.add("active"); // Set the first dot as active
+    dotsContainer.appendChild(dot);
+  }
+  const dots = document.querySelectorAll(".dot");
+
+  function showSlide(index) {
+    const slideWidth = document.querySelector(".slide").clientWidth;
+    slides.style.transform = `translateX(-${index * slideWidth}px)`;
+    updateDots(index);
+  }
+
+  // Update active dot
+  function updateDots(index) {
     dots.forEach((dot, i) => {
-      dot.addEventListener("click", () => {
-        currentIndex = i;
-        showSlide(currentIndex);
-      });
+      dot.classList.toggle("active", i === index);
     });
+  }
+
+  nextBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % totalSlides;
+    showSlide(currentIndex);
+  });
+
+  preBtn.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+    showSlide(currentIndex);
+  });
+
+  // Add click event for dots
+  dots.forEach((dot, i) => {
+    dot.addEventListener("click", () => {
+      currentIndex = i;
+      showSlide(currentIndex);
+    });
+  });
 }
 postSlider();
 
-function singlePost(){
+function singlePost() {
   const postBox = document.querySelectorAll('#page3 .box');
 
 
-  postBox.forEach((boxes)=>{
-    boxes.addEventListener("mouseenter",()=>{
+  postBox.forEach((boxes) => {
+    boxes.addEventListener("mouseenter", () => {
       boxes.childNodes[1].style.height = "67%";
     })
   })
 
-  postBox.forEach((boxes)=>{
-    boxes.addEventListener("mouseleave",()=>{
+  postBox.forEach((boxes) => {
+    boxes.addEventListener("mouseleave", () => {
       boxes.childNodes[1].style.height = "50%";
     })
   })
-  
+
 }
 singlePost();
 
@@ -124,7 +124,7 @@ function postSeeBtn() {
           `;
         });
       }
-      if (!profileUser ) {
+      if (!profileUser) {
         followAndDownBtn = `<div class="followBtn">
               <span class="follow">Follow</span>
             </div>
@@ -238,7 +238,7 @@ function postSeeBtn() {
             </div>
         </div>
         <div class="addCommentBox">
-               <textarea placeholder="Add a comment..." rows="3"></textarea>
+               <textarea placeholder="Add a comment..." rows="3" required></textarea>
                <button type="button" class="submitCommentBtn">
                  <i class="fas fa-paper-plane"></i>
                </button>
@@ -249,11 +249,23 @@ function postSeeBtn() {
 `;
 
       //-------------post Add comments---------------
-      if (profileUser && profileUser.role != 'admin') {
-        const addCommentBtn = document.querySelector(".addCommentBox button");
-        const comment = document.querySelector(".addCommentBox textarea");
-        const commentsContainerSet = document.querySelector(".commentsContainerSet")
-        addCommentBtn.addEventListener("click", async () => {
+
+      const addCommentBtn = document.querySelector(".addCommentBox button");
+      const comment = document.querySelector(".addCommentBox textarea");
+      const commentsContainerSet = document.querySelector(".commentsContainerSet")
+      
+      addCommentBtn.addEventListener("click", async () => {
+        if (profileUser && profileUser.role == 'admin') {
+          flashMsgsTimingForAjax("Admin can't comment on developer's post!")
+          return;
+        }
+        if (profileUser && profileUser.role != 'admin') {
+          console.log(comment.value);
+          
+          if(!comment.value){
+            flashMsgsTimingForAjax("Comment text is required!")
+            return;
+          }
           const commentText = comment.value;
           loaderContainer.classList.remove("hide");
           const res = await fetch(`/users/addComment/${postId}`, {
@@ -263,10 +275,10 @@ function postSeeBtn() {
             },
             body: JSON.stringify({ comment: commentText })
           });
-
+          let data = await res.json();
           if (res.ok) {
-            loaderContainer.classList.add("hide");
             // console.log("Commented");
+            loaderContainer.classList.add("hide");
             comment.value = "";
             commentsContainerSet.innerHTML += `
   <div class="userCommentBox">
@@ -284,72 +296,87 @@ function postSeeBtn() {
       </div>
   </div>
 `;
-
-          
           } else {
             console.log("Failed to add comment");
-            loaderContainer.classList.add("hide");
+            flashMsgsTimingForAjax(data.errMsg)
           }
-
-        });
-
-      } 
+        } else {
+         
+          
+            flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+          
+        }
+      });
 
       //-------------Post comment delete-------------
-      if(profileUser && profileUser.role != 'admin'){
-        if(profileUser.comment.length > 0){
+      if (profileUser && profileUser.role != 'admin') {
+        if (profileUser.comment.length > 0) {
           const deleteCommentBtn = document.querySelectorAll(".deleteComment")
           // console.log(deleteCommentBtn);
-          
-          deleteCommentBtn.forEach((btn)=>{
-            btn.addEventListener("click",async ()=>{
+
+          deleteCommentBtn.forEach((btn) => {
+            btn.addEventListener("click", async () => {
               // console.log("clicked");
               const commentBox = btn.closest(".userCommentBox")
               const commentId = btn.getAttribute("commentId")
               loaderContainer.classList.remove("hide");
               const res = await fetch(`/users/deleteComment/${commentId}`)
-              if(res.ok){
+              if (res.ok) {
                 // console.log("comment deleted");
                 loaderContainer.classList.add("hide");
                 commentBox.remove();
-              }else{
+              } else {
                 console.log("post not deleted");
-                
+
               }
             })
           })
         }
       }
-     
-      // ------------following or unfollow the user---------------
-      if (profileUser && profileUser.role != 'admin') {
-        if (profileUser._id !== postData.postUserId) {
-          function followUnfollowUser() {
-            const followBtn = document.querySelector(".followBtn")
-            const followBtnA = document.querySelector(".followBtn span")
-            followBtn.addEventListener("click", async () => {
-              checkFollowBtnNotclicked = false;
-              const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
 
-              const data = await res.json();
-              if (res.ok) {
-                // console.log(data.following);
-                if (data.following === true) {
-                  followBtnA.classList.remove("follow")
-                  followBtnA.classList.add("following")
-                  followBtnA.innerHTML = "following"
-                }
-                else {
-                  followBtnA.classList.remove("following")
-                  followBtnA.classList.add("follow")
-                  followBtnA.innerHTML = "follow"
+      // ------------following or unfollow the user---------------
+      function followUnfollowUser() {
+        const followBtn = document.querySelector(".followBtn")
+        if(followBtn){
+          const followBtnA = document.querySelector(".followBtn span")
+
+          followBtn.addEventListener("click", async () => {
+  
+            if (profileUser && profileUser.role != 'admin') {
+              if (profileUser._id !== postData.postUserId) {
+                checkFollowBtnNotclicked = false;
+                const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
+  
+                const data = await res.json();
+                if (res.ok) {
+                  console.log(data.following);
+                  if (data.following === true) {
+                    followBtnA.classList.remove("follow")
+                    followBtnA.classList.add("following")
+                    followBtnA.innerHTML = "following"
+                  }
+                  else {
+                    followBtnA.classList.remove("following")
+                    followBtnA.classList.add("follow")
+                    followBtnA.innerHTML = "follow"
+                  }
                 }
               }
-            })
-          }
-          followUnfollowUser()
+  
+            }
+            else {
+              if (profileUser && profileUser.role == 'admin') {
+                flashMsgsTimingForAjax("Admin can't follow developer!")
+              }
+              else {
+                flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+              }
+            }
+          })
         }
+
       }
+      followUnfollowUser()
       // -----------------Detailed post Thubmnail img change-------------
       function thumbnailImgChange() {
         const thumbnail = document.querySelector(".postThumbnail img");
@@ -391,26 +418,60 @@ const likeButtonElements = document.querySelectorAll(".likeButton");
 likeButtonElements.forEach((likeBtn) => {
   likeBtn.addEventListener("click", async function () {
     // console.log("clicked");
+    let profileUser = likeBtn.getAttribute("user")
+    if (profileUser !== 'null') {
+      const postId = likeBtn.getAttribute("postId");
+      const res = await fetch(`/users/likePost/${postId}`);
+      if (res.ok) {
+        const data = await res.json();
+        const countLike = data.countlike;
 
-    const postId = likeBtn.getAttribute("postId");
-    const res = await fetch(`/users/likePost/${postId}`);
-    if (res.ok) {
-      const data = await res.json();
-      const countLike = data.countlike;
-      console.log(countLike);
-      
-      // Update the specific like count for the post
-      document.getElementById(`likeCount_${postId}`).innerHTML = countLike;
+        // Update the specific like count for the post
+        document.getElementById(`likeCount_${postId}`).innerHTML = countLike;
 
-      // Toggle the liked class
-      if (data.liked === true) {
-        likeBtn.classList.add("liked");
+        // Toggle the liked class
+        if (data.liked === true) {
+          likeBtn.classList.add("liked");
+        } else {
+          likeBtn.classList.remove("liked");
+        }
       } else {
-        likeBtn.classList.remove("liked");
+        // Redirect to login if not authenticated
+        window.location.href = "/login";
       }
-    } else {
-      // Redirect to login if not authenticated
-      window.location.href = "/login";
     }
+    else {
+      flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+    }
+
   });
 });
+//===========for ajax req error msg===============
+function flashMsgsTimingForAjax(errMsg) {
+
+  const errorDiv = document.createElement("div");
+  errorDiv.id = "errorMsgFromBackend";
+  errorDiv.innerHTML = `<p>${errMsg} <span class="circle"></span></p>`;
+  document.body.appendChild(errorDiv);
+
+  const msgTimeCircle = document.querySelector(".circle");
+  errorDiv.style.display = 'flex';
+  let count = 4;
+  const timeInt = setInterval(() => {
+    count--;
+    msgTimeCircle.innerHTML = count;
+    if (count === 0) {
+      clearInterval(timeInt);
+
+      errorDiv.style.transition = "opacity 0.5s, transform 0.5s";
+      errorDiv.style.opacity = "0";
+      errorDiv.style.transform = "translateY(-20%)";
+
+      setTimeout(() => {
+        errorDiv.style.display = 'none';
+        errorDiv.remove();
+        return
+      }, 500);
+    }
+  }, 1000);
+}

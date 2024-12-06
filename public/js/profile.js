@@ -405,54 +405,82 @@ function showFollowingsUser() {
   const followContainerSet = document.querySelector(".followContainerSet");
 
   followingsBtn.addEventListener("click", async () => {
-    followContainer.style.display = 'block';
-    console.log("open following list");
-
-    // console.log(userId);
-    followContainerSet.innerHTML = "";
-    loaderContainer.classList.remove("hide");
-    const res = await fetch(`/users/followingList`);
-    const data = await res.json();
-    loaderContainer.classList.add("hide");
-    if (data.status) {
-      const listUser = data.followingDetails;
-      listUser.forEach((list) => {
-        console.log(list.userName);
-
-        // Create a new div element to hold the content
-        const followContent = document.createElement('div');
-        followContent.classList.add('userBox');
-        followContent.innerHTML = `
-          <div class="profilePic"><img src="${list.dp ? list.dp : "/images/profilePic.png"}" alt=""></div>
-          <p class="userName">${list.userName}</p>
-          <div class="followBtn" userId="${list._id}">
-            <span class="following" >Follow</span>
-          </div>
-        `;
-        // Append the created element to the container
-        followContainerSet.appendChild(followContent)
-      });
-      const unfollow = document.querySelectorAll(".followBtn")
-
-      unfollow.forEach((btn) => {
-        btn.addEventListener("click", async () => {
-          const unfollowSpan = btn.querySelector("span")
-          const followedUserId = btn.getAttribute("userId")
-          console.log(followedUserId);
-
-          const res = await fetch(`/users/followingOrRemove/${followedUserId}`)
-          const data = await res.json()
-          if (data.following == false) {
-            unfollowSpan.classList.remove("following")
-            unfollowSpan.classList.add("follow")
-          } else {
-            unfollowSpan.classList.add("following")
-            unfollowSpan.classList.remove("follow")
-          }
-        })
-      })
+    try {
+      // Show the follow container and clear its content
+      followContainer.style.display = "block";
+      console.log("Open following list");
+      followContainerSet.innerHTML = "";
+  
+      // Show loader while fetching data
+      loaderContainer.classList.remove("hide");
+  
+      // Fetch the list of users the current user is following
+      const res = await fetch(`/users/followingList`);
+      const data = await res.json();
+  
+      // Hide loader after the data is fetched
+      loaderContainer.classList.add("hide");
+  
+      if (data.status) {
+        const listUser = data.followingDetails;
+  
+        // Loop through the list and dynamically generate HTML
+        listUser.forEach((list) => {
+          const followContent = document.createElement("div");
+          followContent.classList.add("userBox");
+          followContent.innerHTML = `
+            <div class="profilePic">
+              <img src="${list.dp ? list.dp : "/images/profilePic.png"}" alt="Profile Picture">
+            </div>
+            <div class="userName">
+              <a href="/visitedProfile/${list._id}" style="text-decoration: none; color: #000;" title="Visit ${list.userName}'s profile">
+                ${list.userName}
+              </a>
+            </div>
+            <div class="followBtn" userId="${list._id}">
+              <span class="following">Unfollow</span>
+            </div>
+          `;
+  
+          // Append the created element to the container
+          followContainerSet.appendChild(followContent);
+        });
+  
+        // Add click event listeners for all unfollow buttons
+        const unfollowButtons = document.querySelectorAll(".followBtn");
+        unfollowButtons.forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            const unfollowSpan = btn.querySelector("span");
+            const followedUserId = btn.getAttribute("userId");
+  
+            try {
+              const res = await fetch(`/users/followingOrRemove/${followedUserId}`);
+              const actionData = await res.json();
+  
+              // Update the follow button based on the response
+              if (actionData.following === false) {
+                unfollowSpan.classList.remove("following");
+                unfollowSpan.classList.add("follow");
+                unfollowSpan.textContent = "Follow";
+              } else {
+                unfollowSpan.classList.add("following");
+                unfollowSpan.classList.remove("follow");
+                unfollowSpan.textContent = "Unfollow";
+              }
+            } catch (error) {
+              console.error("Error updating follow status:", error);
+            }
+          });
+        });
+      } else {
+        console.error("Failed to fetch following list");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      loaderContainer.classList.add("hide");
     }
   });
+  
 
   window.addEventListener("click", (e) => {
     if (!followContainer.contains(e.target) && e.target !== followingsBtn) {

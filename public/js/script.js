@@ -183,11 +183,18 @@ function postSeeBtn() {
       const addCommentBtn = document.querySelector(".addCommentBox button");
       const comment = document.querySelector(".addCommentBox textarea");
       const commentsContainerSet = document.querySelector(".commentsContainerSet")
-
+      
       addCommentBtn.addEventListener("click", async () => {
+        if (profileUser && profileUser.role == 'admin') {
+          flashMsgsTimingForAjax("Admin can't comment on developer's post!")
+          return;
+        }
         if (profileUser && profileUser.role != 'admin') {
-          if (profileUser.role == 'admin') {
-            flashMsgsTimingForAjax("Admin can't comment on developer's post!")
+          console.log(comment.value);
+          
+          if(!comment.value){
+            flashMsgsTimingForAjax("Comment text is required!")
+            return;
           }
           const commentText = comment.value;
           loaderContainer.classList.remove("hide");
@@ -198,7 +205,7 @@ function postSeeBtn() {
             },
             body: JSON.stringify({ comment: commentText })
           });
-
+          let data = await res.json();
           if (res.ok) {
             // console.log("Commented");
             loaderContainer.classList.add("hide");
@@ -221,19 +228,15 @@ function postSeeBtn() {
 `;
           } else {
             console.log("Failed to add comment");
+            flashMsgsTimingForAjax(data.errMsg)
           }
         } else {
-          if (profileUser && profileUser.role == 'admin') {
-            flashMsgsTimingForAjax("Admin can't comment on developer's post!")
-          }
-          else {
+         
+          
             flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
-          }
+          
         }
       });
-
-
-
 
       //-------------Post comment delete-------------
       if (profileUser && profileUser.role != 'admin') {
@@ -260,45 +263,48 @@ function postSeeBtn() {
           })
         }
       }
+      
       // ------------following or unfollow the user---------------
-
+      // ------------following or unfollow the user---------------
       function followUnfollowUser() {
         const followBtn = document.querySelector(".followBtn")
-        const followBtnA = document.querySelector(".followBtn span")
+        if(followBtn){
+          const followBtnA = document.querySelector(".followBtn span")
 
-        followBtn.addEventListener("click", async () => {
-
-          if (profileUser && profileUser.role != 'admin') {
-            if (profileUser._id !== postData.postUserId) {
-              checkFollowBtnNotclicked = false;
-              const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
-
-              const data = await res.json();
-              if (res.ok) {
-                console.log(data.following);
-                if (data.following === true) {
-                  followBtnA.classList.remove("follow")
-                  followBtnA.classList.add("following")
-                  followBtnA.innerHTML = "following"
-                }
-                else {
-                  followBtnA.classList.remove("following")
-                  followBtnA.classList.add("follow")
-                  followBtnA.innerHTML = "follow"
+          followBtn.addEventListener("click", async () => {
+  
+            if (profileUser && profileUser.role != 'admin') {
+              if (profileUser._id !== postData.postUserId) {
+                checkFollowBtnNotclicked = false;
+                const res = await fetch(`/users/followingOrRemove/${postData.postUserId}`)
+  
+                const data = await res.json();
+                if (res.ok) {
+                  console.log(data.following);
+                  if (data.following === true) {
+                    followBtnA.classList.remove("follow")
+                    followBtnA.classList.add("following")
+                    followBtnA.innerHTML = "following"
+                  }
+                  else {
+                    followBtnA.classList.remove("following")
+                    followBtnA.classList.add("follow")
+                    followBtnA.innerHTML = "follow"
+                  }
                 }
               }
-            }
-
-          }
-          else {
-            if (profileUser && profileUser.role == 'admin') {
-              flashMsgsTimingForAjax("Admin can't follow developer!")
+  
             }
             else {
-              flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+              if (profileUser && profileUser.role == 'admin') {
+                flashMsgsTimingForAjax("Admin can't follow developer!")
+              }
+              else {
+                flashMsgsTimingForAjax("Sorry you'r not loggedIn!")
+              }
             }
-          }
-        })
+          })
+        }
 
       }
       followUnfollowUser()

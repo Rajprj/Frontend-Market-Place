@@ -576,7 +576,7 @@ const addComment = asyncHandler(async (req, res) => {
     const commentText = req.body.comment;
 
     if (!commentText) {
-        return res.status(400).json({ status: false, errMsg: "Comment is required!" });
+        return res.status(400).json({ status: false, errMsg: "Comment text is required!" });
     }
 
     const whichPost = await Post.findById(postId);
@@ -665,7 +665,7 @@ const otp = asyncHandler(async (req,res)=>{
           });  
     }
     let emailid= user.email;
-    console.log(emailid)
+    // console.log(emailid)
     async function generateOtp(email) {
       const otp = Math.floor(100000 + Math.random() * 900000).toString();
       const data = `<p>Your OTP for frontendmarketplace password reset is <b>${otp}</b>. It expires in 1 minute. Do not share it with anyone. [frontendmarketplace Team]"</p>`
@@ -677,17 +677,32 @@ const otp = asyncHandler(async (req,res)=>{
     
       sendMail(email,data)
       console.log(`OTP for ${email}: ${otp}`);
+      function maskEmail(email) {
+        const [localPart, domain] = email.split('@'); // Split email into local part and domain
+        if (localPart.length <= 2) {
+          return email; // Return the email as-is if local part is too short
+        }
+        const maskedLocalPart = localPart.slice(0, 2) + '*'.repeat(localPart.length - 2); // Mask all but the first 2 characters
+        return `${maskedLocalPart}@${domain}`;
+      }
+      const maskedEmail = maskEmail(email);
+
       res.render('forgetPassword', {
         userName: user.userName,
-        success: true,    
+        success: true,
+        email: maskedEmail, 
       });
+      
     }    
     generateOtp(emailid)
 
   })
 const verify = asyncHandler(async (req,res,next)=>{
     try {
-      let {userName,otp}=req.body;
+      let {userName,otp,email}=req.body;
+      
+      console.log(email);
+      
     // console.log(otp)
     // console.log(userName)
 
@@ -708,7 +723,8 @@ const verify = asyncHandler(async (req,res,next)=>{
     return  res.render('forgetPassword', {
         userName: userName, // Initially, email is null
         success: true, // Proceed to password change
-        errorMessage : "Invalid or expired OTP"
+        errorMessage : "Invalid or expired OTP",
+        email: email || '',
       });
     }
     }

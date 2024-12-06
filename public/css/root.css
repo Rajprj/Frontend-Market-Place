@@ -301,9 +301,9 @@ nav{
     font-weight: 500;
     text-transform: capitalize;
     background-color: #333;
-    opacity: 0; /* Start with hidden */
-    animation: fadeIn 0.5s ease forwards; /* Apply fade-in animation */
-    animation-delay: calc(0.1s * var(--order)); /* Staggered effect */
+    opacity: 0; 
+    animation: listIn 0.5s ease forwards; 
+    animation-delay: calc(0.1s * var(--order)); 
 }
 .menu ul li:hover{
     background-color: #444;
@@ -316,10 +316,10 @@ nav{
     /* padding: inherit; Inherit padding from li */
 }
 
-@keyframes fadeIn {
+@keyframes listIn {
     from {
         opacity: 0;
-        transform: translateY(-10px); /* Slight upward movement for effect */
+        transform: translateY(-10px); 
     }
     to {
         opacity: 1;
@@ -1265,63 +1265,6 @@ nav{
 
 
 
-/* =========== Footer - Start ============= */
-/* 
-footer{
-    height: 70vh;
-    width: 100%;
-    padding: 4vw 7vw;
-    display: flex;
-    flex-direction: row;
-}
-
-.leftContain{
-    height: 10%;
-    width: 33%;
-    display: flex;
-    align-items: center;
-
-    flex-direction: row;
-    
-}
-
-.leftContain img{
-    height: 3.5vw;
-    width: 3.5vw;
-    margin-right: 1.32vw;
-}
-.leftContain h3{
-    font-size: 2vw;
-}
-
-.rightContain{
-    height: 100%;
-    width: 70%;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-auto-columns: 1fr;
-    grid-template-rows: auto;
-    grid-column-gap: 1vw;
-    grid-row-gap: 1vw;
-    
-}
-
-.elems h1{
-    font-size: 1.5vw;
-    font-weight: 500;
-    text-transform: capitalize;
-    color: #333;
-    padding: 1.3vw 0;
-}
-
-.elems h6{
-    font-size: 1.1vw;
-    color: #9c9898;
-    font-weight: 100;
-    line-height: 2;
-    text-transform: capitalize;
-} */
-
 .footer {
     /* background: #1a1a2e; */
     color: #d3d3d3;
@@ -1344,6 +1287,7 @@ footer{
   .footer-section h4 {
     color: #333;
     margin-bottom: 20px;
+    font-size: 1.6vw;
   }
   
   .footer-section p,
@@ -1396,6 +1340,7 @@ footer{
   
   .footer-bottom p {
     margin: 0;
+    font-size: 1.2vw;
     color: #333;
   }
   
